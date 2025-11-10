@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlassLP", "GlassLP.csproj", "{EBAECF10-5136-DE37-DA19-10D02C7E75EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBAECF10-5136-DE37-DA19-10D02C7E75EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBAECF10-5136-DE37-DA19-10D02C7E75EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBAECF10-5136-DE37-DA19-10D02C7E75EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBAECF10-5136-DE37-DA19-10D02C7E75EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E36634D4-FB8F-44FC-A638-1E9FA4CD09C8}
+	EndGlobalSection
+EndGlobal
