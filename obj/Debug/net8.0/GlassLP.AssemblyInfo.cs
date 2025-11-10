@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GlassLP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aafa0143320a86684169af62d3beced37763f567")]
 [assembly: System.Reflection.AssemblyProductAttribute("GlassLP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GlassLP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
