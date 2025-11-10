@@ -1,0 +1,161 @@
+﻿@model IEnumerable<GlassLP.Data.TblCamp>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeOfModule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TypeOfVisit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CampCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DistrictId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BlockId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CLFId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PanchayatId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VOName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CampDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CRPName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CRPMobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParticipantMobilized)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalScreened)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalGlassesDistributed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PowerOfGlassId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoUploadPath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedOn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedOn)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfModule)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfVisit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CampCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DistrictId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BlockId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CLFId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PanchayatId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VOName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CampDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CRPName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CRPMobileNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParticipantMobilized)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalScreened)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalGlassesDistributed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PowerOfGlassId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhotoUploadPath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedOn)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CampId_pk">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CampId_pk">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CampId_pk">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

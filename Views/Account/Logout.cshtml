@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Logout";
+}
+
+<h2 class="text-center mt-4">Logout</h2>
+
+<form asp-action="Logout1" method="post" class="text-center mt-4">
+    <p>Are you sure you want to log out?</p>
+    <button type="submit" class="btn btn-danger">Yes, Logout</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
