@@ -1,7 +1,7 @@
 ﻿@model GlassLP.Data.TblCamp
 
 @{
-    ViewData["Title"] = "Create";
+	ViewData["Title"] = "Create";
 }
 
 <h1>Create</h1>
@@ -9,111 +9,186 @@
 <h4>TblCamp</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TypeOfModule" class="control-label"></label>
-                <input asp-for="TypeOfModule" class="form-control" />
-                <span asp-validation-for="TypeOfModule" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TypeOfVisit" class="control-label"></label>
-                <input asp-for="TypeOfVisit" class="form-control" />
-                <span asp-validation-for="TypeOfVisit" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CampCode" class="control-label"></label>
-                <input asp-for="CampCode" class="form-control" />
-                <span asp-validation-for="CampCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DistrictId" class="control-label"></label>
-                <input asp-for="DistrictId" class="form-control" />
-                <span asp-validation-for="DistrictId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BlockId" class="control-label"></label>
-                <input asp-for="BlockId" class="form-control" />
-                <span asp-validation-for="BlockId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CLFId" class="control-label"></label>
-                <input asp-for="CLFId" class="form-control" />
-                <span asp-validation-for="CLFId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PanchayatId" class="control-label"></label>
-                <input asp-for="PanchayatId" class="form-control" />
-                <span asp-validation-for="PanchayatId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VOName" class="control-label"></label>
-                <input asp-for="VOName" class="form-control" />
-                <span asp-validation-for="VOName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CampDate" class="control-label"></label>
-                <input asp-for="CampDate" class="form-control" />
-                <span asp-validation-for="CampDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Location" class="control-label"></label>
-                <input asp-for="Location" class="form-control" />
-                <span asp-validation-for="Location" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CRPName" class="control-label"></label>
-                <input asp-for="CRPName" class="form-control" />
-                <span asp-validation-for="CRPName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CRPMobileNo" class="control-label"></label>
-                <input asp-for="CRPMobileNo" class="form-control" />
-                <span asp-validation-for="CRPMobileNo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParticipantMobilized" class="control-label"></label>
-                <input asp-for="ParticipantMobilized" class="form-control" />
-                <span asp-validation-for="ParticipantMobilized" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalScreened" class="control-label"></label>
-                <input asp-for="TotalScreened" class="form-control" />
-                <span asp-validation-for="TotalScreened" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TotalGlassesDistributed" class="control-label"></label>
-                <input asp-for="TotalGlassesDistributed" class="form-control" />
-                <span asp-validation-for="TotalGlassesDistributed" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PowerOfGlassId" class="control-label"></label>
-                <input asp-for="PowerOfGlassId" class="form-control" />
-                <span asp-validation-for="PowerOfGlassId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhotoUploadPath" class="control-label"></label>
-                <input asp-for="PhotoUploadPath" class="form-control" />
-                <span asp-validation-for="PhotoUploadPath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IsActive" class="control-label"></label>
-                <input asp-for="IsActive" class="form-control" />
-                <span asp-validation-for="IsActive" class="text-danger"></span>
-            </div>
-          
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+	<div class="col-md-4">
+		<form asp-action="Create">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="TypeOfModule" class="control-label"></label>
+				<input asp-for="TypeOfModule" class="form-control" />
+				<span asp-validation-for="TypeOfModule" class="text-danger"></span>
+			</div>
+			@* <div class="form-group">
+			<label asp-for="TypeOfVisit" class="control-label"></label>
+			<input asp-for="TypeOfVisit" class="form-control" />
+			<span asp-validation-for="TypeOfVisit" class="text-danger"></span>
+			</div> *@
+			<div class="form-group">
+				<label asp-for="TypeOfVisit" class="control-label"></label>
+				<select asp-for="TypeOfVisit" class="form-control">
+					<option value="">--Select Visit Type --</option>
+					<option value="1">Pyes Myopia</option>
+					<option value="2">Other</option>
+				</select>
+				<span asp-validation-for="TypeOfVisit" class="text-danger"></span>
+			</div>
+			@* <div class="form-group">
+				<label asp-for="CampCode" class="control-label"></label>
+				<input asp-for="CampCode" class="form-control" />
+				<span asp-validation-for="CampCode" class="text-danger"></span>
+			</div> *@
+			<div class="form-group">
+				<select asp-for="DistrictId" class="form-control">
+					<option value="">--Select District --</option>
+					<option value="1">Chapra</option>
+					<option value="2">Other</option>
+				</select>
+				<span asp-validation-for="DistrictId" class="text-danger"></span>
+				<input type="hidden" asp-for="DistrictName" />
+			</div>
+			<div class="form-group">
+				<select asp-for="BlockId" class="form-control">
+					<option value="">--Select Block --</option>
+					<option value="1">Ekma</option>
+					<option value="2">Other</option>
+				</select>
+				<span asp-validation-for="BlockId" class="text-danger"></span>
+				<input type="hidden" asp-for="BlockName" />
+			</div>
+			<div class="form-group">
+				<select asp-for="CLFId" class="form-control">
+					<option value="">--Select Clf --</option>
+					<option value="1">Nai Disha Nari Shakti Mahila Swawalambi Sahkari Samiti Limited</option>
+					<option value="2">Jagriti Nari Shakti Mahila Vikas Swawalambi Sahkari Samiti Limited</option>
+					<option value="3">Sahyogi Swayamsidha Mahila Vikas Swawalambi Sahkari Samiti Limited</option>
+					<option value="4">Sangam Swayamsiddha Mahila Vikas Swawalambi Sahkari Samiti Limited</option>
+				</select>
+				<span asp-validation-for="CLFId" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<select asp-for="PanchayatId" class="form-control">
+					<option value="">--Select Block --</option>
+					<option value="1">Amdhari</option>
+					<option value="2">Other</option>
+				</select>
+				<span asp-validation-for="PanchayatId" class="text-danger"></span>
+				<input type="hidden" asp-for="PanchayatName" />
+			</div>
+
+			<div class="form-group">
+				<label asp-for="VOName" class="control-label"></label>
+				<input asp-for="VOName" class="form-control" />
+				<span asp-validation-for="VOName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CampDate" class="control-label"></label>
+				<input asp-for="CampDate" class="form-control" />
+				<span asp-validation-for="CampDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Location" class="control-label"></label>
+				<input asp-for="Location" class="form-control" />
+				<span asp-validation-for="Location" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CRPName" class="control-label"></label>
+				<input asp-for="CRPName" class="form-control" />
+				<span asp-validation-for="CRPName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="CRPMobileNo" class="control-label"></label>
+				<input asp-for="CRPMobileNo" class="form-control" />
+				<span asp-validation-for="CRPMobileNo" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ParticipantMobilized" class="control-label"></label>
+				<input asp-for="ParticipantMobilized" class="form-control" />
+				<span asp-validation-for="ParticipantMobilized" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="TotalScreened" class="control-label"></label>
+				<input asp-for="TotalScreened" class="form-control" />
+				<span asp-validation-for="TotalScreened" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="TotalGlassesDistributed" class="control-label"></label>
+				<input asp-for="TotalGlassesDistributed" class="form-control" />
+				<span asp-validation-for="TotalGlassesDistributed" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<div class="form-group">
+					<select asp-for="PowerOfGlassId" class="form-control">
+						<option value="">--Select Power of Glass --</option>
+						<option value="1">+1.0</option>
+						<option value="2">+1.5</option>
+						<option value="3">+2.0</option>
+						<option value="4">+2.5</option>
+						<option value="5">+3.0</option>
+					</select>
+					<span asp-validation-for="PowerOfGlassId" class="text-danger"></span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label asp-for="PhotoUploadPath" class="control-label"></label>
+				<input asp-for="PhotoUploadPath" class="form-control" />
+				<span asp-validation-for="PhotoUploadPath" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="IsActive" class="control-label"></label>
+				<input asp-for="IsActive" class="form-control" />
+				<span asp-validation-for="IsActive" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<input type="submit" value="Create" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+	<a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+
+	<script>
+		$(document).ready(function () {
+			$("#DistrictId").change(function () {
+				if ($(this).val()) {
+					$('#DistrictName').val($(this).find("option:selected").text().trim());
+				} else {
+					$('#DistrictName').val('');
+				}
+			});
+
+			$("#BlockId").change(function () {
+				if ($(this).val()) {
+					$('#BlockName').val($(this).find("option:selected").text().trim());
+				} else {
+					$('#BlockName').val('');
+				}
+			});
+
+			$("#PanchayatId").change(function () {
+				if ($(this).val()) {
+					$('#PanchayatName').val($(this).find("option:selected").text().trim());
+				} else {
+					$('#PanchayatName').val('');
+				}
+			});
+		});
+	</script>
 }
+
+
+
+
+
+
+
+
+
+

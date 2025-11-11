@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -136,12 +137,28 @@ namespace GlassLP.Data
         public int? TypeOfVisit { get; set; }
 
         [StringLength(500)]
-        public string CampCode { get; set; }
+		[ValidateNever]
+		public string CampCode { get; set; }
 
         public int? DistrictId { get; set; }
+
+        [ValidateNever]
+        [NotMapped]
+        public string? DistrictName { get; set; }
+
         public int? BlockId { get; set; }
+
+        [ValidateNever]
+        [NotMapped]
+        public string? BlockName { get; set; }
+
         public int? CLFId { get; set; }
+
         public int? PanchayatId { get; set; }
+
+        [ValidateNever]
+        [NotMapped]
+        public string? PanchayatName { get;set; }
 
         [StringLength(500)]
         public string VOName { get; set; }
@@ -163,10 +180,12 @@ namespace GlassLP.Data
         public bool? IsActive { get; set; }
 
         [StringLength(130)]
-        public string CreatedBy { get; set; }
+        [ValidateNever]
+        public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         [StringLength(130)]
-        public string UpdatedBy { get; set; }
+        [ValidateNever]
+        public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 

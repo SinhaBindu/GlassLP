@@ -1,10 +1,11 @@
 ﻿using GlassLP.Data;
+using GlassLP.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GlassLP.Controllers
 {
-    public class CampsController : Controller
+    public class CampsController : BaseController
     {
         private readonly GlassDbContext _context;
 
@@ -50,14 +51,19 @@ namespace GlassLP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(TblCamp tblCamp)
         {
+
             if (ModelState.IsValid)
             {
-                var currentUser = User.Identity?.Name ?? "System";
+                var currentUser = GetSubmittedBy();
 
                 tblCamp.CreatedBy = currentUser;  // (typo in your model – should be "CreatedBy" ideally)
                 tblCamp.CreatedOn = DateTime.Now;
                 tblCamp.UpdatedBy = currentUser;
                 tblCamp.UpdatedOn = DateTime.Now;
+
+                tblCamp.CampCode = Utility.GenerateCampCode(tblCamp.DistrictName, tblCamp.BlockName, tblCamp.PanchayatName);
+
+
                 _context.Add(tblCamp);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
