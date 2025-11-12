@@ -6,11 +6,11 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.DistrictId)
                 @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "-- Select District --", new { @class = "form-control" })
-            </div>
+                </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.BlockId)
                 @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
-            </div>
+                </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.CLFId)
                 @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
@@ -18,7 +18,7 @@
             <div class="form-group">
                 @Html.LabelFor(m => m.PanchayatId)
                 @Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
-            </div>
+                </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.VOName)
                 @Html.EditorFor(m => m.VOName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
@@ -73,6 +73,7 @@
                 GetJSFederations("CLFId", $('#DistrictId').val(), $(this).val());
                 $('#PanchayatId').val(); $('#CLFId').val();
             });
+
             //Post sumbitted Data
             $('#btnSubmit').click(function () {
                 var form = $('#addForm')[0];

@@ -43,7 +43,7 @@
 					<option value="2">Other</option>
 				</select>
 				<span asp-validation-for="DistrictId" class="text-danger"></span>
-				<input type="hidden" asp-for="DistrictName" />
+				<input type="hidden" id="DistrictName" asp-for="DistrictName" />
 			</div>
 			<div class="form-group">
 				<select asp-for="BlockId" class="form-control">
@@ -52,7 +52,7 @@
 					<option value="2">Other</option>
 				</select>
 				<span asp-validation-for="BlockId" class="text-danger"></span>
-				<input type="hidden" asp-for="BlockName" />
+				<input type="hidden" id="BlockName" asp-for="BlockName" />
 			</div>
 			<div class="form-group">
 				<select asp-for="CLFId" class="form-control">
@@ -71,7 +71,7 @@
 					<option value="2">Other</option>
 				</select>
 				<span asp-validation-for="PanchayatId" class="text-danger"></span>
-				<input type="hidden" asp-for="PanchayatName" />
+				<input type="hidden" id="PanchayatName" asp-for="PanchayatName" />
 			</div>
 
 			<div class="form-group">
@@ -139,7 +139,7 @@
 			</div>
 
 			<div class="form-group">
-				<input type="submit" value="Create" class="btn btn-primary" />
+				<input type="submit" value="Add Camp" class="btn btn-primary" />
 			</div>
 		</form>
 	</div>
@@ -179,6 +179,8 @@
 					$('#PanchayatName').val('');
 				}
 			});
+
+			
 		});
 	</script>
 }
