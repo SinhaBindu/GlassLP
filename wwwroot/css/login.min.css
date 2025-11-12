@@ -1,0 +1,77 @@
+.sign-in-bg {
+    background-image: url('../images/loginbg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.sign-in-bg .main-container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+.sign-in-bg .main-container .main-content-box {
+    padding: calc(20px + 28 * (100vw - 300px) / 1620);
+    overflow: hidden;
+}
+.image-content-box .signup-bg-img img {
+    margin: auto;
+    display: block;
+}
+.form-content-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-content-box .form-container {
+    padding: 0 2rem;
+}
+.form-content-box h2 {
+    margin-bottom: 0;
+    font-size: calc(22px + 13 * (100vw - 300px) / 1620);
+    white-space: nowrap;
+}
+.text-dark {
+    color: #28232d !important;
+}
+.form-content-box p {
+    color: #28232d;
+    font-weight: 500;
+    font-size: calc(12px + 4 * (100vw - 300px) / 1620);
+}
+.form-content-box .form-container .form-control {
+    background-color: #fff;
+    color: #28232d;
+    border: 1px solid #fff;
+}
+.w-25 {
+    width: 25px !important;
+}
+.h-25 {
+    height: 25px !important;
+}
+.app-form .form-select:focus, .app-form .form-control:focus {
+    color: #28232d;
+    box-shadow: 0 0 0 0.25rem rgba(15, 98, 106, 0.3);
+    border: 1px solid rgba(15, 98, 106, 0.8);
+    padding-left: 1.3rem;
+    transition: all 0.3s ease;
+}
+.text-dark {
+    color: #28232d !important;
+}
+.f-w-500 {
+    font-weight: 500 !important;
+}
+.btn-group-lg > .btn, .btn-lg {
+    padding: 6px 30px;
+    font-size: 18px;
+}
+.btn-primary, .btn-primary:hover, .btn-check:focus + .btn-primary, .btn-primary:focus {
+    background-color: rgba(15, 98, 106, 1);
+    border: 1px solid rgba(15, 98, 106, 1);
+}
+.f-w-500 {
+    font-weight: 500 !important;
+}

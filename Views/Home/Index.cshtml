@@ -1,8 +1,268 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Home Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row ticket-app">
+    <div class="col-lg-6">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card ticket-card bg-primary">
+                    <div class="card-body">
+                        <i class="ph-bold fa fa-circle circle-bg-img"></i>
+                        <div class="h-50 w-50 d-flex-center b-r-15 bg-white mb-3">
+                            <i class="ph-bold fa fa-globe f-s-25 text-primary"></i>
+                        </div>
+                        <p class="f-s-16">All Tickets</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="text-white">185</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card ticket-card bg-info">
+                    <div class="card-body">
+                        <i class="ph-bold fa fa-circle circle-bg-img"></i>
+                        <div class="h-50 w-50 d-flex-center b-r-15 bg-white mb-3">
+                            <i class="ph-bold fa fa-clock f-s-25 text-info"></i>
+                        </div>
+                        <p class="f-s-16">Pending Tickets</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="text-white">185</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card ticket-card bg-success">
+                    <div class="card-body">
+                        <i class="ph-bold fa fa-circle circle-bg-img"></i>
+                        <div class="h-50 w-50 d-flex-center b-r-15 bg-white mb-3">
+                            <i class="ph-bold fa fa-file f-s-25 text-success"></i>
+                        </div>
+                        <p class="f-s-16">Completed Tickets</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="text-white">185</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card ticket-card bg-warning">
+                    <div class="card-body">
+                        <i class="ph-bold fa fa-circle circle-bg-img"></i>
+                        <div class="h-50 w-50 d-flex-center b-r-15 bg-white mb-3">
+                            <i class="ph-bold fa fa-recycle f-s-25 text-warning"></i>
+                        </div>
+                        <p class="f-s-16">Cancelled Tickets</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 class="text-white">185</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <form action="#" class="app-form app-icon-form search-lg h-100">
+                    <div class="position-relative h-100">
+                        <input aria-label="Search" class="form-control search h-100 pe-4" placeholder="Search..." type="search">
+                        <i class="fa fa-search text-dark icon-search"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="table-responsive app-scroll">
+                <table class="table table-bottom-border table-lg align-middle">
+                    <thead>
+                        <tr class="app-sort">
+                            <th>
+                                <input class="checkAll form-check-input ms-2" name="checkAll" type="checkbox">
+                            </th>
+                            <th class="d-none">Id</th>
+                            <th>Task</th>
+                            <th>Priority</th>
+                            <th>Due Date</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th><input class="form-check-input todo-checkbox ms-2" name="item" type="checkbox" value="1"></th>
+                            <td class="id d-none">1</td>
+                            <td class="f-w-500 text-dark">the homepage layout</td>
+                            <td>
+                                <span class="badge bg-success-subtle bg-success f-s-10 text-uppercase">High</span>
+                            </td>
+                            <td class="text-danger">2021-03-19</td>
+                            <td class="edit">
+                                <button class="btn edit-item-btn icon-btn btn-outline-success">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn remove-item-btn icon-btn btn-outline-danger"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><input class="form-check-input todo-checkbox ms-2" name="item" type="checkbox" value="2"></th>
+                            <td class="id d-none">1</td>
+                            <td class="f-w-500 text-dark">Design the layout</td>
+                            <td>
+                                <span class="badge bg-warning-subtle bg-warning f-s-10 text-uppercase">High</span>
+                            </td>
+                            <td class="text-danger">2021-03-19</td>
+                            <td class="edit">
+                                <button class="btn edit-item-btn icon-btn btn-outline-success">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn remove-item-btn icon-btn btn-outline-danger"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><input class="form-check-input todo-checkbox ms-2" name="item" type="checkbox" value="2"></th>
+                            <td class="id d-none">1</td>
+                            <td class="f-w-500 text-dark">Design the homepage</td>
+                            <td>
+                                <span class="badge bg-danger-subtle bg-danger f-s-10 text-uppercase">High</span>
+                            </td>
+                            <td class="text-danger">2021-03-19</td>
+                            <td class="edit">
+                                <button class="btn edit-item-btn icon-btn btn-outline-success">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn remove-item-btn icon-btn btn-outline-danger"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><input class="form-check-input todo-checkbox ms-2" name="item" type="checkbox" value="2"></th>
+                            <td class="id d-none">1</td>
+                            <td class="f-w-500 text-dark">Design the homepage</td>
+                            <td>
+                                <span class="badge bg-danger-subtle bg-danger f-s-10 text-uppercase">High</span>
+                            </td>
+                            <td class="text-danger">2021-03-19</td>
+                            <td class="edit">
+                                <button class="btn edit-item-btn icon-btn btn-outline-success">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn remove-item-btn icon-btn btn-outline-danger"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- TICKET DETAIL tabel 5 -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Profile</h5>
+            </div>
+            <div class="card-body">
+                <form class="app-form">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Username</label>
+                                <input class="form-control" placeholder="Maria C. Eck" type="text">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Email address</label>
+                                <input class="form-control" placeholder="MariaCEck@teleworm.us" type="email">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Password</label>
+                                <input class="form-control" placeholder="*******" type="password">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Confirm Password</label>
+                                <input class="form-control" placeholder="*******" type="password">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="app-divider-v dotted"></div>
+                        </div>
+                        <h5 class="mb-2 text-dark f-w-600">Personal Info</h5>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Address</label>
+                                <textarea class="form-control" placeholder="1098 Asylum Avenu New Haven, CT 06510"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label class="form-label">Address 2</label>
+                                <textarea class="form-control" placeholder="51244 Ankunding Villages, Reicheltown, IL 84366"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label" for="inputCity">City</label>
+                                <input class="form-control" id="inputCity" placeholder="oregon" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label class="form-label" for="inputState">State</label>
+                                <select class="form-select" id="inputState">
+                                    <option selected="">Choose...</option>
+                                    <option>USA</option>
+                                    <option>Canada</option>
+                                    <option>Australia</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="mb-3">
+                                <label class="form-label" for="inputZip">Zip</label>
+                                <input class="form-control" id="inputZip" placeholder="CT 06510" type="text">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xl-4">
+                            <div class="">
+                                <label class="form-label">language</label>
+                                <select class="select-langauge form-select select-basic" name="state">
+                                    <option value="EN">English</option>
+                                    <option value="GU">Gujarati</option>
+                                    <option value="HI">Hindi</option>
+                                    <option value="DU">Dutch</option>
+                                    <option value="FR">French</option>
+                                    <option value="RU">Russian</option>
+                                    <option value="KO">Korean</option>
+                                    <option value="TA">Tamil</option>
+                                    <option value="SP">Spanish</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-end">
+                                <button class="btn btn-primary" type="submit">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

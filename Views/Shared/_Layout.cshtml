@@ -4,47 +4,187 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GlassLP</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link href="~/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GlassLP.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GlassLP</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li>@User.Identity?.Name</li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
-                        </li>
-                    </ul>
+    <div class="app-wrapper">
+        <nav class="vertical-sidebar">
+            <div class="app-logo">
+                <a class="logo d-inline-block" href="index.html">
+					<img src="~/images/logo.jpg" />
+                </a>
+                <div class="d-flex align-items-center nav-profile p-3">
+                    <span class="h-45 w-45 d-flex-center b-r-10 position-relative bg-danger m-auto">
+                        <img alt="avatar" class="img-fluid b-r-10" src="~/images/woman.jpg">
+                        <span class="position-absolute top-0 end-0 p-1 bg-success border border-light rounded-circle"></span>
+                    </span>
+                    <div class="flex-grow-1 ps-2">
+                        <h6 class="text-primary mb-0"> Ninfa Monaldo</h6>
+                        <p class="text-muted f-s-12 mb-0">Web Developer</p>
+                    </div>
+                    <div class="dropdown profile-menu-dropdown">
+                        <a aria-expanded="false" data-bs-auto-close="true" data-bs-placement="top" data-bs-toggle="dropdown" role="button" class="">
+                            <i class="ti fa fa-cog fs-5"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item">
+                                <a class="f-w-500" href="./profile.html" target="_blank">
+                                    <i class="fa fa-user-circle-o pe-1 f-s-20"></i> Profile Details
+                                </a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a class="f-w-500" href="./setting.html" target="_blank">
+                                    <i class="fa fa-cog pe-1 f-s-20"></i> Settings
+                                </a>
+                            </li>
+                            <li class="dropdown-item">
+                                <a class="mb-0 text-secondary f-w-500" href="./sign_up.html" target="_blank">
+                                    <i class="fa fa-plus pe-1 f-s-20"></i> Add account
+                                </a>
+                            </li>
+                            <li class="app-divider-v dotted py-1"></li>
+                            <li class="dropdown-item">
+                                <a class="mb-0 text-danger" href="./sign_in" target="_blank">
+                                    <i class="fa fa-sign-out pe-1 f-s-20"></i> Log Out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+            <div class="app-nav">
+                <ul class="main-nav p-0 mt-2">
+                    <li class="menu-title">
+                        <span>Dashboard</span>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#dashboard">
+                            <i class="fa fa-home"></i>
+                            dashboard
+                            <span class="badge bg-danger  badge-dashboard badge-notification ms-2">New</span>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - GlassLP - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </a>
+                        <ul class="collapse" id="dashboard">
+                            <li><a href="index.html">Ecommerce</a></li>
+                            <li><a href="project_dashboard.html">Project</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a aria-expanded="false" data-bs-toggle="collapse" href="#apps">
+                            <i class="fa fa-home"></i>
+                            Apps
+                        </a>
+                        <ul class="collapse" id="apps">
+                            <li><a href="calendar.html">Calender</a></li>
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#Profile-page">
+                                    Profile
+                                </a>
+                                <ul class="collapse" id="Profile-page">
+                                    <li><a href="profile.html">Profile</a></li>
+                                    <li><a href="setting.html">Setting</a></li>
+                                </ul>
+                            </li>
+                            <li class="another-level">
+                                <a aria-expanded="false" data-bs-toggle="collapse" href="#projects-page">
+                                    Projects Page
+                                </a>
+                                <ul class="collapse" id="projects-page">
+                                    <li><a href="project_app.html">projects</a></li>
+                                    <li><a href="project_details.html">projects Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="to_do.html">To-Do</a></li>
+                            <li><a href="team.html">Team</a></li>
+                            <li><a href="api.html">API</a></li>
+                            <li><a href="pricing.html">Pricing</a></li>
+                            <li><a href="gallery.html">Gallery</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="app-content">
+            <header class="header-main">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-8 col-sm-6 d-flex align-items-center header-left p-0">
+                            <span class="header-toggle ">
+                                <i class="fa fa-bars"></i>
+                            </span>
+                            <div class="header-searchbar w-100">
+                                <form action="#" class="mx-sm-3 app-form app-icon-form ">
+                                    <div class="position-relative">
+                                        <input aria-label="Search" class="form-control" placeholder="Search..." type="search">
+                                        <i class="ti fa fa-search text-dark"></i>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-4 col-sm-6 d-flex align-items-center justify-content-end header-right p-0">
+                            <ul class="d-flex align-items-center">
+                                <li class="header-apps">
+                                    <a aria-controls="appscanvasRights" class="d-block head-icon bg-light-dark rounded-circle f-s-22 p-2" data-bs-target="#appscanvasRights" data-bs-toggle="offcanvas" href="#" role="button">
+                                        <i class="fa fa-user"></i>
+                                    </a>
+                                    <div aria-labelledby="appscanvasRightsLabel" class="offcanvas offcanvas-end header-apps-canvas" id="appscanvasRights" tabindex="-1">
+                                        <div class="offcanvas-header">
+                                            <h5 class="offcanvas-title">Shortcut</h5>
+                                        </div>
+                                        <div class="offcanvas-body app-scroll">
+                                            <div class="row row-cols-3 g-2">
+                                                <div class="d-flex-center text-center">
+                                                    <a class="text-light-primary w-100 rounded-3 py-3 px-2 " href="profile.html" target="_blank">
+                                                        <span>
+                                                            <i class="ph-light fa fa-user f-s-30"></i>
+                                                        </span>
+                                                        <p class="mb-0 f-w-500 text-dark">Profile</p>
+                                                    </a>
+                                                </div>
+                                                <div class="d-flex-center text-center">
+                                                    <a class="text-light-danger w-100 rounded-3 py-3 px-2 " href="/sign_in">
+                                                        <span>
+                                                            <i class="ph-light fa fa-sign f-s-30"></i>
+                                                        </span>
+                                                        <p class="mb-0 f-w-500 text-dark">Log Out</p>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <main class="page-content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </main>
+            <footer>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-9 col-12">
+                            <p class="footer-text f-w-600 mb-0">
+                                Copyright © 2025 admin. All rights reserved 💖
+                                V1.0.0
+                            </p>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="footer-text text-end">
+                                <a class="f-w-500 text-primary" href="mailto:asasas.com"> Need Help <i class="ti ti-help"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
-    </footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

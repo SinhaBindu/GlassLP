@@ -1,37 +1,83 @@
 ﻿@{
-    ViewData["Title"] = "Register";
+	ViewData["Title"] = "Register";
 }
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>@ViewData["Title"] - GlassLP</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/login.min.css" />
+</head>
+<body class="sign-in-bg">
+	<div class="app-wrapper d-block">
+		<div class="">
+			<!-- Body main section starts -->
+			<div class="container main-container">
+				<div class="row main-content-box">
+					<div class="col-lg-7 image-content-box d-none d-lg-block">
+						<div class="form-container">
+							<div class="signup-bg-img">
+								<img alt="" class="img-fluid" src="~/images/02.png">
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-5 form-content-box">
+						<div class="form-container">
+							<form class="app-form" asp-action="Register" method="post">
+								<div class="row">
+									<div class="col-12">
+										<div class="mb-5 text-center text-lg-start">
+											<h2 class="f-w-600 text-dark">Welcome To <span class="text-dark">Register!</span> </h2>
+											<p class="f-s-16 mt-2">
+												Sign in with your data that you enterd during your
+												registration
+											</p>
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-floating mb-3">
+											<input type="email" name="email" id="email" class="form-control" required />
+											<label for="Email">Email</label>
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-floating mb-3">
+											<label for="userName">Username</label>
+											<input type="text" name="userName" id="userName" class="form-control" required />
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="form-floating mb-3">
+										<label for="password">Password</label>
+										<input type="password" name="password" id="password" class="form-control" required />
+									</div>
+									</div>
+									<div class="col-12 mt-3">
+										<button type="submit" class="btn btn-primary btn-lg w-100">Register</button>
+									</div>
+									<div class="col-12 mt-4">
+										<div class="text-center text-lg-start f-w-500">
+											Already have an account?
+											<a asp-controller="Account" asp-action="Login" class="text-white-800 text-decoration-underline">Login</a>
+										</div>
+									</div>
+								</div>
+							</form>
+							@if (!ViewData.ModelState.IsValid)
+							{
+								<div class="text-danger mt-3">
+									@foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+									{
+										<p class="text-danger">@err.ErrorMessage</p>
+									}
+								</div>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Body main section ends -->
+		</div>
+	</div>
+</body>
 
-<h2 class="text-center mt-4">Register</h2>
-
-<form asp-action="Register" method="post" class="mx-auto mt-4" style="max-width:400px;">
-    <div class="form-group mb-3">
-        <label for="email">Email</label>
-        <input type="email" name="email" class="form-control" required />
-    </div>
-    <div class="form-group mb-3">
-        <label for="userName">Username</label>
-        <input type="text" name="userName" class="form-control" required />
-    </div>
-
-    <div class="form-group mb-3">
-        <label for="password">Password</label>
-        <input type="password" name="password" class="form-control" required />
-    </div>
-
-    <button type="submit" class="btn btn-primary w-100">Register</button>
-
-    <div class="text-center mt-3">
-        <a asp-controller="Account" asp-action="Login">Already have an account? Login</a>
-    </div>
-</form>
-
-@if (!ViewData.ModelState.IsValid)
-{
-    <div class="text-danger mt-3">
-        @foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-        {
-            <p>@err.ErrorMessage</p>
-        }
-    </div>
-}
