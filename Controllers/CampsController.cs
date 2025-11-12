@@ -1,4 +1,5 @@
 ﻿using GlassLP.Data;
+using GlassLP.Models;
 using GlassLP.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,56 @@ namespace GlassLP.Controllers
         {
             return View(await _context.TblCamp.ToListAsync());
         }
+
+        public IActionResult AddCamp()
+        {
+            CampViewModel model = new CampViewModel();
+            return View(model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddCamp(CampViewModel model, IFormFile PhotoFile)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = GetSubmittedBy(); // your helper method or identity user
+
+                model.CreatedBy = currentUser;
+                model.CreatedOn = DateTime.Now;
+                model.UpdatedBy = currentUser;
+                model.UpdatedOn = DateTime.Now;
+                model.IsActive = true;
+                // Optional: Generate unique CampCode
+                // model.CampCode = Utility.GenerateCampCode(model.DistrictName, model.BlockName, model.PanchayatName);
+
+                // ✅ Handle Photo Upload
+                if (PhotoFile != null && PhotoFile.Length > 0)
+                {
+                    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "camp");
+                    if (!Directory.Exists(uploadsDir))
+                        Directory.CreateDirectory(uploadsDir);
+
+                    var uniqueFileName = $"{Guid.NewGuid()}_{PhotoFile.FileName}";
+                    var filePath = Path.Combine(uploadsDir, uniqueFileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await PhotoFile.CopyToAsync(stream);
+                    }
+                    model.PhotoUploadPath = "/uploads/camp/" + uniqueFileName;
+                }
+
+                // ✅ Save to database
+               // _context.TblCamp.Add(model);
+                await _context.SaveChangesAsync();
+
+                TempData["Success"] = "Camp added successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
+        }
+
 
         // GET: Camps/Details/5
         public async Task<IActionResult> Details(int? id)

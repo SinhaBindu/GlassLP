@@ -1,0 +1,101 @@
+﻿@model CampViewModel
+<div class="row">
+    <div class="col-md-4">
+        @* asp-action="AddCamp" *@
+        <form  method="post" enctype="multipart/form-data" id="addForm">
+            <div class="form-group">
+                @Html.LabelFor(m => m.DistrictId)
+                @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "-- Select District --", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BlockId)
+                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CLFId)
+                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.PanchayatId)
+                @Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.VOName)
+                @Html.EditorFor(m => m.VOName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CampDate)
+                @Html.EditorFor(m => m.CampDate, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Location)
+                @Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CRPName)
+                @Html.EditorFor(m => m.CRPName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CRPMobileNo)
+                @Html.EditorFor(m => m.CRPMobileNo, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ParticipantMobilized)
+                @Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.TotalScreened)
+                @Html.EditorFor(m => m.TotalScreened, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.TotalGlassesDistributed)
+                @Html.EditorFor(m => m.TotalGlassesDistributed, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+            </div>
+            <!-- Add other fields similarly -->
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            GetJSDistricts("DistrictId");
+            $("#DistrictId").change(function () {
+                GetJSBlocks("BlockId", $(this).val());
+                $('#BlockId').val();
+            });
+            $("#BlockId").change(function () {
+                GetJSPanchayats("PanchayatId", $('#DistrictId').val(), $(this).val());
+                GetJSFederations("CLFId", $('#DistrictId').val(), $(this).val());
+                $('#PanchayatId').val(); $('#CLFId').val();
+            });
+            //Post sumbitted Data
+            $('#btnSubmit').click(function () {
+                var form = $('#addForm')[0];
+                var formData = new FormData(form);
+                $.ajax({
+                    url: '/Camp/AddCamp',
+                    type: 'POST',
+                    data: formData,
+                    processData: false, // Important for files
+                    contentType: false, // Important for files
+                    success: function (response) {
+                        $('#responseMessage').html(
+                            '<div class="alert alert-success">Camp added successfully!</div>'
+                        );
+                        $('#addCampForm')[0].reset();
+                    },
+                    error: function (xhr) {
+                        $('#responseMessage').html(
+                            '<div class="alert alert-danger">Error: ' + xhr.responseText + '</div>'
+                        );
+                    }
+                });
+            });
+        });
+    </script>
+}

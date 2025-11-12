@@ -13,15 +13,15 @@ namespace GlassLP.Data
         public int? BlockId_fk { get; set; }
 
         [StringLength(500)]
-        public string PanchayatName { get; set; }
+        public string? PanchayatName { get; set; }
 
         public bool? IsActive { get; set; }
 
         [StringLength(130)]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         [StringLength(130)]
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 }

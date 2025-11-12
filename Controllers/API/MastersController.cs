@@ -25,20 +25,24 @@ namespace GlassLP.Controllers.API
         [HttpGet("Districts")]
         public async Task<ActionResult<IEnumerable<MstDistrict>>> GetMstDistrict()
         {
-            return await _context.MstDistrict.ToListAsync();
+            return await _context.MstDistrict.Where(x => x.IsActive == true).ToListAsync();
         }
 
         [HttpGet("Blocks")]
-        public async Task<ActionResult<IEnumerable<MstBlock>>> GetMstBlock()
+        public async Task<ActionResult<IEnumerable<MstBlock>>> GetMstBlock(int DistrictId)
         {
-            return await _context.MstBlock.ToListAsync();
+            return await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true).ToListAsync();
         }
 
         [HttpGet("Panchayats")]
-        public async Task<ActionResult<IEnumerable<MstPanchayat>>> GetMstPanchayat()
+        public async Task<ActionResult<IEnumerable<MstPanchayat>>> GetMstPanchayat(int DistrictId, int BlockId)
         {
-            return await _context.MstPanchayat.ToListAsync();
+            return await _context.MstPanchayat.Where(x => x.DistrictId_fk == DistrictId && x.BlockId_fk == BlockId && x.IsActive == true).ToListAsync();
         }
-
+        [HttpGet("Federations")]
+        public async Task<ActionResult<IEnumerable<MstFederation>>> GetMstFederations(int DistrictId, int BlockId)
+        {
+            return await _context.MstFederation.Where(x => x.DistrictId_fk == DistrictId && x.BlockId_fk == BlockId && x.IsActive == true).ToListAsync();
+        }
     }
 }

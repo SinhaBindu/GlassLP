@@ -18,13 +18,13 @@ namespace GlassLP.Data
         public int BlockId_pk { get; set; }
         public int? DistrictId_fk { get; set; }
         [StringLength(500)]
-        public string BlockName { get; set; }
+        public string? BlockName { get; set; }
         public bool? IsActive { get; set; }
         [StringLength(130)]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         [StringLength(130)]
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 
@@ -51,17 +51,14 @@ namespace GlassLP.Data
     {
         [Key]
         public int DistrictId_pk { get; set; }
-
         [StringLength(500)]
         public string DistrictName { get; set; }
-
         public bool? IsActive { get; set; }
-
         [StringLength(130)]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         [StringLength(130)]
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 
@@ -76,15 +73,15 @@ namespace GlassLP.Data
         public int? PanchayatId_fk { get; set; }
 
         [StringLength(500)]
-        public string FederationName { get; set; }
+        public string? FederationName { get; set; }
 
         public bool? IsActive { get; set; }
 
         [StringLength(130)]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         [StringLength(130)]
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 
