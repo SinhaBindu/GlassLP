@@ -1,62 +1,99 @@
 ﻿@model CampViewModel
+
 <div class="row">
-    <div class="col-md-4">
-        @* asp-action="AddCamp" *@
-        <form  method="post" enctype="multipart/form-data" id="addForm">
-            <div class="form-group">
-                @Html.LabelFor(m => m.DistrictId)
-                @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "-- Select District --", new { @class = "form-control" })
-                </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.BlockId)
-                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
-                </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.CLFId)
-                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Add Camp</h5>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.PanchayatId)
-                @Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
-                </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.VOName)
-                @Html.EditorFor(m => m.VOName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+            <div class="card-body">
+                <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "-- Select District --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.PanchayatId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.VOName, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.VOName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.CampDate, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.CampDate, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.Location, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.CRPName, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.CRPName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.CRPMobileNo, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.CRPMobileNo, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.ParticipantMobilized, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.TotalScreened, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.TotalScreened, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.TotalGlassesDistributed, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.TotalGlassesDistributed, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-end">
+                                <button class="btn btn-primary" type="submit">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.CampDate)
-                @Html.EditorFor(m => m.CampDate, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Location)
-                @Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.CRPName)
-                @Html.EditorFor(m => m.CRPName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.CRPMobileNo)
-                @Html.EditorFor(m => m.CRPMobileNo, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.ParticipantMobilized)
-                @Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.TotalScreened)
-                @Html.EditorFor(m => m.TotalScreened, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.TotalGlassesDistributed)
-                @Html.EditorFor(m => m.TotalGlassesDistributed, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-            </div>
-            <!-- Add other fields similarly -->
-            <button type="submit">Submit</button>
-        </form>
+        </div>
     </div>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
