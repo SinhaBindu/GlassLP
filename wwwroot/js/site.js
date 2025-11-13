@@ -44,3 +44,34 @@ function GetJSFederations(eleid, Paraid1, Paraid2) {
     });
 }
 
+function GetCampCode(eleid) {
+    $.getJSON('/API/Masters/CampCode', function (data) {
+        let items = '<option value="">Select</option>';
+        $.each(data, function (i, item) {
+            items += '<option value="' + item.campId_pk + '">' + item.campCode + '</option>';
+        });
+        $('#' + eleid).html(items);
+    });
+}
+
+function GetOccupations(eleid) {
+    $.getJSON('/API/Masters/Occupations', function (data) {
+        debugger;
+        let items = '<option value="">Select</option>';
+        $.each(data, function (i, item) {
+            items += '<option value="' + item.pk_OccupationId + '">' + item.occupatioName + '</option>';
+        });
+        $('#' + eleid).html(items);
+    });
+}
+
+function GetPowerofGlasses(eleid) {
+    $.getJSON('/API/Masters/PowerofGlasses', function (data) {
+        debugger;
+        let items = '<option value="">Select</option>';
+        $.each(data, function (i, item) {
+            items += '<option value="' + item.pk_PowerGlassId + '">' + item.powerofGlass + '</option>';
+        });
+        $('#' + eleid).html(items);
+    });
+}

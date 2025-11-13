@@ -1,0 +1,107 @@
+﻿@model VendorViewModel
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Add Vendors</h5>
+            </div>
+            <div class="card-body">
+                <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.BusinessMentorName, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.BusinessMentorName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.VEName, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.VEName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select Camp --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.AOPName, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.AOPName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.ContactNumber, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.ContactNumber, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.TotalSalesAmount, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.TotalSalesAmount, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-end">
+                                <button class="btn btn-primary" type="submit">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            GetJSDistricts("DistrictId");
+            $("#DistrictId").change(function () {
+                GetJSBlocks("BlockId", $(this).val());
+                $('#BlockId').val();
+            });
+            $("#BlockId").change(function () {
+                GetJSPanchayats("PanchayatId", $('#DistrictId').val(), $(this).val());
+                GetJSFederations("CLFId", $('#DistrictId').val(), $(this).val());
+                $('#PanchayatId').val(); $('#CLFId').val();
+            });
+
+            //Post sumbitted Data
+            $('#btnSubmit').click(function () {
+                var form = $('#addForm')[0];
+                var formData = new FormData(form);
+                $.ajax({
+                    url: '/Camp/AddCamp',
+                    type: 'POST',
+                    data: formData,
+                    processData: false, // Important for files
+                    contentType: false, // Important for files
+                    success: function (response) {
+                        $('#responseMessage').html(
+                            '<div class="alert alert-success">Camp added successfully!</div>'
+                        );
+                        $('#addCampForm')[0].reset();
+                    },
+                    error: function (xhr) {
+                        $('#responseMessage').html(
+                            '<div class="alert alert-danger">Error: ' + xhr.responseText + '</div>'
+                        );
+                    }
+                });
+            });
+        });
+    </script>
+}@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

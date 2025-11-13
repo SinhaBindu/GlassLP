@@ -25,10 +25,10 @@ namespace GlassLP.Data
 		public DateTime CampDate { get; set; }
 
 		[StringLength(500)]
-		public string CampLocationType { get; set; }
+		public string? CampLocationType { get; set; }
 
 		[StringLength(500)]
-		public string CRPName { get; set; }
+		public string? CRPName { get; set; }
 		public int ParticipantMobilized { get; set; }
 		public int TotalScreened { get; set; }
 		public int TotalGlassesDistributed { get; set; }
@@ -50,6 +50,7 @@ namespace GlassLP.Data
 		public int OccupationId { get; set; }
 
 		[StringLength(500)]
+		[ValidateNever]
 		public string? OccupationOther { get; set; }
 		public bool VisionIssueIdentified { get; set; }
 		public int TypeofVisionIssueId { get; set; }

@@ -204,10 +204,12 @@ namespace GlassLP.Data
         public int CampId_fk { get; set; }
         public string? ParticipantName { get; set; }
         public string? MobileNo { get; set; }
-        public string? Age { get; set; }
+        public int Age { get; set; }
         public string? SHGName { get; set; }
         public int OccupationId { get; set; }
-        public string? Occupation_Others { get; set; }
+
+		[ValidateNever]
+		public string? Occupation_Others { get; set; }
         public int VisionIssueIdentifiedId { get; set; }
         public int TypeofVisionIssueId { get; set; }
         public int GlassesProvidedId { get; set; }
@@ -228,10 +230,28 @@ namespace GlassLP.Data
         public DateTime? UpdatedOn { get; set; }
     }
 
-    // -------------------------
-    // DbContext
-    // -------------------------
-    public class GlassDbContext : IdentityDbContext<ApplicationUser>
+	[Table("mst_PowerGlass")]
+	public class MstPowerGlasses
+	{
+		[Key]
+		public int pk_PowerGlassId { get; set; }
+
+		[StringLength(100)]
+		public string? PowerofGlass { get; set; }
+
+		public bool? IsActive { get; set; }
+		[StringLength(100)]
+		public string? CreatedBy { get; set; }
+		public DateTime? CreatedOn { get; set; }
+		[StringLength(100)]
+		public string? UpdatedBy { get; set; }
+		public DateTime? UpdatedOn { get; set; }
+	}
+
+	// -------------------------
+	// DbContext
+	// -------------------------
+	public class GlassDbContext : IdentityDbContext<ApplicationUser>
     {
         public GlassDbContext(DbContextOptions<GlassDbContext> options) : base(options)
         {
@@ -246,7 +266,8 @@ namespace GlassLP.Data
         public DbSet<MstPanchayat> MstPanchayat { get; set; }
         public DbSet<TblCamp> TblCamp { get; set; }
         public DbSet<TblPaticipantM1> TblPaticipantM1 { get; set; }
-        public DbSet<TempMasterGlass> TempMasterGlass { get; set; }
+		public DbSet<MstPowerGlasses> MstPowerGlasses { get; set; }
+		public DbSet<TempMasterGlass> TempMasterGlass { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

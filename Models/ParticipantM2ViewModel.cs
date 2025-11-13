@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GlassLP.Models
 {
-    public class ParticipantM1ViewModel
+    public class ParticipantM2ViewModel
     {
         public int ParticipantId_pk { get; set; } = 0;
 
-        [DisplayName("Camp Code")]
-        public int CampId_fk { get; set; }
+        [DisplayName("Type of Participant")]
+        public int TypeofParticipantId{ get; set; }
 
         [DisplayName("Participant Name")]
         public string? ParticipantName { get; set; }
@@ -22,6 +19,9 @@ namespace GlassLP.Models
         [DisplayName("Age")]
         public int Age { get; set; }
 
+        [DisplayName("Screening Date")]
+        public DateTime? ScreeningDate { get; set; }
+
         [DisplayName("SHG Name")]
         public string? SHGName { get; set; }
 
@@ -29,8 +29,8 @@ namespace GlassLP.Models
         public int OccupationId { get; set; }
 
         [DisplayName("Occupation Others")]
-		[ValidateNever]
-		public string? Occupation_Others { get; set; }
+        [ValidateNever]
+        public string? Occupation_Others { get; set; }
 
         [DisplayName("Vision Issue Identified")]
         public int VisionIssueIdentifiedId { get; set; }
@@ -39,7 +39,7 @@ namespace GlassLP.Models
         public int TypeofVisionIssueId { get; set; }
 
         [DisplayName("Glasses Provided")]
-        public int GlassesProvidedId { get; set; }
+        public int Glassessold { get; set; }
 
         [DisplayName("Power of Glass")]
         public int PowerofGlassId { get; set; }
@@ -56,7 +56,17 @@ namespace GlassLP.Models
         [DisplayName("Digital Consent")]
         public int DigitalConsentId { get; set; }
 
+        [DisplayName("Location")]
+        public int Location{ get; set; }
 
+        [DisplayName("Screening Cost")]
+        public int ScreeningCost { get; set; }
+
+        [DisplayName("Glasses Cost")]
+        public int GlassesCost { get; set; }
+
+        [DisplayName("Remarks/Action Taken")]
+        public int RemarksActionTaken{ get; set; }
         public bool? IsActive { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }

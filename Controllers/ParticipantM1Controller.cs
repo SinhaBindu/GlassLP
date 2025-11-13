@@ -13,11 +13,28 @@ namespace GlassLP.Controllers
         {
             _context = context;
         }
+
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TblCamp.ToListAsync());
-        }
-        public IActionResult Create(int? PId)
+			// LINQ query projecting directly into DTO class
+			var result = (from p in _context.TblPaticipantM1
+						  join o in _context.MstOccupation
+						  on p.OccupationId equals o.pk_OccupationId
+						  select new DTO.ParticipantDTO
+						  {
+                              ParticipantId_pk = p.ParticipantId_pk,
+							  ParticipantName = p.ParticipantName,
+							  MobileNo = p.MobileNo,
+							  Age = p.Age,
+							  SHGName = p.SHGName,
+							  OccupatioName = o.OccupatioName
+						  }).ToList();
+
+			// Return list to the view
+			return View(result);
+
+		}
+		public IActionResult Create(int? PId)
         {
             ParticipantM1ViewModel model = new ParticipantM1ViewModel();
             if (PId > 0)
@@ -49,40 +66,47 @@ namespace GlassLP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ParticipantM1ViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var currentUser = GetSubmittedBy(); // your helper method or identity user
-                TblPaticipantM1 tbl = new TblPaticipantM1();
+				if (ModelState.IsValid)
+				{
+					var currentUser = GetSubmittedBy(); // your helper method or identity user
+					TblPaticipantM1 tbl = new TblPaticipantM1();
 
-                tbl.CampId_fk = model.CampId_fk;
-                tbl.ParticipantName = model.ParticipantName;
-                tbl.MobileNo = model.MobileNo;
-                tbl.Age = model.Age;
-                tbl.SHGName = model.SHGName;
-                tbl.OccupationId = model.OccupationId;
-                tbl.Occupation_Others = model.Occupation_Others;
-                tbl.VisionIssueIdentifiedId = model.VisionIssueIdentifiedId;
-                tbl.TypeofVisionIssueId = model.TypeofVisionIssueId;
-                tbl.GlassesProvidedId = model.GlassesProvidedId;
-                tbl.PowerofGlassId = model.PowerofGlassId;
-                tbl.FeedbackonComfort = model.FeedbackonComfort;
-                tbl.Remarks = model.Remarks;
-                tbl.FollowupRequiredId = model.FollowupRequiredId;
-                tbl.DigitalConsentId = model.DigitalConsentId; 
-                
-                tbl.CreatedBy = currentUser;
-                tbl.CreatedOn = DateTime.Now;
-                tbl.UpdatedBy = currentUser;
-                tbl.UpdatedOn = DateTime.Now;
-                tbl.IsActive = true;
-                
-                _context.TblPaticipantM1.Add(tbl);
-                await _context.SaveChangesAsync();
+					tbl.CampId_fk = model.CampId_fk;
+					tbl.ParticipantName = model.ParticipantName;
+					tbl.MobileNo = model.MobileNo;
+					tbl.Age = model.Age;
+					tbl.SHGName = model.SHGName;
+					tbl.OccupationId = model.OccupationId;
+					tbl.Occupation_Others = model.Occupation_Others;
+					tbl.VisionIssueIdentifiedId = model.VisionIssueIdentifiedId;
+					tbl.TypeofVisionIssueId = model.TypeofVisionIssueId;
+					tbl.GlassesProvidedId = model.GlassesProvidedId;
+					tbl.PowerofGlassId = model.PowerofGlassId;
+					tbl.FeedbackonComfort = model.FeedbackonComfort;
+					tbl.Remarks = model.Remarks;
+					tbl.FollowupRequiredId = model.FollowupRequiredId;
+					tbl.DigitalConsentId = model.DigitalConsentId;
 
-                TempData["Success"] = "PaticipantM1 added successfully!";
-                return RedirectToAction(nameof(Index));
+					tbl.CreatedBy = currentUser;
+					tbl.CreatedOn = DateTime.Now;
+					tbl.UpdatedBy = currentUser;
+					tbl.UpdatedOn = DateTime.Now;
+					tbl.IsActive = true;
+
+					_context.TblPaticipantM1.Add(tbl);
+					await _context.SaveChangesAsync();
+
+					TempData["Success"] = "PaticipantM1 added successfully!";
+					return RedirectToAction(nameof(Index));
+				}
+			}
+            catch (Exception)
+            {
+
+                throw;
             }
-
             return View(model);
         }
 
@@ -107,3 +131,8 @@ namespace GlassLP.Controllers
 
     }
 }
+
+
+
+
+

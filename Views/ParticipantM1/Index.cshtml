@@ -1,75 +1,80 @@
-﻿@model IEnumerable<GlassLP.Data.TblPaticipantM1>
+﻿@model IEnumerable<GlassLP.DTO.ParticipantDTO>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
 <p>
-    
+
 </p>
 <div class="row">
-    <div class="col-xs-12 col-md-12">
-        <div class="card-header">
-            <h5><a asp-action="Create">Create New</a></h5>
-        </div>
-        <div class="card">
-            <div class="table-responsive app-scroll">
-                <table class="table table-bottom-border table-lg align-middle">
-                    <thead>
-                        <tr class="app-sort">
-                            <th>
-                                    @Html.DisplayNameFor(model => model.ParticipantName)
-                            </th>
-                            <th>
-                                    @Html.DisplayNameFor(model => model.MobileNo)
-                            </th>
-                            <th>
-                                    @Html.DisplayNameFor(model => model.Age)
-                            </th>
-                            <th>
-                                    @Html.DisplayNameFor(model => model.SHGName)
-                            </th>
-                            <th>
-                                    @Html.DisplayNameFor(model => model.OccupationId)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ParticipantName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.MobileNo)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Age)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SHGName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.OccupationId)
-                                </td>
-                                <td>
-                                <td class="edit">
-                                    <button class="btn edit-item-btn icon-btn btn-outline-success" asp-action="Edit" asp-route-id="@item.ParticipantId_pk">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button class="btn edit-item-btn icon-btn btn-outline-success" asp-action="Details" asp-route-id="@item.ParticipantId_pk">
-                                        <i class="fa fa-eye"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+	<div class="col-xs-12 col-md-12">
+		<div class="card-header">
+			<h5><a asp-action="Create">Create New</a></h5>
+		</div>
+		<div class="card">
+			<div class="table-responsive app-scroll">
+				<table class="table table-bottom-border table-lg align-middle">
+					<thead>
+						<tr class="app-sort">
+							<th>
+								@Html.DisplayNameFor(model => model.ParticipantName)
+							</th>
+							<th>
+								@Html.DisplayNameFor(model => model.MobileNo)
+							</th>
+							<th>
+								@Html.DisplayNameFor(model => model.Age)
+							</th>
+							<th>
+								@Html.DisplayNameFor(model => model.SHGName)
+							</th>
+							<th>
+								@Html.DisplayNameFor(model => model.OccupatioName)
+							</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>
+									@Html.DisplayFor(modelItem => item.ParticipantName)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.MobileNo)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.Age)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.SHGName)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.OccupatioName)
+								</td>
+								<td>
+								<td class="edit">
+									@* <button class="btn edit-item-btn icon-btn btn-outline-success" asp-action="Create" asp-route-PId="@item.ParticipantId_pk">
+										<i class="fa fa-edit"></i>
+									</button> *@
+									<a asp-action="Create"
+									   asp-route-PId="@item.ParticipantId_pk"
+									   class="btn edit-item-btn icon-btn btn-outline-success">
+										<i class="fa fa-edit"></i>
+									</a>
+									<button class="btn edit-item-btn icon-btn btn-outline-success" asp-action="Details" asp-route-PId="@item.ParticipantId_pk">
+										<i class="fa fa-eye"></i>
+									</button>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>

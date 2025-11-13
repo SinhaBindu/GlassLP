@@ -44,5 +44,23 @@ namespace GlassLP.Controllers.API
         {
             return await _context.MstFederation.Where(x => x.DistrictId_fk == DistrictId && x.BlockId_fk == BlockId && x.IsActive == true).ToListAsync();
         }
-    }
+
+		[HttpGet("CampCode")]
+		public async Task<ActionResult<IEnumerable<TblCamp>>> GetCampCode()
+		{
+			return await _context.TblCamp.Where(x => x.IsActive == true).ToListAsync();
+		}
+
+        [HttpGet("Occupations")]
+        public async Task<ActionResult<IEnumerable<MstOccupation>>> GetOccupations()
+        {
+            return await _context.MstOccupation.Where(x => x.IsActive == true).ToListAsync();
+        }
+
+		[HttpGet("PowerofGlasses")]
+		public async Task<ActionResult<IEnumerable<MstPowerGlasses>>> GetPowerofGlasses()
+		{
+			return await _context.MstPowerGlasses.Where(x => x.IsActive == true).ToListAsync();
+		}
+	}
 }
