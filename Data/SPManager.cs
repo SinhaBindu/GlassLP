@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using SubSonic.Schema;
+//using SubSonic.Schema;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;

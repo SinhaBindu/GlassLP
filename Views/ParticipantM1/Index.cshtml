@@ -53,14 +53,12 @@
 										@Html.DisplayFor(modelItem => item.OccupatioName)
 									</td>
 									<td class="edit">
-											@* <button class="btn edit-item-btn icon-btn btn-outline-success" asp-action="Create" asp-route-PId="@item.ParticipantId_pk">
-										<i class="fa fa-edit"></i>
-									</button> *@
 										<a asp-action="Create"
 										   asp-route-PId="@item.ParticipantId_pk"
 										   class="btn edit-item-btn icon-btn btn-outline-info">
 											<i class="fa fa-edit"></i>
 										</a>
+
 										<button class="btn edit-item-btn icon-btn btn-outline-success" asp-action="Details" asp-route-PId="@item.ParticipantId_pk">
 											<i class="fa fa-eye"></i>
 										</button>

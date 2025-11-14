@@ -37,7 +37,7 @@ namespace GlassLP.Controllers
 		public IActionResult Create(int? PId)
         {
             ParticipantM1ViewModel model = new ParticipantM1ViewModel();
-            if (PId > 0)
+            if (PId > 0 && PId > 0)
             {
                 var tbl = _context.TblPaticipantM1.Find(PId);
                 if (tbl != null)

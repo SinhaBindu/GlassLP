@@ -35,7 +35,7 @@ namespace GlassLP.Models
         [DisplayName("Vision Issue Identified")]
         public int VisionIssueIdentifiedId { get; set; }
 
-        [DisplayName("Typeof Vision Issue")]
+        [DisplayName("Type of Vision Issue")]
         public int TypeofVisionIssueId { get; set; }
 
         [DisplayName("Glasses Provided")]
@@ -44,7 +44,7 @@ namespace GlassLP.Models
         [DisplayName("Power of Glass")]
         public int PowerofGlassId { get; set; }
 
-        [DisplayName("Feedbackon Comfort")]
+        [DisplayName("Feedback on Comfort")]
         public int FeedbackonComfort { get; set; }
 
         [DisplayName("Remarks")]
