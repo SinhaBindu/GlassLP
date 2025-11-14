@@ -1,0 +1,68 @@
+﻿@using System.Data
+@{
+    DataTable dt = new DataTable();
+    if (Model != null)
+    {
+        dt = Model;
+    }
+}
+<style>
+    table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {
+        padding-right: 0px !important;
+    }
+</style>
+
+<table class="table table-bottom-border table-lg align-middle tbl" id="tbl">
+    <thead class="text-center">
+        <tr>
+            <th class="text-center tblth">Srno.</th>
+            <th class="text-center tblth">Camp Code</th>
+            <th class="text-center tblth">Distict</th>
+            <th class="text-center tblth">Block</th>
+            <th class="text-center tblth">Panchayat</th>
+            <th class="text-center tblth">CLF</th>
+            <th class="text-center tblth">VO</th>
+            <th class="text-center tblth">Camp Date</th>
+            <th class="text-center tblth">CRP Name</th>
+            <th class="text-center tblth">CRP Mobile No</th>
+            <th class="text-center tblth">Location</th>
+            <th class="text-center tblth">Participants Mobilized</th>
+            <th class="text-center tblth">Total Screened</th>
+            <th class="text-center tblth">Total Glasses Distributed</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (dt.Rows.Count > 0)
+            {
+                int srno = 1;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    <tr>
+                        <td class="text-center">@(srno++)</td>
+                        <td class="text-left">@dr["CampCode"]</td>
+                        <td class="text-left">@dr["DistrictName"]</td>
+                        <td class="text-left">@dr["BlockName"]</td>
+                        <td class="text-left">@dr["PanchayatName"]</td>
+                        <td class="text-left">@dr["CLFName"]</td>
+                        <td class="text-left">@dr["VOName"]</td>
+                        <td class="text-left">@dr["CampRegDate"]</td>
+                        <td class="text-left">@dr["CRPName"]</td>
+                        <td class="text-left">@dr["CRPMobileNo"]</td>
+                        <td class="text-left">@dr["Location"]</td>
+                        <td class="text-left">@dr["ParticipantMobilized"]</td>
+                        <td class="text-left">@dr["TotalScreened"]</td>
+                        <td class="text-left">@dr["TotalGlassesDistributed"]</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="16" class="text-center"><strong class="text-danger">Record Not Found !!</strong></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

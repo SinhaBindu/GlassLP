@@ -29,6 +29,7 @@ builder.Services.AddRazorPages(); // required if you use the default Identity UI
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<SPManager>();
 
 var app = builder.Build();
 

@@ -4,7 +4,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5>Add Camp</h5>
+                <h5>Create Camp</h5>
             </div>
             <div class="card-body">
                 <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
@@ -60,19 +60,19 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CRPMobileNo, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.CRPMobileNo, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.EditorFor(m => m.CRPMobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.ParticipantMobilized, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "3" } })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.TotalScreened, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.TotalScreened, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.EditorFor(m => m.TotalScreened, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "3" } })
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -100,6 +100,12 @@
     }
     <script>
         $(document).ready(function () {
+            jQuery('.numbersOnly').keyup(function () {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            });
+
+
+
             GetJSDistricts("DistrictId");
             $("#DistrictId").change(function () {
                 GetJSBlocks("BlockId", $(this).val());

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GlassLP.Models
@@ -38,26 +39,22 @@ namespace GlassLP.Models
         [DisplayName("Camp Date")]
         public DateTime? CampDate { get; set; }
 
-        [DisplayName("Camp Location Type")]
+        [DisplayName("Camp Location")]
         public string? Location { get; set; }
-
-        [DisplayName("CRP Name and ID")]
+        [Required]
+        [DisplayName("CRP Name")]
         public string? CRPName { get; set; }
-
-        [DisplayName("CRP Mobile No.")]
+        [DisplayName("CRP Mobile No")]
+        [Required]
         public string? CRPMobileNo { get; set; }
-
         [DisplayName("Participants Mobilized")]
         public int? ParticipantMobilized { get; set; }
-
         [DisplayName("Total Screened")]
         public int? TotalScreened { get; set; }
 
         [DisplayName("Total Glasses Distributed")]
         public int? TotalGlassesDistributed { get; set; }
-
         public int? PowerOfGlassId { get; set; }
-
         [NotMapped]
         [ValidateNever]
         public IFormFile? PhotoUpload { get; set; }

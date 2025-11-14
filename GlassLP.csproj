@@ -24,4 +24,10 @@
     <Folder Include="Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="SubSonic.Core">
+      <HintPath>bin\Debug\net8.0\SubSonic.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

@@ -3,7 +3,12 @@ using GlassLP.Models;
 using GlassLP.Utilities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Claims;
 using System.Xml.Linq;
 
@@ -12,18 +17,92 @@ namespace GlassLP.Controllers
     public class CampsController : BaseController
     {
         private readonly GlassDbContext _context;
-
-        public CampsController(GlassDbContext context)
+        private readonly ICompositeViewEngine _viewEngine;
+        private readonly SPManager _spManager;
+        int result = 0;
+        public CampsController(GlassDbContext context, ICompositeViewEngine viewEngine, SPManager spManager)
         {
             _context = context;
+            _viewEngine = viewEngine;
+            _spManager = spManager;
         }
 
         // GET: Camps
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TblCamp.ToListAsync());
-        }
+            ////return View(await _context.TblCamp.ToListAsync());
+            //var query = from c in _context.TblCamp
+            //            join d in _context.MstDistrict
+            //            on c.DistrictId equals d.DistrictId_pk
+            //            join b in _context.MstBlock
+            //            on new { BlockId = c.BlockId, DistrictId = c.DistrictId } equals new { BlockId = b.BlockId_pk, DistrictId = b.DistrictId_fk }
+            //            select new
+            //            {
+            //                Camp = c,
+            //                District = d,
+            //                Block = b
+            //            };
 
+            return View();
+        }
+        public IActionResult GetCampm1List()
+        {
+            try
+            {
+                DataTable tbllist = _spManager.SP_Campm1List();
+
+                if (tbllist.Rows.Count > 0)
+                {
+                    string html = RenderPartialViewToString("_Campm1Data", tbllist);
+
+                    return Json(new
+                    {
+                        IsSuccess = true,
+                        Data = html
+                    });
+                }
+                else
+                {
+                    return Json(new
+                    {
+                        IsSuccess = false,
+                        Data = "Record Not Found !!"
+                    });
+                }
+            }
+            catch (Exception)
+            {
+                return Json(new
+                {
+                    IsSuccess = false,
+                    Data = "There was a communication error."
+                });
+            }
+        }
+        private string RenderPartialViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+
+            using (var writer = new StringWriter())
+            {
+                var viewResult = _viewEngine.FindView(ControllerContext, viewName, false);
+
+                if (viewResult.View == null)
+                    throw new ArgumentNullException($"{viewName} not found");
+
+                var viewContext = new ViewContext(
+                    ControllerContext,
+                    viewResult.View,
+                    ViewData,
+                    TempData,
+                    writer,
+                    new HtmlHelperOptions()
+                );
+
+                viewResult.View.RenderAsync(viewContext).Wait();
+                return writer.ToString();
+            }
+        }
         public IActionResult AddCamp(int? CId)
         {
             CampViewModel model = new CampViewModel();
@@ -56,63 +135,70 @@ namespace GlassLP.Controllers
             if (ModelState.IsValid)
             {
                 var currentUser = GetSubmittedBy(); // your helper method or identity user
-                TblCamp tbl = new TblCamp();
-
-                //tbl.TypeOfModule = model.TypeOfModule;
-                //tbl.TypeOfVisit
-                tbl.DistrictId = model.DistrictId;
-                tbl.BlockId = model.BlockId;
-                tbl.CLFId = model.CLFId;
-                tbl.PanchayatId = model.PanchayatId;
-                tbl.VOName = model.VOName;
-                tbl.CampDate = model.CampDate;
-                tbl.Location = model.Location;
-                tbl.CRPName = model.CRPName;
-                tbl.CRPMobileNo = model.CRPMobileNo;
-                tbl.ParticipantMobilized = model.ParticipantMobilized;
-                tbl.TotalScreened = model.TotalScreened;
-                tbl.TotalGlassesDistributed = model.TotalGlassesDistributed;
-                tbl.PowerOfGlassId = model.PowerOfGlassId;
-                tbl.DistrictName = model.DistrictName;
-                tbl.BlockName = model.BlockName;
-                tbl.PanchayatName = model.PanchayatName;
-                tbl.CampCode = model.DistrictId.ToString() + model.PanchayatId.ToString(); //Utility.GenerateCampCode(tbl.DistrictName, tbl.BlockName, tbl.PanchayatName);
-
-                tbl.PhotoUploadPath = "na";
-                tbl.CreatedBy = currentUser;
-                tbl.CreatedOn = DateTime.Now;
-                tbl.UpdatedBy = currentUser;
-                tbl.UpdatedOn = DateTime.Now;
-                tbl.IsActive = true;
-                // Optional: Generate unique CampCode
-
-                if (PhotoFile != null && PhotoFile.Length > 0)
+                var tbl = model.CampId_pk > 0 ? _context.TblCamp.Find(model.CampId_pk) : new TblCamp();
+                if (tbl != null)
                 {
-                    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "camp");
-                    if (!Directory.Exists(uploadsDir))
-                        Directory.CreateDirectory(uploadsDir);
+                    tbl.DistrictId = model.DistrictId;
+                    tbl.BlockId = model.BlockId;
+                    tbl.CLFId = model.CLFId;
+                    tbl.PanchayatId = model.PanchayatId;
+                    tbl.VOName = model.VOName;
+                    tbl.CampDate = model.CampDate;
+                    tbl.Location = model.Location;
+                    tbl.CRPName = model.CRPName;
+                    tbl.CRPMobileNo = model.CRPMobileNo;
+                    tbl.ParticipantMobilized = model.ParticipantMobilized;
+                    tbl.TotalScreened = model.TotalScreened;
+                    tbl.TotalGlassesDistributed = model.TotalGlassesDistributed;
+                    tbl.PowerOfGlassId = model.PowerOfGlassId;
+                    tbl.DistrictName = model.DistrictName;
+                    tbl.BlockName = model.BlockName;
+                    tbl.PanchayatName = model.PanchayatName;
+                    tbl.CampCode = model.DistrictId.ToString() + model.PanchayatId.ToString(); //Utility.GenerateCampCode(tbl.DistrictName, tbl.BlockName, tbl.PanchayatName);
 
-                    var uniqueFileName = $"{Guid.NewGuid()}_{PhotoFile.FileName}";
-                    var filePath = Path.Combine(uploadsDir, uniqueFileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    tbl.PhotoUploadPath = "na";
+                    if (model.CampId_pk == 0)
                     {
-                        await PhotoFile.CopyToAsync(stream);
+                        tbl.CreatedBy = currentUser;
+                        tbl.CreatedOn = DateTime.Now;
+
+                        tbl.UpdatedBy = currentUser;
+                        tbl.UpdatedOn = DateTime.Now;
+                        tbl.IsActive = true;
                     }
-                    model.PhotoUploadPath = "/uploads/camp/" + uniqueFileName;
+                    //else if (model.CampId_pk > 0)
+                    //{
+                    //    tbl.UpdatedBy = currentUser;
+                    //    tbl.UpdatedOn = DateTime.Now;
+                    //    tbl.IsActive = true;
+                    //}
+                    // Optional: Generate unique CampCode
+                    if (PhotoFile != null && PhotoFile.Length > 0)
+                    {
+                        var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "camp");
+                        if (!Directory.Exists(uploadsDir))
+                            Directory.CreateDirectory(uploadsDir);
+
+                        var uniqueFileName = $"{Guid.NewGuid()}_{PhotoFile.FileName}";
+                        var filePath = Path.Combine(uploadsDir, uniqueFileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await PhotoFile.CopyToAsync(stream);
+                        }
+                        model.PhotoUploadPath = "/uploads/camp/" + uniqueFileName;
+                    }
+                    _context.TblCamp.Add(tbl);
+                    result = await _context.SaveChangesAsync();
                 }
-
-                _context.TblCamp.Add(tbl);
-                await _context.SaveChangesAsync();
-
-                TempData["Success"] = "Camp added successfully!";
+                if (result > 0)
+                {
+                    TempData["Success"] = "Camp added successfully!";
+                }
                 return RedirectToAction(nameof(Index));
             }
-
             return View(model);
         }
-
-
         // GET: Camps/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -1,181 +1,181 @@
 ﻿@model ParticipantM1ViewModel
 <div class="row">
-	<div class="col-12">
-		<div class="card">
-			<div class="card-header">
-				<h5>Add Participant Model1</h5>
-			</div>
-			<div class="card-body">
-				<form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
-					<div class="row">
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.CampId_fk, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.ParticipantName, new { @class = "form-label" })
-								@Html.EditorFor(m => m.ParticipantName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.MobileNo, new { @class = "form-label" })
-								@Html.EditorFor(m => m.MobileNo, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.Age, new { @class = "form-label" })
-								@Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.SHGName, new { @class = "form-label" })
-								@Html.EditorFor(m => m.SHGName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.OccupationId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select Occupation --", new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.VisionIssueIdentifiedId, new { @class = "form-label" })
-								@* @Html.DropDownListFor(m => m.VisionIssueIdentifiedId, new List<SelectListItem>(), "-- Select Vision Issue Identified --", new { @class = "form-control" }) *@
-								@Html.DropDownListFor(
-																	m => m.VisionIssueIdentifiedId,
-																	new List<SelectListItem>
-								{
-								new SelectListItem { Text = "Yes", Value = "1" },
-								new SelectListItem { Text = "No", Value = "0" }
-								},
-																	"-- Select Vision Issue Identified --",
-																	new { @class = "form-control" }
-																	)
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.TypeofVisionIssueId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.TypeofVisionIssueId, new List<SelectListItem>
-								{
-								new SelectListItem { Text = "pyesMyopia", Value = "1" },
-								new SelectListItem { Text = "Other", Value = "2" }
-								},
-																	"-- Select Vision Issue --",
-																	new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.GlassesProvidedId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.GlassesProvidedId, new List<SelectListItem>
-								{
-								new SelectListItem { Text = "Yes", Value = "1" },
-								new SelectListItem { Text = "No", Value = "0" }
-								},
-									"-- Select Glasses Provided --", new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.PowerofGlassId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.PowerofGlassId, new List<SelectListItem>(),
-									"-- Select Power of Glass --", new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.FeedbackonComfort, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.FeedbackonComfort, new List<SelectListItem>
-								{
-								new SelectListItem { Text = "Satisfied", Value = "1" },
-								new SelectListItem { Text = "Not Satisfied", Value = "2" },
-								new SelectListItem { Text = "Adjustment Needed", Value = "3" }
-								},
-									"-- Select Feed backon Comfort --", new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.Remarks, new { @class = "form-label" })
-								@Html.EditorFor(m => m.Remarks, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.FollowupRequiredId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.FollowupRequiredId, new List<SelectListItem>
-								{
-								new SelectListItem { Text = "Yes", Value = "1" },
-								new SelectListItem { Text = "No", Value = "0" }
-								},
-									"-- Select Followup Required --", new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.DigitalConsentId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.DigitalConsentId, new List<SelectListItem>
-								{
-								new SelectListItem { Text = "Yes", Value = "1" },
-								new SelectListItem { Text = "No", Value = "0" }
-								},
-									"-- Select Digital Consent --", new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-12">
-							<div class="text-end">
-								<button class="btn btn-primary" type="submit">
-									Submit
-								</button>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Add Participant Model1</h5>
+            </div>
+            <div class="card-body">
+                <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.CampId_fk, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.ParticipantName, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.ParticipantName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.MobileNo, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.MobileNo, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.Age, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.SHGName, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.SHGName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.OccupationId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select Occupation --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.VisionIssueIdentifiedId, new { @class = "form-label" })
+                                @* @Html.DropDownListFor(m => m.VisionIssueIdentifiedId, new List<SelectListItem>(), "-- Select Vision Issue Identified --", new { @class = "form-control" }) *@
+                                @Html.DropDownListFor(
+                                         m => m.VisionIssueIdentifiedId,
+                                         new List<SelectListItem>
+                                {
+                                new SelectListItem { Text = "Yes", Value = "1" },
+                                new SelectListItem { Text = "No", Value = "0" }
+                                },
+                                         "-- Select Vision Issue Identified --",
+                                         new { @class = "form-control" }
+                                         )
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.TypeofVisionIssueId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.TypeofVisionIssueId, new List<SelectListItem>
+                                {
+                                new SelectListItem { Text = "pyesMyopia", Value = "1" },
+                                new SelectListItem { Text = "Other", Value = "2" }
+                                },
+                                         "-- Select Vision Issue --",
+                                         new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.GlassesProvidedId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.GlassesProvidedId, new List<SelectListItem>
+                                {
+                                new SelectListItem { Text = "Yes", Value = "1" },
+                                new SelectListItem { Text = "No", Value = "0" }
+                                },
+                                         "-- Select Glasses Provided --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.PowerofGlassId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.PowerofGlassId, new List<SelectListItem>(),
+                                         "-- Select Power of Glass --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.FeedbackonComfort, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.FeedbackonComfort, new List<SelectListItem>
+                                {
+                                new SelectListItem { Text = "Satisfied", Value = "1" },
+                                new SelectListItem { Text = "Not Satisfied", Value = "2" },
+                                new SelectListItem { Text = "Adjustment Needed", Value = "3" }
+                                },
+                                         "-- Select Feed backon Comfort --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.Remarks, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.Remarks, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.FollowupRequiredId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.FollowupRequiredId, new List<SelectListItem>
+                                {
+                                new SelectListItem { Text = "Yes", Value = "1" },
+                                new SelectListItem { Text = "No", Value = "0" }
+                                },
+                                         "-- Select Followup Required --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.DigitalConsentId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.DigitalConsentId, new List<SelectListItem>
+                                {
+                                new SelectListItem { Text = "Yes", Value = "1" },
+                                new SelectListItem { Text = "No", Value = "0" }
+                                },
+                                         "-- Select Digital Consent --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-end">
+                                <button class="btn btn-primary" type="submit">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
-	<script>
-		$(document).ready(function () {
-			GetCampCode("CampId_fk");
-			GetOccupations("OccupationId");
-			GetPowerofGlasses("PowerofGlassId");
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            GetCampCode("CampId_fk");
+            GetOccupations("OccupationId");
+            GetPowerofGlasses("PowerofGlassId");
 
-			//Post sumbitted Data
-			$('#btnSubmit').click(function () {
-				var form = $('#addForm')[0];
-				var formData = new FormData(form);
-				$.ajax({
-					url: '/ParticipantM1/Create',
-					type: 'POST',
-					data: formData,
-					processData: false, // Important for files
-					contentType: false, // Important for files
-					success: function (response) {
-						$('#responseMessage').html(
-							'<div class="alert alert-success">Camp added successfully!</div>'
-						);
-						$('#addParticipantM1Form')[0].reset();
-					},
-					error: function (xhr) {
-						$('#responseMessage').html(
-							'<div class="alert alert-danger">Error: ' + xhr.responseText + '</div>'
-						);
-					}
-				});
-			});
-		});
-	</script>
+            //Post sumbitted Data
+            $('#btnSubmit').click(function () {
+                var form = $('#addForm')[0];
+                var formData = new FormData(form);
+                $.ajax({
+                    url: '/ParticipantM1/Create',
+                    type: 'POST',
+                    data: formData,
+                    processData: false, // Important for files
+                    contentType: false, // Important for files
+                    success: function (response) {
+                        $('#responseMessage').html(
+                            '<div class="alert alert-success">Camp added successfully!</div>'
+                        );
+                        $('#addParticipantM1Form')[0].reset();
+                    },
+                    error: function (xhr) {
+                        $('#responseMessage').html(
+                            '<div class="alert alert-danger">Error: ' + xhr.responseText + '</div>'
+                        );
+                    }
+                });
+            });
+        });
+    </script>
 }

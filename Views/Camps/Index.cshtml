@@ -1,86 +1,149 @@
-﻿@model IEnumerable<GlassLP.Data.TblCamp>
-
+﻿@* @model IEnumerable<GlassLP.Data.TblCamp>
+ *@
 @{
-	ViewData["Title"] = "Index";
+    ViewData["Title"] = "Index";
 }
 <div class="row">
-	<div class="col-12">
-		<div class="card">
-			<div class="card-header d-flex justify-content-between">
-				<h5>Index</h5>
-				<div class=""><a asp-action="AddCamp" class="badge bg-danger-subtle bg-danger f-s-10 text-uppercase">Create New</a></div>
-			</div>
-			<div class="card-body p-0">
-				<div class="table-responsive app-scroll">
-					<table class="table table-bottom-border table-lg align-middle">
-						<thead>
-							<tr class="app-sort">
-								<th>
-									@Html.DisplayNameFor(model => model.CampCode)
-								</th>
-								<th>
-									@Html.DisplayNameFor(model => model.VOName)
-								</th>
-								<th>
-									@Html.DisplayNameFor(model => model.CampDate)
-								</th>
-								<th>
-									@Html.DisplayNameFor(model => model.CRPName)
-								</th>
-								<th>
-									@Html.DisplayNameFor(model => model.CRPMobileNo)
-								</th>
-								<th>
-									@Html.DisplayNameFor(model => model.TotalScreened)
-								</th>
-								<th>
-									@Html.DisplayNameFor(model => model.TotalGlassesDistributed)
-								</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach (var item in Model)
-							{
-								<tr>
-									<td>
-										@Html.DisplayFor(modelItem => item.CampCode)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.VOName)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.CampDate)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.CRPName)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.CRPMobileNo)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.TotalScreened)
-									</td>
-									<td>
-										@Html.DisplayFor(modelItem => item.TotalGlassesDistributed)
-									</td>
-									<td>
-										<a asp-action="AddCamp" asp-route-CId="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-info">
-											<i class="fa fa-edit"></i>
-										</a>
-										<a asp-action="Details" asp-route-id="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-success">
-											<i class="fa fa-eye"></i>
-										</a>
-									</td>
-								</tr>
-							}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h5>Index</h5>
+                <div class=""><a asp-action="AddCamp" class="badge bg-danger-subtle bg-danger f-s-10 text-uppercase">Create New</a></div>
+            </div>
+            <div class="card-body p-0" >
+                <div class="table-responsive app-scroll" id="subdata">
+                @* 
+                <table class="table table-bottom-border table-lg align-middle">
+                <thead>
+                <tr class="app-sort">
+                <th>
+                @Html.DisplayNameFor(model => model.CampCode)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.VOName)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.CampDate)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.CRPName)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.CRPMobileNo)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.TotalScreened)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.TotalGlassesDistributed)
+                </th>
+                <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                <td>
+                @Html.DisplayFor(modelItem => item.CampCode)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.VOName)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.CampDate)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.CRPName)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.CRPMobileNo)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.TotalScreened)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.TotalGlassesDistributed)
+                </td>
+                <td>
+                <a asp-action="AddCamp" asp-route-CId="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-info">
+                <i class="fa fa-edit"></i>
+                </a>
+                <a asp-action="Details" asp-route-id="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-success">
+                <i class="fa fa-eye"></i>
+                </a>
+                </td>
+                </tr>
+                }
+                </tbody>
+                </table>
+                </div> *@
+            </div>
+        </div>
+    </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            BindData();
+        });
+        function BindData() {
+            debugger;
+            $("#subdata").html('');
+            // var filtermodel = new Object();
+            // filtermodel.FromDt = $('#FromDt').val() == '' ? '' : $('#FromDt').val();
+            // filtermodel.ToDt = $('#ToDt').val() == '' ? '' : $('#ToDt').val();
+            // filtermodel.BatchId = $('#BatchId').val() == '' ? '' : $('#BatchId').val();
+            // filtermodel.UserId = $('#UserId').val() == '' ? '' : $('#UserId').val();
+            // var formData = $('#formid').serialize();
 
+            $.ajax({
+                type: "Get",
+                url: "/Camps/GetCampm1List",
+                data: '',//filtermodel,//JSON.stringify({ 'Roles': '' }),
+                //cache: false,
+                success: function (res) {
+                    if (res.isSuccess) {
+                        $("#subdata").html(res.data);
 
+                        // if ($.fn.dataTable.isDataTable('.tbl')) {
+                        //     $(".tbl").dataTable().fnDestroy();
+                        // }
+                        // table = $('.tbl').DataTable({
+                        //     //scrollY: "400px",
+                        //     //scrollX: true,
+                        //     //scrollCollapse: true,
+                        //     //paging: false,
+                        //     "dom": '<"pull-left"f><"pull-right"l>tip',
+                        //     pageLength: 100,
+                        //     fixedColumns: {
+                        //         leftColumns: 1,
+                        //         rightColumns: 1
+                        //     },
+                        //     buttons: [{
+                        //         extend: 'excel', text: '<span><i class="fa fa-download"></i>Download</span>', title: 'Call Status Details Lists',//$('#IDDistrict option:selected').text() +
+                        //         className: 'btn btn-primary button-icon mr-3 mt-1 mb-1',
+                        //         filename: 'Call Status Details Lists',
+                        //         exportOptions: { modifier: { page: 'all' } }
+                        //     }],
+                        // });
+                        // $('.dataTables_filter input[type="search"]').css(
+                        //     { 'width': '300px', 'display': 'inline-block' }
+                        // );
+                        // $('#div-download').empty();
+                        // table.buttons().container().appendTo($('#div-download'));
+                    }
+                    else {
+                        $("#subdata").html('<h6 class="text-danger">' + res.data + ' < / h6>');
+            }
+                },
+                error: function (req, error) {
+                    if (error === 'error') { error = req.statusText; }
+                    var errormsg = 'There was a communication error: ' + error;
+                    //Do To Message display
+                }
+            });
+        }
 
+    </script>
+}
