@@ -1,74 +1,86 @@
 ﻿@model IEnumerable<GlassLP.Data.TblCamp>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header d-flex justify-content-between">
+				<h5>Index</h5>
+				<div class=""><a asp-action="AddCamp" class="badge bg-danger-subtle bg-danger f-s-10 text-uppercase">Create New</a></div>
+			</div>
+			<div class="card-body p-0">
+				<div class="table-responsive app-scroll">
+					<table class="table table-bottom-border table-lg align-middle">
+						<thead>
+							<tr class="app-sort">
+								<th>
+									@Html.DisplayNameFor(model => model.CampCode)
+								</th>
+								<th>
+									@Html.DisplayNameFor(model => model.VOName)
+								</th>
+								<th>
+									@Html.DisplayNameFor(model => model.CampDate)
+								</th>
+								<th>
+									@Html.DisplayNameFor(model => model.CRPName)
+								</th>
+								<th>
+									@Html.DisplayNameFor(model => model.CRPMobileNo)
+								</th>
+								<th>
+									@Html.DisplayNameFor(model => model.TotalScreened)
+								</th>
+								<th>
+									@Html.DisplayNameFor(model => model.TotalGlassesDistributed)
+								</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model)
+							{
+								<tr>
+									<td>
+										@Html.DisplayFor(modelItem => item.CampCode)
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.VOName)
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.CampDate)
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.CRPName)
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.CRPMobileNo)
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.TotalScreened)
+									</td>
+									<td>
+										@Html.DisplayFor(modelItem => item.TotalGlassesDistributed)
+									</td>
+									<td>
+										<a asp-action="AddCamp" asp-route-CId="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-info">
+											<i class="fa fa-edit"></i>
+										</a>
+										<a asp-action="Details" asp-route-id="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-success">
+											<i class="fa fa-eye"></i>
+										</a>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="AddCamp">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CampCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VOName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CampDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CRPName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CRPMobileNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalScreened)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalGlassesDistributed)
-            </th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CampCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.VOName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CampDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CRPName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CRPMobileNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalScreened)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalGlassesDistributed)
-            </td>
-            <td>
-                    <a asp-action="AddCamp" asp-route-CId="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-success">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a asp-action="Details" asp-route-id="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-success">
-                        <i class="fa fa-eye"></i>
-                    </a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
