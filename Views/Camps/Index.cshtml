@@ -99,7 +99,8 @@
 
             $.ajax({
                 type: "Get",
-                url: "/Camps/GetCampm1List",
+                //url: "/Camps/GetCampm1List",
+                url: "/Camps/GetCampm2List",
                 data: '',//filtermodel,//JSON.stringify({ 'Roles': '' }),
                 //cache: false,
                 success: function (res) {
@@ -134,8 +135,8 @@
                         // table.buttons().container().appendTo($('#div-download'));
                     }
                     else {
-                        $("#subdata").html('<h6 class="text-danger">' + res.data + ' < / h6>');
-            }
+                        $("#subdata").html('<h6 class="text-danger">' + res.message + ' < / h6>');
+                    }
                 },
                 error: function (req, error) {
                     if (error === 'error') { error = req.statusText; }

@@ -5,7 +5,6 @@
 
 function GetJSDistricts(eleid) {
     $.getJSON('/API/Masters/Districts', function (data) {
-        debugger;
         let items = '<option value="">Select</option>';
         $.each(data, function (i, item) {
             items += '<option value="' + item.districtId_pk + '">' + item.districtName + '</option>';
@@ -15,7 +14,6 @@ function GetJSDistricts(eleid) {
 }
 function GetJSBlocks(eleid, Paraid) {
     $.getJSON('/API/Masters/Blocks?DistrictId=' + Paraid, function (data) {
-        debugger;
         let items = '<option value="">Select</option>';
         $.each(data, function (i, item) {
             items += '<option value="' + item.blockId_pk + '">' + item.blockName + '</option>';
@@ -25,7 +23,6 @@ function GetJSBlocks(eleid, Paraid) {
 }
 function GetJSPanchayats(eleid, Paraid1, Paraid2) {
     $.getJSON('/API/Masters/Panchayats?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (data) {
-        debugger;
         let items = '<option value="">Select</option>';
         $.each(data, function (i, item) {
             items += '<option value="' + item.panchayatId_pk + '">' + item.panchayatName + '</option>';
@@ -35,7 +32,6 @@ function GetJSPanchayats(eleid, Paraid1, Paraid2) {
 }
 function GetJSFederations(eleid, Paraid1, Paraid2) {
     $.getJSON('/API/Masters/Federations?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (data) {
-        debugger;
         let items = '<option value="">Select</option>';
         $.each(data, function (i, item) {
             items += '<option value="' + item.federationId_pk + '">' + item.federationName + '</option>';
@@ -56,7 +52,6 @@ function GetCampCode(eleid) {
 
 function GetOccupations(eleid) {
     $.getJSON('/API/Masters/Occupations', function (data) {
-        debugger;
         let items = '<option value="">Select</option>';
         $.each(data, function (i, item) {
             items += '<option value="' + item.pk_OccupationId + '">' + item.occupatioName + '</option>';
@@ -67,7 +62,6 @@ function GetOccupations(eleid) {
 
 function GetPowerofGlasses(eleid) {
     $.getJSON('/API/Masters/PowerofGlasses', function (data) {
-        debugger;
         let items = '<option value="">Select</option>';
         $.each(data, function (i, item) {
             items += '<option value="' + item.pk_PowerGlassId + '">' + item.powerofGlass + '</option>';

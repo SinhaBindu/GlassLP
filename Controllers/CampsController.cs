@@ -1,16 +1,12 @@
 ﻿using GlassLP.Data;
 using GlassLP.Models;
 using GlassLP.Utilities;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
-using System.Security.Claims;
-using System.Xml.Linq;
 
 namespace GlassLP.Controllers
 {
@@ -45,38 +41,44 @@ namespace GlassLP.Controllers
 
             return View();
         }
-        public IActionResult GetCampm1List()
+        public Result GetCampm1List()
         {
             try
             {
                 DataTable tbllist = _spManager.SP_Campm1List();
-
                 if (tbllist.Rows.Count > 0)
                 {
                     string html = RenderPartialViewToString("_Campm1Data", tbllist);
-
-                    return Json(new
-                    {
-                        IsSuccess = true,
-                        Data = html
-                    });
+                    return Result.Success(html, "Record Found!!");
                 }
                 else
                 {
-                    return Json(new
-                    {
-                        IsSuccess = false,
-                        Data = "Record Not Found !!"
-                    });
+                    return Result.Failure("Record Not Found!!");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new
+                return Result.Failure(ex.Message, ex);
+            }
+        }
+        public Result<string> GetCampm2List()
+        {
+            try
+            {
+                DataTable tbllist = _spManager.SP_Campm1List();
+                if (tbllist.Rows.Count > 0)
                 {
-                    IsSuccess = false,
-                    Data = "There was a communication error."
-                });
+                    string html = RenderPartialViewToString("_Campm1Data", tbllist);
+                    return Result<string>.Success(html, "Record Found!!");
+                }
+                else
+                {
+                    return Result<string>.Failure("Record Not Found!!");
+                }
+            }
+            catch (Exception ex)
+            {
+                return Result<string>.Failure(ex.Message, ex);
             }
         }
         private string RenderPartialViewToString(string viewName, object model)
@@ -130,12 +132,12 @@ namespace GlassLP.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddCamp(CampViewModel model, IFormFile? PhotoFile)
+        public async Task<Result<TblCamp>> AddCamp(CampViewModel model, IFormFile? PhotoFile)
         {
             if (ModelState.IsValid)
             {
                 var currentUser = GetSubmittedBy(); // your helper method or identity user
-                var tbl = model.CampId_pk > 0 ? _context.TblCamp.Find(model.CampId_pk) : new TblCamp();
+                var tbl = model.CampId_pk > 0 ? await _context.TblCamp.FindAsync(model.CampId_pk) : new TblCamp();
                 if (tbl != null)
                 {
                     tbl.DistrictId = model.DistrictId;
@@ -155,7 +157,7 @@ namespace GlassLP.Controllers
                     tbl.PhotoUploadPath = "na";
                     if (model.CampId_pk == 0)
                     {
-                        tbl.CampCode = _spManager.GenerateCode(model.DistrictId,model.BlockId);// Optional: Generate unique CampCode
+                        tbl.CampCode = _spManager.GenerateCode(model.DistrictId, model.BlockId);// Optional: Generate unique CampCode
                         tbl.CreatedBy = currentUser;
                         tbl.CreatedOn = DateTime.Now;
 
@@ -175,7 +177,7 @@ namespace GlassLP.Controllers
                         {
                             await model.PhotoUpload.CopyToAsync(stream);
                         }
-                        tbl.PhotoUploadPath =  "\\uploads"+ "\\campm1" + "\\" + uniqueFileName;
+                        tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
                     }
                     //// Optional: Generate unique CampCode
                     //if (PhotoFile != null && PhotoFile.Length > 0)
@@ -198,11 +200,17 @@ namespace GlassLP.Controllers
                 }
                 if (result > 0)
                 {
-                    TempData["Success"] = "Camp added successfully!";
+                    return Result<TblCamp>.Success(tbl, $"Camp added successfully! Camp Code is <b>{tbl.CampCode}</b>");
                 }
-                return RedirectToAction(nameof(Index));
+                else
+                {
+                    return Result<TblCamp>.Failure("Error occurred while adding camp.");
+                }
             }
-            return View(model);
+            else
+            {
+                return Result<TblCamp>.ValidationFailure(ModelState);
+            }
         }
         // GET: Camps/Details/5
         public async Task<IActionResult> Details(int? id)

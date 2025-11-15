@@ -121,20 +121,28 @@
             });
 
             //Post sumbitted Data
-            $('#btnSubmit').click(function () {
+            $('#addForm').on('submit', function(e) {
+                 e.preventDefault(); // <- prevent normal form post
                 var form = $('#addForm')[0];
                 var formData = new FormData(form);
                 $.ajax({
-                    url: '/Camp/AddCamp',
+                    url: '/Camps/AddCamp',
                     type: 'POST',
                     data: formData,
                     processData: false, // Important for files
                     contentType: false, // Important for files
                     success: function (response) {
-                        $('#responseMessage').html(
-                            '<div class="alert alert-success">Camp added successfully!</div>'
-                        );
-                        $('#addForm')[0].reset();
+                        if (response.isSuccess === true){
+                            toastr.success(response.message);
+                            $('#addForm')[0].reset();
+                            setTimeout(function(){
+                                if (confirm("Do you want to add Participant?") == true) {
+                                    window.location.href = "/ParticipantM1/Create?code=" + response.data.campCode;
+                                }
+                            }, 200);
+                        } else {
+                            toastr.error(response.message);
+                        }
                     },
                     error: function (xhr) {
                         $('#responseMessage').html(

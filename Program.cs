@@ -24,7 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultUI()
 .AddDefaultTokenProviders();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation(); // <--- important
 builder.Services.AddRazorPages(); // required if you use the default Identity UI
 
 builder.Services.AddEndpointsApiExplorer();
