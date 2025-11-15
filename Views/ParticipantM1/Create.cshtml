@@ -190,11 +190,20 @@
                     data: formData,
                     processData: false, // Important for files
                     contentType: false, // Important for files
+
                     success: function (response) {
-                        $('#responseMessage').html(
-                            '<div class="alert alert-success">Camp added successfully!</div>'
-                        );
+                        
+                        toastr.success('Camp added successfully!');
+                        // $('#responseMessage').html(
+                            
+                        //     '<div class="alert alert-success">Camp added successfully!</div>'
+                        // );
                         $('#addParticipantM1Form')[0].reset();
+
+                        // toastr.warning('Warning')
+                        // toastr.success('Success')
+                        // toastr.info('Info')
+                        // toastr.error('Error', 'Error Title')
                     },
                     error: function (xhr) {
                         $('#responseMessage').html(
