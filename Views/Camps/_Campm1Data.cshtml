@@ -29,6 +29,7 @@
             <th class="text-center tblth">Participants Mobilized</th>
             <th class="text-center tblth">Total Screened</th>
             <th class="text-center tblth">Total Glasses Distributed</th>
+            <th class="text-center tblth">Image File</th>
         </tr>
     </thead>
     <tbody>
@@ -38,6 +39,7 @@
                 int srno = 1;
                 foreach (DataRow dr in dt.Rows)
                 {
+                    var imgfile = GlassLP.Data.UrlUtility.GetBaseUrl() + dr["PhotoUploadPath"].ToString();
                     <tr>
                         <td class="text-center">@(srno++)</td>
                         <td class="text-left">@dr["CampCode"]</td>
@@ -53,6 +55,12 @@
                         <td class="text-left">@dr["ParticipantMobilized"]</td>
                         <td class="text-left">@dr["TotalScreened"]</td>
                         <td class="text-left">@dr["TotalGlassesDistributed"]</td>
+                        <td class="text-center">
+                            @if (!string.IsNullOrWhiteSpace(dr["PhotoUploadPath"].ToString()))
+                            {
+                                <a href="@imgfile" target="_blank" title="Image File" download="@dr["CampCode"].ToString()"><i class="fa fa-download"></i></a>
+                            }
+                        </td>
                     </tr>
                 }
             }

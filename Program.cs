@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddHttpContextAccessor();
 // Add DbContext
 builder.Services.AddDbContext<GlassDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -32,7 +32,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<SPManager>();
 
 var app = builder.Build();
-
+UrlUtility.Configure(app.Services.GetRequiredService<IHttpContextAccessor>());
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -58,7 +58,7 @@ app.UseUserAuthenticationLogger();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.MapRazorPages(); // map Identity pages
 

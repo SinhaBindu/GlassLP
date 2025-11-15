@@ -6,15 +6,50 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using System.Globalization;
 
 namespace GlassLP.Data
 {
     public class SPManager
     {
         private readonly IConfiguration _configuration;
-        public SPManager(IConfiguration configuration)
+        private readonly GlassDbContext _context;
+        private int _lastNumber;
+        private DateTime _lastDate;
+        public SPManager(GlassDbContext context, IConfiguration configuration)
         {
+            _context = context;
             _configuration = configuration;
+            _lastNumber = 0;
+            _lastDate = DateTime.MinValue;
+        }
+        public string GenerateCode(int? DistrictId, int? BlockId)
+        {
+            var district = _context.MstDistrict.Find(DistrictId);
+            var disname = district != null && district.DistrictName != null
+                ? district.DistrictName.Substring(0, 3).ToUpper()  // also "005"
+                : "XXX";
+            var block = _context.MstBlock.Find(BlockId);
+            var blockname = block != null && block.BlockName != null
+                          ? block.BlockName.Substring(0, 3).ToUpper()
+                          : "XXX";
+
+            DateTime today = DateTime.Today;
+            // Reset counter if new day
+            if (today != _lastDate)
+            {
+                _lastNumber = 1;
+                _lastDate = today;
+            }
+            else
+            {
+                _lastNumber++;
+            }
+            string datePart = (disname + blockname) + today.ToString("ddMMyyyy", CultureInfo.InvariantCulture);
+            string numberPart = _lastNumber.ToString("D3"); // 3 digits with leading zeros
+
+            string code = datePart + numberPart;
+            return code;
         }
         public DataTable SP_Campm1List()
         {

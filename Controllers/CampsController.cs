@@ -151,14 +151,11 @@ namespace GlassLP.Controllers
                     tbl.TotalScreened = model.TotalScreened;
                     tbl.TotalGlassesDistributed = model.TotalGlassesDistributed;
                     tbl.PowerOfGlassId = model.PowerOfGlassId;
-                    tbl.DistrictName = model.DistrictName;
-                    tbl.BlockName = model.BlockName;
-                    tbl.PanchayatName = model.PanchayatName;
-                    tbl.CampCode = model.DistrictId.ToString() + model.PanchayatId.ToString(); //Utility.GenerateCampCode(tbl.DistrictName, tbl.BlockName, tbl.PanchayatName);
 
                     tbl.PhotoUploadPath = "na";
                     if (model.CampId_pk == 0)
                     {
+                        tbl.CampCode = _spManager.GenerateCode(model.DistrictId,model.BlockId);// Optional: Generate unique CampCode
                         tbl.CreatedBy = currentUser;
                         tbl.CreatedOn = DateTime.Now;
 
@@ -166,28 +163,36 @@ namespace GlassLP.Controllers
                         tbl.UpdatedOn = DateTime.Now;
                         tbl.IsActive = true;
                     }
-                    //else if (model.CampId_pk > 0)
-                    //{
-                    //    tbl.UpdatedBy = currentUser;
-                    //    tbl.UpdatedOn = DateTime.Now;
-                    //    tbl.IsActive = true;
-                    //}
-                    // Optional: Generate unique CampCode
-                    if (PhotoFile != null && PhotoFile.Length > 0)
+                    if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
                     {
-                        var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "camp");
+
+                        var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm1");
                         if (!Directory.Exists(uploadsDir))
                             Directory.CreateDirectory(uploadsDir);
-
-                        var uniqueFileName = $"{Guid.NewGuid()}_{PhotoFile.FileName}";
+                        var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
                         var filePath = Path.Combine(uploadsDir, uniqueFileName);
-
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
-                            await PhotoFile.CopyToAsync(stream);
+                            await model.PhotoUpload.CopyToAsync(stream);
                         }
-                        model.PhotoUploadPath = "/uploads/camp/" + uniqueFileName;
+                        tbl.PhotoUploadPath =  "\\uploads"+ "\\campm1" + "\\" + uniqueFileName;
                     }
+                    //// Optional: Generate unique CampCode
+                    //if (PhotoFile != null && PhotoFile.Length > 0)
+                    //{
+                    //    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "camp");
+                    //    if (!Directory.Exists(uploadsDir))
+                    //        Directory.CreateDirectory(uploadsDir);
+
+                    //    var uniqueFileName = $"{Guid.NewGuid()}_{PhotoFile.FileName}";
+                    //    var filePath = Path.Combine(uploadsDir, uniqueFileName);
+
+                    //    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //    {
+                    //        await PhotoFile.CopyToAsync(stream);
+                    //    }
+                    //    model.PhotoUploadPath = "/uploads/camp/" + uniqueFileName;
+                    //}
                     _context.TblCamp.Add(tbl);
                     result = await _context.SaveChangesAsync();
                 }

@@ -81,6 +81,12 @@
                                 @Html.EditorFor(m => m.TotalGlassesDistributed, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
                             </div>
                         </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.PhotoUpload, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.PhotoUpload, new { htmlAttributes = new { @class = "required form-control", type="file"} })
+                            </div>
+                        </div>
                         <div class="col-12">
                             <div class="text-end">
                                 <button class="btn btn-primary" type="submit">
@@ -103,9 +109,6 @@
             jQuery('.numbersOnly').keyup(function () {
                 this.value = this.value.replace(/[^0-9\.]/g, '');
             });
-
-
-
             GetJSDistricts("DistrictId");
             $("#DistrictId").change(function () {
                 GetJSBlocks("BlockId", $(this).val());
@@ -131,7 +134,7 @@
                         $('#responseMessage').html(
                             '<div class="alert alert-success">Camp added successfully!</div>'
                         );
-                        $('#addCampForm')[0].reset();
+                        $('#addForm')[0].reset();
                     },
                     error: function (xhr) {
                         $('#responseMessage').html(
