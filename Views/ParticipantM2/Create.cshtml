@@ -3,7 +3,7 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header">
-				<h5>Add Participant Model2</h5>
+				<h5>Add Participant Model Two</h5>
 			</div>
 			<div class="card-body">
 				<form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
@@ -16,7 +16,7 @@
 									@Html.RadioButtonFor(m => m.TypeofParticipantId, 1, new { @class = "form-check-input", id = "New" })
 									<label class="form-check-label" for="New">New</label>
 								</div>
-
+								
 								<div class="form-check form-check-inline">
 									@Html.RadioButtonFor(m => m.TypeofParticipantId, 2, new { @class = "form-check-input", id = "Repeat" })
 									<label class="form-check-label" for="Repeat">Repeat Customers</label>
@@ -25,7 +25,12 @@
 								@Html.ValidationMessageFor(m => m.TypeofParticipantId, "", new { @class = "text-danger" })
 							</div>
 						</div>
-
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.CampId_fk, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "form-control" })
+							</div>
+						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.ParticipantName, new { @class = "form-label" })
@@ -227,7 +232,7 @@
 	}
 	<script>
 		$(document).ready(function () {
-			
+			GetCampCode("CampId_fk");
 			GetOccupations("OccupationId");
 			GetPowerofGlasses("PowerofGlassId");
 

@@ -9,8 +9,11 @@ namespace GlassLP.Models
 
         [DisplayName("Type of Participant")]
         public int TypeofParticipantId{ get; set; }
+		
+		[DisplayName("Capm Code")]
+		public int CampId_fk { get; set; }
 
-        [DisplayName("Participant Name")]
+		[DisplayName("Participant Name")]
         public string? ParticipantName { get; set; }
 
         [DisplayName("Mobile No")]
@@ -35,7 +38,7 @@ namespace GlassLP.Models
         [DisplayName("Vision Issue Identified")]
         public int VisionIssueIdentifiedId { get; set; }
 
-        [DisplayName("Typeof Vision Issue")]
+        [DisplayName("Type of Vision Issue")]
         public int TypeofVisionIssueId { get; set; }
 
         [DisplayName("Glasses Sold")]

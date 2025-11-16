@@ -29,7 +29,6 @@ namespace GlassLP.Models
         public int OccupationId { get; set; }
 
         [DisplayName("Occupation Others")]
-		[ValidateNever]
 		public string? Occupation_Others { get; set; }
 
         [DisplayName("Vision Issue Identified")]

@@ -3,7 +3,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h5>Add Participant Model1</h5>
+                <h5>Add Participant Model One</h5>
             </div>
             <div class="card-body">
                 <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
@@ -42,6 +42,12 @@
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.OccupationId, new { @class = "form-label" })
                                 @Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select Occupation --", new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.Occupation_Others, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.Occupation_Others, new { htmlAttributes = new { @class = "required form-control", @disabled = "disabled", id = "Occupation_Others" , @maxlength = "100" } })
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -113,12 +119,6 @@
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.Remarks, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.Remarks, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
                                 @Html.LabelFor(m => m.FollowupRequiredId, new { @class = "form-label d-block" })
 
                                 <div class="form-check form-check-inline">
@@ -152,7 +152,12 @@
                                 @Html.ValidationMessageFor(m => m.DigitalConsentId, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.Remarks, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.Remarks, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                            </div>
+                        </div>
                         <div class="col-12">
                             <div class="text-end">
                                 <button class="btn btn-primary" type="submit">
@@ -180,8 +185,29 @@
                 this.value = this.value.replace(/[^0-9\.]/g, '');
             });
 
+            // GetOccupations Disable
+            function toggleOtherOccupation() {
+                var selectedValue = $("#OccupationId").val();
+
+                if (selectedValue == "6") {   // 999 = Other
+                    $("#Occupation_Others").prop("disabled", false);
+                } else {
+                    $("#Occupation_Others").prop("disabled", true).val('');
+                }
+            }
+
+            // run on dropdown change
+            $("#OccupationId").change(function () {
+                toggleOtherOccupation();
+            });
+
+            // run on page load (important for Edit page)
+            toggleOtherOccupation();
+
+
             //Post sumbitted Data
-            $('#btnSubmit').click(function () {
+            $('#addForm').on('submit', function (e) {
+                e.preventDefault();
                 var form = $('#addForm')[0];
                 var formData = new FormData(form);
                 $.ajax({
@@ -192,18 +218,12 @@
                     contentType: false, // Important for files
 
                     success: function (response) {
-                        
-                        toastr.success('Camp added successfully!');
-                        // $('#responseMessage').html(
-                            
-                        //     '<div class="alert alert-success">Camp added successfully!</div>'
-                        // );
-                        $('#addParticipantM1Form')[0].reset();
-
-                        // toastr.warning('Warning')
-                        // toastr.success('Success')
-                        // toastr.info('Info')
-                        // toastr.error('Error', 'Error Title')
+                        if (response.isSuccess === true) {
+                            toastr.success(response.message);
+                            $('#addForm')[0].reset();
+                        } else {
+                            toastr.error(response.message);
+                        }
                     },
                     error: function (xhr) {
                         $('#responseMessage').html(

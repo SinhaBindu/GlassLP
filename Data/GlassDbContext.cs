@@ -245,7 +245,6 @@ namespace GlassLP.Data
         public string? SHGName { get; set; }
         public int OccupationId { get; set; }
 
-		[ValidateNever]
 		public string? Occupation_Others { get; set; }
         public int VisionIssueIdentifiedId { get; set; }
         public int TypeofVisionIssueId { get; set; }
@@ -274,6 +273,9 @@ namespace GlassLP.Data
 		public int ParticipantId_pk { get; set; } = 0;
 		[DisplayName("Type of Participant")]
 		public int TypeofParticipantId { get; set; }
+		
+		[DisplayName("Camp Code")]
+		public int CampId_fk { get; set; }
 
 		[DisplayName("Participant Name")]
 		public string? ParticipantName { get; set; }
@@ -300,7 +302,7 @@ namespace GlassLP.Data
 		[DisplayName("Vision Issue Identified")]
 		public int VisionIssueIdentifiedId { get; set; }
 
-		[DisplayName("Typeof Vision Issue")]
+		[DisplayName("Type of Vision Issue")]
 		public int TypeofVisionIssueId { get; set; }
 
 		[DisplayName("Glasses Sold")]

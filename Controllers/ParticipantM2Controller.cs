@@ -81,6 +81,7 @@ namespace GlassLP.Controllers
 				if (tbl != null)
 				{
 					model.TypeofParticipantId = tbl.TypeofParticipantId;
+					model.CampId_fk = tbl.CampId_fk;
 					model.ParticipantName = tbl.ParticipantName;
 					model.MobileNo = tbl.MobileNo;
 					model.Age = tbl.Age;
@@ -118,6 +119,7 @@ namespace GlassLP.Controllers
 					if (tbl != null)
 					{
 						tbl.TypeofParticipantId = model.TypeofParticipantId;
+						tbl.CampId_fk = model.CampId_fk;
 						tbl.ParticipantName = model.ParticipantName;
 						tbl.MobileNo = model.MobileNo;
 						tbl.Age = model.Age;
