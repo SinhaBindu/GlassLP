@@ -76,11 +76,12 @@
             // });
 
             //Post sumbitted Data
-            $('#addForm').click(function () {
+            $('#addForm').on('submit', function (e) {
+                e.preventDefault(); // <- prevent normal form post
                 var form = $('#addForm')[0];
                 var formData = new FormData(form);
                 $.ajax({
-                    url: '/Vendor/Create',
+                    url: '/Vendors/Create',
                     type: 'POST',
                     data: formData,
                     processData: false, // Important for files
@@ -89,11 +90,11 @@
                         if (response.isSuccess === true) {
                             toastr.success(response.message);
                             $('#addForm')[0].reset();
-                            setTimeout(function () {
-                                if (confirm("Do you want to add Participant?") == true) {
+                            //setTimeout(function () {
+                                //if (confirm("Do you want to add Participant?") == true) {
                                     //window.location.href = "/ParticipantM1/Create?code=" + response.data.campCode;
-                                }
-                            }, 200);
+                                //}
+                            //}, 200);
                         } else {
                             toastr.error(response.message);
                         }
