@@ -38,8 +38,8 @@ namespace GlassLP.Models
         [DisplayName("Typeof Vision Issue")]
         public int TypeofVisionIssueId { get; set; }
 
-        [DisplayName("Glasses Provided")]
-        public int Glassessold { get; set; }
+        [DisplayName("Glasses Sold")]
+        public int GlassesSold { get; set; }
 
         [DisplayName("Power of Glass")]
         public int PowerofGlassId { get; set; }
@@ -62,11 +62,11 @@ namespace GlassLP.Models
         [DisplayName("Screening Cost")]
         public int ScreeningCost { get; set; }
 
-        [DisplayName("Glasses Cost")]
+		[DisplayName("Glasses Cost")]
         public int GlassesCost { get; set; }
 
         [DisplayName("Remarks/Action Taken")]
-        public int RemarksActionTaken{ get; set; }
+        public string? RemarksActionTaken{ get; set; }
         public bool? IsActive { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }

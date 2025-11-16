@@ -35,13 +35,13 @@
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.MobileNo, new { @class = "form-label" })
-								@Html.EditorFor(m => m.MobileNo, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								@Html.EditorFor(m => m.MobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.Age, new { @class = "form-label" })
-								@Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								@Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "required form-control", @maxlength = "2" } })
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -96,21 +96,21 @@
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.Glassessold, new { @class = "form-label d-block" })
+								@Html.LabelFor(m => m.GlassesSold, new { @class = "form-label d-block" })
 
 								<div class="form-check form-check-inline">
-									@Html.RadioButtonFor(m => m.Glassessold, "1",
+									@Html.RadioButtonFor(m => m.GlassesSold, "1",
 										new { @class = "form-check-input", id = "GlassesYes" })
 									<label class="form-check-label" for="GlassesYes">Yes</label>
 								</div>
 
 								<div class="form-check form-check-inline">
-									@Html.RadioButtonFor(m => m.Glassessold, "0",
+									@Html.RadioButtonFor(m => m.GlassesSold, "0",
 										new { @class = "form-check-input", id = "GlassesNo" })
 									<label class="form-check-label" for="GlassesNo">No</label>
 								</div>
 
-								@Html.ValidationMessageFor(m => m.Glassessold, "", new { @class = "text-danger" })
+								@Html.ValidationMessageFor(m => m.GlassesSold, "", new { @class = "text-danger" })
 							</div>
 						</div>
 
@@ -118,7 +118,7 @@
 							<div class="mb-3">
 								@Html.LabelFor(m => m.PowerofGlassId, new { @class = "form-label" })
 								@Html.DropDownListFor(m => m.PowerofGlassId, new List<SelectListItem>(),
-																	"Select", new { @class = "form-control" })
+									"Select", new { @class = "form-control" })
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -178,12 +178,12 @@
 								@Html.LabelFor(m => m.Location, new { @class = "form-label d-block" })
 
 								<div class="form-check form-check-inline">
-									@Html.RadioButtonFor(m => m.Location, "Camp", new { @class = "form-check-input", id = "locationCamp" })
+									@Html.RadioButtonFor(m => m.Location, "1", new { @class = "form-check-input", id = "locationCamp" })
 									<label class="form-check-label" for="locationCamp">Camp</label>
 								</div>
 
 								<div class="form-check form-check-inline">
-									@Html.RadioButtonFor(m => m.Location, "Home Visit", new { @class = "form-check-input", id = "locationHome" })
+									@Html.RadioButtonFor(m => m.Location, "2", new { @class = "form-check-input", id = "locationHome" })
 									<label class="form-check-label" for="locationHome">Home Visit</label>
 								</div>
 							</div>
@@ -207,6 +207,7 @@
 								@Html.EditorFor(m => m.RemarksActionTaken, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
 							</div>
 						</div>
+						
 						<div class="col-12">
 							<div class="text-end">
 								<button class="btn btn-primary" type="submit">
@@ -229,6 +230,10 @@
 			
 			GetOccupations("OccupationId");
 			GetPowerofGlasses("PowerofGlassId");
+
+			jQuery('.numbersOnly').keyup(function () {
+				this.value = this.value.replace(/[^0-9\.]/g, '');
+			});
 
 			//Post sumbitted Data
 			$('#btnSubmit').click(function () {

@@ -83,5 +83,33 @@ namespace GlassLP.Data
 
 			return dt;
 		}
+
+		public DataTable SP_ParticipantM1List()
+		{
+			DataTable dt = new DataTable();
+			string connectionString = _configuration.GetConnectionString("DefaultConnection");
+			using var conn = new SqlConnection(connectionString);
+			using var cmd = new SqlCommand("SP_ParticipantM1List", conn);
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.CommandTimeout = 500;
+			using var da = new SqlDataAdapter(cmd);
+			da.Fill(dt);
+
+			return dt;
+		}
+
+		public DataTable SP_ParticipantM2List()
+		{
+			DataTable dt = new DataTable();
+			string connectionString = _configuration.GetConnectionString("DefaultConnection");
+			using var conn = new SqlConnection(connectionString);
+			using var cmd = new SqlCommand("SP_ParticipantM2List", conn);
+			cmd.CommandType = CommandType.StoredProcedure;
+			cmd.CommandTimeout = 500;
+			using var da = new SqlDataAdapter(cmd);
+			da.Fill(dt);
+
+			return dt;
+		}
 	}
 }
