@@ -69,3 +69,13 @@ function GetPowerofGlasses(eleid) {
         $('#' + eleid).html(items);
     });
 }
+
+function GetClfName(eleid) {
+    $.getJSON('/API/Masters/ClfName', function (data) {
+        let items = '<option value="">Select</option>';
+        $.each(data, function (i, item) {
+            items += '<option value="' + item.pk_CLFId + '">' + item.clfName + '</option>';
+        });
+        $('#' + eleid).html(items);
+    });
+}

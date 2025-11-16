@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -35,14 +36,15 @@ namespace GlassLP.Data
         public int pk_CLFId { get; set; }
 
         [StringLength(100)]
-        public string CLFName { get; set; }
+        public string? CLFName { get; set; }
+        public bool? IsActive { get; set; }
 
         [StringLength(100)]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         public DateTime? CreatedOn { get; set; }
         [StringLength(100)]
-        public string UpdatedBy { get; set; }
+        public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
     }
 
@@ -186,6 +188,41 @@ namespace GlassLP.Data
         public DateTime? UpdatedOn { get; set; }
     }
 
+    [Table("mst_Vendors")]
+    public class MstVendor
+    {
+        [Key]
+        public int pk_VendorsId { get; set; } = 0;
+
+        [DisplayName("Business Mentor Name")]
+        public string? BusinessMentorName { get; set; }
+
+        [DisplayName("VE Name")]
+        public string? VEName { get; set; }
+
+        [DisplayName("CLF Name")]
+        public int CLFId { get; set; }
+
+        [DisplayName("AOP Name")]
+        public string? AOPName { get; set; }
+
+        [DisplayName("Contact Number")]
+        public string? ContactNumber { get; set; }
+
+        [DisplayName("Total Sales Amount")]
+        public string? TotalSalesAmount { get; set; }
+        public bool? IsActive { get; set; }
+
+        [StringLength(130)]
+        [ValidateNever]
+        public string? CreatedBy { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        [StringLength(130)]
+        [ValidateNever]
+        public string? UpdatedBy { get; set; }
+        public DateTime? UpdatedOn { get; set; }
+    }
+
     [Keyless]
     [Table("TempMasterGlass")]
     public class TempMasterGlass
@@ -265,6 +302,7 @@ namespace GlassLP.Data
         public DbSet<MstOccupation> MstOccupation { get; set; }
         public DbSet<MstPanchayat> MstPanchayat { get; set; }
         public DbSet<TblCamp> TblCamp { get; set; }
+        public DbSet<MstVendor> MstVendor { get; set; }
         public DbSet<TblPaticipantM1> TblPaticipantM1 { get; set; }
 		public DbSet<MstPowerGlasses> MstPowerGlasses { get; set; }
 		public DbSet<TempMasterGlass> TempMasterGlass { get; set; }

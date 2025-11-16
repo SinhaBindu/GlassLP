@@ -34,7 +34,7 @@ namespace GlassLP.Middleware
 
             // Continue the request pipeline
             await _next(context);
-        }
+         }
     }
 
     // Extension method to easily add it in Program.cs

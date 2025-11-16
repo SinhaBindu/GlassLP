@@ -62,5 +62,11 @@ namespace GlassLP.Controllers.API
 		{
 			return await _context.MstPowerGlasses.Where(x => x.IsActive == true).ToListAsync();
 		}
-	}
+
+        [HttpGet("ClfName")]
+        public async Task<ActionResult<IEnumerable<MstCLF>>> GetClfName()
+        {
+            return await _context.MstCLF.Where(x => x.IsActive == true).ToListAsync();
+        }
+    }
 }

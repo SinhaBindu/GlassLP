@@ -6,7 +6,7 @@ namespace GlassLP.Models
 {
     public class VendorViewModel
     {
-        public int Vendors_pk { get; set; } = 0;
+        public int pk_VendorsId { get; set; } = 0;
 
         [DisplayName("Business Mentor Name")]
         public string? BusinessMentorName{ get; set; }

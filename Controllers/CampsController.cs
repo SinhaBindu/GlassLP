@@ -130,6 +130,7 @@ namespace GlassLP.Controllers
             }
             return View(model);
         }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<Result<TblCamp>> AddCamp(CampViewModel model, IFormFile? PhotoFile)
@@ -179,22 +180,7 @@ namespace GlassLP.Controllers
                         }
                         tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
                     }
-                    //// Optional: Generate unique CampCode
-                    //if (PhotoFile != null && PhotoFile.Length > 0)
-                    //{
-                    //    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "camp");
-                    //    if (!Directory.Exists(uploadsDir))
-                    //        Directory.CreateDirectory(uploadsDir);
-
-                    //    var uniqueFileName = $"{Guid.NewGuid()}_{PhotoFile.FileName}";
-                    //    var filePath = Path.Combine(uploadsDir, uniqueFileName);
-
-                    //    using (var stream = new FileStream(filePath, FileMode.Create))
-                    //    {
-                    //        await PhotoFile.CopyToAsync(stream);
-                    //    }
-                    //    model.PhotoUploadPath = "/uploads/camp/" + uniqueFileName;
-                    //}
+                    
                     _context.TblCamp.Add(tbl);
                     result = await _context.SaveChangesAsync();
                 }
