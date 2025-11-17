@@ -80,7 +80,7 @@
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.ScreeningDate, new { @class = "form-label" })
-								@Html.EditorFor(m => m.ScreeningDate, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								@Html.EditorFor(m => m.ScreeningDate, new { htmlAttributes = new { @class = "datepicker required form-control", @type = "text", @maxlength = "500" } })
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -93,6 +93,12 @@
 							<div class="mb-3">
 								@Html.LabelFor(m => m.OccupationId, new { @class = "form-label" })
 								@Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select--", new { @class = "form-control" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.Occupation_Others, new { @class = "form-label" })
+								@Html.EditorFor(m => m.Occupation_Others, new { htmlAttributes = new { @class = "required form-control", @disabled = "disabled", id = "Occupation_Others", @maxlength = "100" } })
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -256,6 +262,50 @@
 				GetJSBlocks("BlockId", $(this).val());
 				$('#BlockId').val();
 			});
+
+			//GetCampCode disable or enable
+			function toggleCampDropdown() {
+				let selectedValue = $("input[name='Camp']:checked").val();
+
+				if (selectedValue == "1") {
+					// Camp selected
+					$("#CampId_fk").prop("disabled", false);
+				} else {
+					// Home Visit
+					$("#CampId_fk").prop("disabled", true);
+					$("#CampId_fk").val("");  // clear value if disable
+				}
+			}
+
+			// On page load
+			toggleCampDropdown();
+
+			// On change
+			$("input[name='Camp']").change(function () {
+				toggleCampDropdown();
+			});
+		});
+
+			// GetOccupations Disable
+			function toggleOtherOccupation() {
+				var selectedValue = $("#OccupationId").val();
+
+				if (selectedValue == "6") {   // 999 = Other
+					$("#Occupation_Others").prop("disabled", false);
+				} else {
+					$("#Occupation_Others").prop("disabled", true).val('');
+				}
+			}
+
+			// run on dropdown change
+			$("#OccupationId").change(function () {
+				toggleOtherOccupation();
+			});
+
+			// run on page load (important for Edit page)
+			toggleOtherOccupation();
+
+
 
 			//Post sumbitted Data
 			$('#addForm').on('submit', function (e) {

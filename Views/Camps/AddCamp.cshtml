@@ -42,7 +42,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CampDate, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.CampDate, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.EditorFor(m => m.CampDate, new { htmlAttributes = new { @class = "datepicker required form-control",@type="text", @maxlength = "500" } })
                             </div>
                         </div>
                         <div class="col-md-4">

@@ -17,11 +17,19 @@
         <tr>
             <th class="text-center tblth">Srno.</th>
             <th class="text-center tblth">Participant Type</th>
+            <th class="text-center tblth">District</th>
+            <th class="text-center tblth">Block Name</th>
+            <th class="text-center tblth">Location</th>
+            <th class="text-center tblth">Camp Code</th>
             <th class="text-center tblth">Participant Name</th>
             <th class="text-center tblth">Mobile No</th>
             <th class="text-center tblth">Age</th>
             <th class="text-center tblth">SHG Name</th>
             <th class="text-center tblth">Occupatio Name</th>
+            <th class="text-center tblth">Vision Issue</th>
+            <th class="text-center tblth">Type of Vision</th>
+            <th class="text-center tblth">Glasses Sold</th>
+            <th class="text-center tblth">Feedback on Comfort</th>
             <th class="text-center tblth">Remarks</th>
             <th class="text-center tblth">Action</th>
         </tr>
@@ -36,11 +44,19 @@
                     <tr>
                         <td class="text-center">@(srno++)</td>
                         <td class="text-left">@dr["ParticipantType"]</td>
+                        <td class="text-left">@dr["Location"]</td>
+                        <td class="text-left">@dr["DistrictName"]</td>
+                        <td class="text-left">@dr["BlockName"]</td>
+                        <td class="text-left">@dr["CampCode"]</td>
                         <td class="text-left">@dr["ParticipantName"]</td>
                         <td class="text-left">@dr["MobileNo"]</td>
                         <td class="text-left">@dr["Age"]</td>
                         <td class="text-left">@dr["SHGName"]</td>
                         <td class="text-left">@dr["OccupatioName"]</td>
+                        <td class="text-left">@dr["VisionIssue"]</td>
+                        <td class="text-left">@dr["TypeofVision"]</td>
+                        <td class="text-left">@dr["GlassesSold"]</td>
+                        <td class="text-left">@dr["FeedbackonComfort"]</td>
                         <td class="text-left">@dr["Remarks"]</td>
                         <td class="edit">
                             <a asp-action="Create"
