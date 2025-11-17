@@ -128,15 +128,15 @@ namespace GlassLP.Controllers
                         tbl.FollowupRequiredId = model.FollowupRequiredId;
                         tbl.DigitalConsentId = model.DigitalConsentId;
 
-                        //if (model.ParticipantId_pk == 0)
-                        //{
-                        //    tbl.CreatedBy = currentUser;
-                        //    tbl.CreatedOn = DateTime.Now;
+                        if (model.ParticipantId_pk == 0)
+                        {
+                            tbl.CreatedBy = currentUser;
+                            tbl.CreatedOn = DateTime.Now;
 
-                        //    tbl.UpdatedBy = currentUser;
-                        //    tbl.UpdatedOn = DateTime.Now;
-                        //    tbl.IsActive = true;
-                        //}
+                            tbl.UpdatedBy = currentUser;
+                            tbl.UpdatedOn = DateTime.Now;
+                            tbl.IsActive = true;
+                        }
                         _context.TblPaticipantM1.Add(tbl);
                         result = await _context.SaveChangesAsync();
                     }

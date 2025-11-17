@@ -82,6 +82,8 @@ namespace GlassLP.Controllers
 				{
 					model.TypeofParticipantId = tbl.TypeofParticipantId;
 					model.CampId_fk = tbl.CampId_fk;
+					model.DistrictId = tbl.DistrictId;
+					model.BlockId = tbl.BlockId;
 					model.ParticipantName = tbl.ParticipantName;
 					model.MobileNo = tbl.MobileNo;
 					model.Age = tbl.Age;
@@ -120,6 +122,8 @@ namespace GlassLP.Controllers
 					{
 						tbl.TypeofParticipantId = model.TypeofParticipantId;
 						tbl.CampId_fk = model.CampId_fk;
+						tbl.DistrictId =  model.DistrictId ;
+						model.BlockId = tbl.BlockId;
 						tbl.ParticipantName = model.ParticipantName;
 						tbl.MobileNo = model.MobileNo;
 						tbl.Age = model.Age;

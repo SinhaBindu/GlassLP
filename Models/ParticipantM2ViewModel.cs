@@ -13,6 +13,12 @@ namespace GlassLP.Models
 		[DisplayName("Capm Code")]
 		public int CampId_fk { get; set; }
 
+		[DisplayName("District")]
+		public int? DistrictId { get; set; }
+
+		[DisplayName("Block")]
+		public int? BlockId { get; set; }
+
 		[DisplayName("Participant Name")]
         public string? ParticipantName { get; set; }
 

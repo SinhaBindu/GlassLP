@@ -27,10 +27,38 @@
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
+								@Html.LabelFor(m => m.Location, new { @class = "form-label d-block" })
+
+								<div class="form-check form-check-inline">
+									@Html.RadioButtonFor(m => m.Location, "1", new { @class = "form-check-input", id = "locationCamp" })
+									<label class="form-check-label" for="locationCamp">Camp</label>
+								</div>
+
+								<div class="form-check form-check-inline">
+									@Html.RadioButtonFor(m => m.Location, "2", new { @class = "form-check-input", id = "locationHome" })
+									<label class="form-check-label" for="locationHome">Home Visit</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
 								@Html.LabelFor(m => m.CampId_fk, new { @class = "form-label" })
 								@Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "form-control" })
 							</div>
 						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "-- Select District --", new { @class = "form-control" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
+							</div>
+						</div>
+						
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.ParticipantName, new { @class = "form-label" })
@@ -177,23 +205,6 @@
 								</div>
 							</div>
 						</div>
-
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.Location, new { @class = "form-label d-block" })
-
-								<div class="form-check form-check-inline">
-									@Html.RadioButtonFor(m => m.Location, "1", new { @class = "form-check-input", id = "locationCamp" })
-									<label class="form-check-label" for="locationCamp">Camp</label>
-								</div>
-
-								<div class="form-check form-check-inline">
-									@Html.RadioButtonFor(m => m.Location, "2", new { @class = "form-check-input", id = "locationHome" })
-									<label class="form-check-label" for="locationHome">Home Visit</label>
-								</div>
-							</div>
-						</div>
-
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.ScreeningCost, new { @class = "form-label" })
@@ -238,6 +249,12 @@
 
 			jQuery('.numbersOnly').keyup(function () {
 				this.value = this.value.replace(/[^0-9\.]/g, '');
+			});
+
+			GetJSDistricts("DistrictId");
+			$("#DistrictId").change(function () {
+				GetJSBlocks("BlockId", $(this).val());
+				$('#BlockId').val();
 			});
 
 			//Post sumbitted Data
