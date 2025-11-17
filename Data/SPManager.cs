@@ -133,5 +133,19 @@ namespace GlassLP.Data
 
 			return dt;
 		}
-	}
+
+        public DataTable SP_MaindashboardTopCount()
+        {
+            DataTable dt = new DataTable();
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+            using var conn = new SqlConnection(connectionString);
+            using var cmd = new SqlCommand("MaindashboardTopCount", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandTimeout = 500;
+            using var da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+
+            return dt;
+        }
+    }
 }
