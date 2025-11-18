@@ -24,13 +24,13 @@
     align-items: center;
     justify-content: center;
 }
-.form-content-box .form-container {
-    padding: 2rem;
-    position: relative;
-    border: 10px solid transparent;
-    border-color: #ffd800;
-    box-sizing: border-box;
-}
+    .form-content-box .form-container {
+        padding: 2rem;
+        position: relative;
+        border: 10px solid transparent;
+        border-color: #41464b;
+        box-sizing: border-box;
+    }
 .form-content-box .form-container legend {
     font-family: 'Averia Serif Libre';
     font-size: 21px;

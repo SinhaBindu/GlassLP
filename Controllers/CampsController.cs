@@ -130,72 +130,79 @@ namespace GlassLP.Controllers
             }
             return View(model);
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<Result<TblCamp>> AddCamp(CampViewModel model, IFormFile? PhotoFile)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var currentUser = GetSubmittedBy(); // your helper method or identity user
-                var tbl = model.CampId_pk > 0 ? await _context.TblCamp.FindAsync(model.CampId_pk) : new TblCamp();
-                if (tbl != null)
+                if (ModelState.IsValid)
                 {
-                    tbl.DistrictId = model.DistrictId;
-                    tbl.BlockId = model.BlockId;
-                    tbl.CLFId = model.CLFId;
-                    tbl.PanchayatId = model.PanchayatId;
-                    tbl.VOName = model.VOName;
-                    tbl.CampDate = model.CampDate;
-                    tbl.Location = model.Location;
-                    tbl.CRPName = model.CRPName;
-                    tbl.CRPMobileNo = model.CRPMobileNo;
-                    tbl.ParticipantMobilized = model.ParticipantMobilized;
-                    tbl.TotalScreened = model.TotalScreened;
-                    tbl.TotalGlassesDistributed = model.TotalGlassesDistributed;
-                    tbl.PowerOfGlassId = model.PowerOfGlassId;
-
-                    tbl.PhotoUploadPath = "na";
-                    if (model.CampId_pk == 0)
+                    var currentUser = GetSubmittedBy(); // your helper method or identity user
+                    var tbl = model.CampId_pk > 0 ? await _context.TblCamp.FindAsync(model.CampId_pk) : new TblCamp();
+                    if (tbl != null)
                     {
-                        tbl.CampCode = _spManager.GenerateCode(model.DistrictId, model.BlockId);// Optional: Generate unique CampCode
-                        tbl.CreatedBy = currentUser;
-                        tbl.CreatedOn = DateTime.Now;
+                        tbl.DistrictId = model.DistrictId;
+                        tbl.BlockId = model.BlockId;
+                        tbl.CLFId = model.CLFId;
+                        tbl.PanchayatId = model.PanchayatId;
+                        tbl.VOName = model.VOName;
+                        tbl.CampDate = model.CampDate;
+                        tbl.Location = model.Location;
+                        tbl.CRPName = model.CRPName;
+                        tbl.CRPMobileNo = model.CRPMobileNo;
+                        tbl.ParticipantMobilized = model.ParticipantMobilized;
+                        tbl.TotalScreened = model.TotalScreened;
+                        tbl.TotalGlassesDistributed = model.TotalGlassesDistributed;
+                        tbl.PowerOfGlassId = model.PowerOfGlassId;
 
-                        tbl.UpdatedBy = currentUser;
-                        tbl.UpdatedOn = DateTime.Now;
-                        tbl.IsActive = true;
-                    }
-                    if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
-                    {
-
-                        var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm1");
-                        if (!Directory.Exists(uploadsDir))
-                            Directory.CreateDirectory(uploadsDir);
-                        var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
-                        var filePath = Path.Combine(uploadsDir, uniqueFileName);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        tbl.PhotoUploadPath = "na";
+                        if (model.CampId_pk == 0)
                         {
-                            await model.PhotoUpload.CopyToAsync(stream);
+                            tbl.CampCode = _spManager.GenerateCode(model.DistrictId, model.BlockId);// Optional: Generate unique CampCode
+                            tbl.CreatedBy = currentUser;
+                            tbl.CreatedOn = DateTime.Now;
+
+                            tbl.UpdatedBy = currentUser;
+                            tbl.UpdatedOn = DateTime.Now;
+                            tbl.IsActive = true;
                         }
-                        tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
+                        if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
+                        {
+
+                            var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm1");
+                            if (!Directory.Exists(uploadsDir))
+                                Directory.CreateDirectory(uploadsDir);
+                            var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
+                            var filePath = Path.Combine(uploadsDir, uniqueFileName);
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await model.PhotoUpload.CopyToAsync(stream);
+                            }
+                            tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
+                        }
+
+                        _context.TblCamp.Add(tbl);
+                        result = await _context.SaveChangesAsync();
                     }
-                    
-                    _context.TblCamp.Add(tbl);
-                    result = await _context.SaveChangesAsync();
-                }
-                if (result > 0)
-                {
-                    return Result<TblCamp>.Success(tbl, $"Camp added successfully! Camp Code is <b>{tbl.CampCode}</b>");
+                    if (result > 0)
+                    {
+                        return Result<TblCamp>.Success(tbl, $"Camp added successfully! Camp Code is <b>{tbl.CampCode}</b>");
+                    }
+                    else
+                    {
+                        return Result<TblCamp>.Failure("Error occurred while adding camp.");
+                    }
                 }
                 else
                 {
-                    return Result<TblCamp>.Failure("Error occurred while adding camp.");
+                    return Result<TblCamp>.ValidationFailure(ModelState);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                return Result<TblCamp>.ValidationFailure(ModelState);
+                return Result<TblCamp>.Failure("Failed to create camp", ex);
             }
         }
         // GET: Camps/Details/5

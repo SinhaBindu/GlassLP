@@ -22,6 +22,7 @@ namespace GlassLP.Models
         public string? CampCode { get; set; }
 
         [DisplayName("District")]
+        [Required]
         public int? DistrictId { get; set; }
 
         [DisplayName("Block")]

@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\PROJECT PCI\Glasses\CoreGLP\GlassLP\GlassLP\GlassLP\bin\Release\net8.0\publish\</_PublishTargetUrl>
-    <History>True|2025-11-14T14:40:50.8422055Z;</History>
+    <History>True|2025-11-18T07:12:39.9190740Z;True|2025-11-18T12:17:20.2999016+05:30;True|2025-11-14T20:10:50.8422055+05:30;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

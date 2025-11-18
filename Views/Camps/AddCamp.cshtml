@@ -12,79 +12,99 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "-- Select District --", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "-- Select District --", new { @class = "required form-control" })
+                                @Html.ValidationMessageFor(m => m.DistrictId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
-                            </div>
+                                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "-- Select Block --", new { @class = "required form-control" })
+                                @Html.ValidationMessageFor(m => m.BlockId, "", new { @class = "text-danger" })
+                                </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
-                            </div>
+                                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select CLF --", new { @class = "required form-control" })
+                                @Html.ValidationMessageFor(m => m.CLFId, "", new { @class = "text-danger" })
+                                </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.PanchayatId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
-                            </div>
+                                @Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "required form-control" })
+                                @Html.ValidationMessageFor(m => m.PanchayatId, "", new { @class = "text-danger" })
+                                </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.VOName, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.VOName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.ValidationMessageFor(m => m.VOName, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CampDate, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.CampDate, new { htmlAttributes = new { @class = "datepicker required form-control",@type="text", @maxlength = "500" } })
+                                @Html.EditorFor(m => m.CampDate, new { htmlAttributes = new { @class = "required datepicker form-control", @type = "text", @maxlength = "20" } })
+                                @Html.ValidationMessageFor(m => m.CampDate, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.Location, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CRPName, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.CRPName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.ValidationMessageFor(m => m.CRPName, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CRPMobileNo, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.CRPMobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
+                                @Html.ValidationMessageFor(m => m.CRPMobileNo, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.ParticipantMobilized, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "3" } })
+                                @Html.ValidationMessageFor(m => m.ParticipantMobilized, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.TotalScreened, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.TotalScreened, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "3" } })
+                                @Html.ValidationMessageFor(m => m.TotalScreened, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.TotalGlassesDistributed, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.TotalGlassesDistributed, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.ValidationMessageFor(m => m.TotalGlassesDistributed, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.PhotoUpload, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.PhotoUpload, new { htmlAttributes = new { @class = "required form-control", type="file"} })
+                                @if (Model.CampId_pk==0)
+                                {
+                                    @Html.EditorFor(m => m.PhotoUpload, new { htmlAttributes = new { @class = "required form-control", type = "file" } })
+                                    @Html.ValidationMessageFor(m => m.PhotoUpload, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(m => m.PhotoUpload, new { htmlAttributes = new { @class = "form-control", type = "file" } })
+                                }
                             </div>
                         </div>
                         <div class="col-12">
@@ -101,11 +121,16 @@
     </div>
 </div>
 @section Scripts {
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
         $(document).ready(function () {
+            $("#CampDate").datepicker({
+                dateFormat: "dd-M-yy" // jQuery UI standard
+            });
             jQuery('.numbersOnly').keyup(function () {
                 this.value = this.value.replace(/[^0-9\.]/g, '');
             });
@@ -120,7 +145,6 @@
                 $('#PanchayatId').val(); $('#CLFId').val();
             });
             $("#PhotoUpload").change(function (e) {
-
                 var fileInput = document.getElementById('PhotoUpload');
                 let allowedExtension = ['image/jpeg', 'image/jpg', 'image/png'];
                 //Iterating through each files selected in fileInput
@@ -144,12 +168,16 @@
                         }
                     }
                 }
-
             });
 
             //Post sumbitted Data
-            $('#addForm').on('submit', function(e) {
-                 e.preventDefault(); // <- prevent normal form post
+            $('#addForm').on('submit', function (e) {
+                debugger;
+                e.preventDefault(); // <- prevent normal form post
+                var isvalid = $('#addForm').valid();
+                if (!$('#addForm').valid()) {
+                    return; // Invalid form, stop submission
+                }
                 var form = $('#addForm')[0];
                 var formData = new FormData(form);
                 $.ajax({
@@ -159,10 +187,10 @@
                     processData: false, // Important for files
                     contentType: false, // Important for files
                     success: function (response) {
-                        if (response.isSuccess === true){
+                        if (response.isSuccess === true) {
                             toastr.success(response.message);
                             $('#addForm')[0].reset();
-                            setTimeout(function(){
+                            setTimeout(function () {
                                 if (confirm("Do you want to add Participant?") == true) {
                                     window.location.href = "/ParticipantM1/Create?code=" + response.data.campCode;
                                 }
