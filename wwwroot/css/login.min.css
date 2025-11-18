@@ -25,7 +25,28 @@
     justify-content: center;
 }
 .form-content-box .form-container {
-    padding: 0 2rem;
+    padding: 2rem;
+    position: relative;
+    border: 10px solid transparent;
+    border-color: #ffd800;
+    box-sizing: border-box;
+}
+.form-content-box .form-container legend {
+    font-family: 'Averia Serif Libre';
+    font-size: 21px;
+    line-height: 10px;
+    font-weight: bold;
+    padding: 10px;
+    animation: move 3s infinite linear alternate;
+    background-color: #ea3337;
+    position: absolute;
+    top: -22px;
+    left: -10px;
+    width: auto;
+    border-radius: 10px 20px 20px 0px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 3px;
 }
 .form-content-box h2 {
     margin-bottom: 0;

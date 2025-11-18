@@ -23,10 +23,13 @@
 						</div>
 					</div>
 					<div class="col-lg-5 form-content-box">
-						<div class="form-container">
-							<form class="app-form" asp-action="Login" method="post">
-								<div class="row">
-									<div class="col-12">
+						<div class="g-container">
+								<div class="form-container">
+								<fieldset>
+									<legend>Login</legend>
+									<form class="app-form mb-0" asp-action="Login" method="post">
+										<div class="row">
+											@* <div class="col-12">
 										<div class="mb-5 text-center text-lg-start">
 											<h2 class="f-w-600 text-dark">Welcome To <span class="text-dark">Login!</span> </h2>
 											<p class="f-s-16 mt-2">
@@ -34,51 +37,55 @@
 												registration
 											</p>
 										</div>
-									</div>
-									<div class="col-12">
-										<div class="form-floating mb-3">
-											<input type="text" name="userName" id="UserName" placeholder="User Name" class="form-control" required />
-											<label for="UserName">Username</label>
+									</div> *@
+											<div class="col-12">
+												<div class="form-floating mb-3">
+													<input type="text" name="userName" id="UserName" placeholder="User Name" class="form-control" required />
+													<label for="UserName">Username</label>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-floating mb-3">
+													<input type="password" name="password" id="password" placeholder="User Password" class="form-control" required />
+													<label for="password">Password</label>
+												</div>
+												<div class="text-end ">
+													<a class="text-dark f-w-500 text-decoration-underline" href="forgot_password.html">Forgot password</a>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-check d-flex align-items-center gap-2 mb-3">
+													<input class="form-check-input w-25 h-25" id="checkDefault" type="checkbox" value="">
+													<label class="form-check-label text-white mt-2 f-s-16 text-dark" for="checkDefault">
+														Remember me
+													</label>
+												</div>
+											</div>
+											<div class="col-12 mt-3">
+												<button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
+											</div>
+											<div class="col-12 mt-4">
+												<div class="text-center text-lg-start f-w-500">
+													Don't Have Your Account yet?
+													<a asp-controller="Account" asp-action="register" class="text-white-800 text-decoration-underline">Sign up</a>
+												</div>
+											</div>
 										</div>
-									</div>
-									<div class="col-12">
-										<div class="form-floating mb-3">
-											<input type="password" name="password" id="password" placeholder="User Password" class="form-control" required />
-											<label for="password">Password</label>
-										</div>
-										<div class="text-end ">
-											<a class="text-dark f-w-500 text-decoration-underline" href="forgot_password.html">Forgot password</a>
-										</div>
-									</div>
-									<div class="col-12">
-										<div class="form-check d-flex align-items-center gap-2 mb-3">
-											<input class="form-check-input w-25 h-25" id="checkDefault" type="checkbox" value="">
-											<label class="form-check-label text-white mt-2 f-s-16 text-dark" for="checkDefault">
-												Remember me
-											</label>
-										</div>
-									</div>
-									<div class="col-12 mt-3">
-										<button type="submit" class="btn btn-primary btn-lg w-100">Sign In</button>
-									</div>
-									<div class="col-12 mt-4">
-										<div class="text-center text-lg-start f-w-500">
-											Don't Have Your Account yet?
-											<a asp-controller="Account" asp-action="register" class="text-white-800 text-decoration-underline">Sign up</a>
-										</div>
-									</div>
-								</div>
-							</form>
-							@if (!ViewData.ModelState.IsValid)
-							{
-								<div class="text-danger mt-3">
-									@foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+									</form>
+									@if (!ViewData.ModelState.IsValid)
 									{
-										<p class="text-danger">@err.ErrorMessage</p>
+										<div class="text-danger mt-3">
+											@foreach (var err in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+											{
+												<p class="text-danger">@err.ErrorMessage</p>
+											}
+										</div>
 									}
+								</fieldset>
 								</div>
-							}
+						  
 						</div>
+						
 					</div>
 				</div>
 			</div>
