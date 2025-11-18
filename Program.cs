@@ -1,5 +1,6 @@
 using GlassLP.Data;
 using GlassLP.Middleware;
+using GlassLP.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +31,7 @@ builder.Services.AddRazorPages(); // required if you use the default Identity UI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<SPManager>();
+builder.Services.AddScoped<JWTHelper>();
 
 var app = builder.Build();
 UrlUtility.Configure(app.Services.GetRequiredService<IHttpContextAccessor>());
