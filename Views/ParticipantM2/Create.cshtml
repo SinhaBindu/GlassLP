@@ -38,7 +38,7 @@
 						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.CampId_fk, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "form-control" })
+								@Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "form-control", @id = "CampId_fk", @disabled = "disabled" })
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -236,7 +236,6 @@
 	}
 	<script>
 		$(document).ready(function () {
-			GetCampCode("CampId_fk");
 			GetOccupations("OccupationId");
 			GetPowerofGlasses("PowerofGlassId");
 
@@ -250,34 +249,36 @@
 				$('#BlockId').val();
 			});
 
-			//GetCampCode disable or enable
+			// Camp dropdown disable or enable based on Location
 			function toggleCampDropdown() {
-				let selectedValue = $("input[name='Camp']:checked").val();
+				let selectedLocation = $("input[name='Location']:checked").val();
 
-				if (selectedValue == "1") {
-					// Camp selected
+				if (selectedLocation == "1") {
+					// Camp location selected - enable Camp dropdown
 					$("#CampId_fk").prop("disabled", false);
 				} else {
-					// Home Visit
+					// Home Visit or no selection - disable Camp dropdown
 					$("#CampId_fk").prop("disabled", true);
-					$("#CampId_fk").val("");  // clear value if disable
+					$("#CampId_fk").val("");  // clear value if disabled
 				}
 			}
 
-			// On page load
+			// On page load - set initial state first
 			toggleCampDropdown();
+			
+			// Then populate the dropdown (function handles disabled state)
+			GetCampCode("CampId_fk");
 
-			// On change
-			$("input[name='Camp']").change(function () {
+			// On Location change
+			$("input[name='Location']").change(function () {
 				toggleCampDropdown();
 			});
-		});
 
 			// GetOccupations Disable
 			function toggleOtherOccupation() {
 				var selectedValue = $("#OccupationId").val();
 
-				if (selectedValue == "6") {   // 999 = Other
+				if (selectedValue == "6") {   // 6 = Other
 					$("#Occupation_Others").prop("disabled", false);
 				} else {
 					$("#Occupation_Others").prop("disabled", true).val('');
@@ -291,8 +292,6 @@
 
 			// run on page load (important for Edit page)
 			toggleOtherOccupation();
-
-
 
 			//Post sumbitted Data
 			$('#addForm').on('submit', function (e) {

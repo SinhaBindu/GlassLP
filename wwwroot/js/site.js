@@ -4,78 +4,100 @@
 // Write your JavaScript code.
 
 function GetJSDistricts(eleid) {
-    $.getJSON('/API/Masters/Districts', function (data) {
-        let items = '<option value="">Select</option>';
-        $.each(data, function (i, item) {
-            items += '<option value="' + item.districtId_pk + '">' + item.districtName + '</option>';
-        });
-        $('#' + eleid).html(items);
+    $.getJSON('/API/Masters/Districts', function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.districtId_pk + '">' + item.districtName + '</option>';
+            });
+            $('#' + eleid).html(items);
+        }
     });
 }
 function GetJSBlocks(eleid, Paraid) {
-    $.getJSON('/API/Masters/Blocks?DistrictId=' + Paraid, function (data) {
-        let items = '<option value="">Select</option>';
-        $.each(data, function (i, item) {
-            items += '<option value="' + item.blockId_pk + '">' + item.blockName + '</option>';
-        });
-        $('#' + eleid).html(items);
+    $.getJSON('/API/Masters/Blocks?DistrictId=' + Paraid, function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.blockId_pk + '">' + item.blockName + '</option>';
+            });
+            $('#' + eleid).html(items);
+        }
     });
 }
 function GetJSPanchayats(eleid, Paraid1, Paraid2) {
-    $.getJSON('/API/Masters/Panchayats?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (data) {
-        let items = '<option value="">Select</option>';
-        $.each(data, function (i, item) {
-            items += '<option value="' + item.panchayatId_pk + '">' + item.panchayatName + '</option>';
-        });
-        $('#' + eleid).html(items);
+    $.getJSON('/API/Masters/Panchayats?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.panchayatId_pk + '">' + item.panchayatName + '</option>';
+            });
+            $('#' + eleid).html(items);
+        }
     });
 }
 function GetJSFederations(eleid, Paraid1, Paraid2) {
-    $.getJSON('/API/Masters/Federations?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (data) {
-        let items = '<option value="">Select</option>';
-        $.each(data, function (i, item) {
-            items += '<option value="' + item.federationId_pk + '">' + item.federationName + '</option>';
-        });
-        $('#' + eleid).html(items);
+    $.getJSON('/API/Masters/Federations?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.federationId_pk + '">' + item.federationName + '</option>';
+            });
+            $('#' + eleid).html(items);
+        }
     });
 }
 
 function GetCampCode(eleid) {
-    $.getJSON('/API/Masters/CampCode', function (data) {
-        let items = '<option value="">Select</option>';
-        $.each(data, function (i, item) {
-            items += '<option value="' + item.campId_pk + '">' + item.campCode + '</option>';
-        });
-        $('#' + eleid).html(items);
+    $.getJSON('/API/Masters/CampCode', function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.campId_pk + '">' + item.campCode + '</option>';
+            });
+            // Temporarily enable dropdown to set HTML, then restore disabled state if needed
+            var wasDisabled = $('#' + eleid).prop('disabled');
+            $('#' + eleid).prop('disabled', false);
+            $('#' + eleid).html(items);
+            if (wasDisabled) {
+                $('#' + eleid).prop('disabled', true);
+            }
+        }
     });
 }
 
 function GetOccupations(eleid) {
-    $.getJSON('/API/Masters/Occupations', function (data) {
-        let items = '<option value="">Select</option>';
-        $.each(data, function (i, item) {
-            items += '<option value="' + item.pk_OccupationId + '">' + item.occupatioName + '</option>';
-        });
-        $('#' + eleid).html(items);
+    $.getJSON('/API/Masters/Occupations', function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.pk_OccupationId + '">' + item.occupatioName + '</option>';
+            });
+            $('#' + eleid).html(items);
+        }
     });
 }
 
 function GetPowerofGlasses(eleid) {
-    $.getJSON('/API/Masters/PowerofGlasses', function (data) {
-        let items = '<option value="">Select</option>';
-        $.each(data, function (i, item) {
-            items += '<option value="' + item.pk_PowerGlassId + '">' + item.powerofGlass + '</option>';
-        });
-        $('#' + eleid).html(items);
+    $.getJSON('/API/Masters/PowerofGlasses', function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.pk_PowerGlassId + '">' + item.powerofGlass + '</option>';
+            });
+            $('#' + eleid).html(items);
+        }
     });
 }
 
 function GetClfName(eleid) {
-    $.getJSON('/API/Masters/ClfName', function (data) {
-        let items = '<option value="">Select</option>';
-        $.each(data, function (i, item) {
-            items += '<option value="' + item.pk_CLFId + '">' + item.clfName + '</option>';
-        });
-        $('#' + eleid).html(items);
+    $.getJSON('/API/Masters/ClfName', function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.pk_CLFId + '">' + item.clfName + '</option>';
+            });
+            $('#' + eleid).html(items);
+        }
     });
 }
