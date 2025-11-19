@@ -68,7 +68,8 @@
 						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.Age, new { @class = "form-label" })
-								@Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "required form-control", @maxlength = "2" } })
+								@Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "required form-control numbersOnly age-input", @maxlength = "2", @min = "35", @max = "59", @type = "number" } })
+								@Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -240,7 +241,50 @@
 			GetPowerofGlasses("PowerofGlassId");
 
 			jQuery('.numbersOnly').keyup(function () {
-				this.value = this.value.replace(/[^0-9\.]/g, '');
+				// For age field, don't allow decimals
+				if ($(this).hasClass('age-input')) {
+					this.value = this.value.replace(/[^0-9]/g, '');
+				} else {
+					this.value = this.value.replace(/[^0-9\.]/g, '');
+				}
+			});
+
+			// Age validation - only numbers, max 2 digits, range 35-59
+			$('.age-input').on('input', function () {
+				var value = $(this).val();
+				// Remove any non-numeric characters
+				value = value.replace(/[^0-9]/g, '');
+				// Limit to 2 digits
+				if (value.length > 2) {
+					value = value.substring(0, 2);
+				}
+				$(this).val(value);
+				
+				// Validate range 35-59
+				var age = parseInt(value);
+				if (value && (age < 35 || age > 59)) {
+					$(this).addClass('is-invalid');
+					if (!$(this).next('.age-error').length) {
+						$(this).after('<span class="age-error text-danger small">Age must be between 35 and 59</span>');
+					}
+				} else {
+					$(this).removeClass('is-invalid');
+					$(this).next('.age-error').remove();
+				}
+			});
+
+			// Also validate on blur
+			$('.age-input').on('blur', function () {
+				var value = parseInt($(this).val());
+				if ($(this).val() && (value < 35 || value > 59)) {
+					$(this).addClass('is-invalid');
+					if (!$(this).next('.age-error').length) {
+						$(this).after('<span class="age-error text-danger small">Age must be between 35 and 59</span>');
+					}
+				} else {
+					$(this).removeClass('is-invalid');
+					$(this).next('.age-error').remove();
+				}
 			});
 
 			GetJSDistricts("DistrictId");

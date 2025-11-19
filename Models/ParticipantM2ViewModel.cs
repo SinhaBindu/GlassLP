@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace GlassLP.Models
 {
@@ -26,6 +27,7 @@ namespace GlassLP.Models
         public string? MobileNo { get; set; }
 
         [DisplayName("Age")]
+        [Range(35, 59, ErrorMessage = "Age must be between 35 and 59")]
         public int Age { get; set; }
 
         [DisplayName("Screening Date")]
