@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GlassLP.Data;
+using GlassLP.Models;
 using GlassLP.Utilities;
 
 namespace GlassLP.Controllers.API
@@ -23,23 +24,36 @@ namespace GlassLP.Controllers.API
 
         // GET: api/Camps
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TblCamp>>> GetTblCamp()
+        public async Task<IActionResult> GetTblCamp()
         {
-            return await _context.TblCamp.ToListAsync();
+            var camps = await _context.TblCamp.ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                camps.Cast<object>().ToList()));
         }
 
         // GET: api/Camps/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TblCamp>> GetTblCamp(int id)
+        public async Task<IActionResult> GetTblCamp(int id)
         {
             var tblCamp = await _context.TblCamp.FindAsync(id);
 
             if (tblCamp == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse<List<object>>(
+                    false,
+                    "not_found",
+                    "Camp not found.",
+                    new List<object>()));
             }
 
-            return tblCamp;
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                new List<object> { tblCamp }));
         }
 
         // PUT: api/Camps/5
@@ -49,7 +63,11 @@ namespace GlassLP.Controllers.API
         {
             if (id != tblCamp.CampId_pk)
             {
-                return BadRequest();
+                return BadRequest(new ApiResponse<List<object>>(
+                    false,
+                    "bad_request",
+                    "ID mismatch.",
+                    new List<object>()));
             }
 
             _context.Entry(tblCamp).State = EntityState.Modified;
@@ -62,7 +80,11 @@ namespace GlassLP.Controllers.API
             {
                 if (!TblCampExists(id))
                 {
-                    return NotFound();
+                    return NotFound(new ApiResponse<List<object>>(
+                        false,
+                        "not_found",
+                        "Camp not found.",
+                        new List<object>()));
                 }
                 else
                 {
@@ -70,13 +92,17 @@ namespace GlassLP.Controllers.API
                 }
             }
 
-            return NoContent();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Camp updated successfully.",
+                new List<object> { tblCamp }));
         }
 
         // POST: api/Camps
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TblCamp>> PostTblCamp(TblCamp tblCamp)
+        public async Task<IActionResult> PostTblCamp(TblCamp tblCamp)
         {
             var currentUser = GetSubmittedBy();
 
@@ -90,7 +116,11 @@ namespace GlassLP.Controllers.API
             _context.TblCamp.Add(tblCamp);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTblCamp", new { id = tblCamp.CampId_pk }, tblCamp);
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Camp created successfully.",
+                new List<object> { tblCamp }));
         }
 
         // DELETE: api/Camps/5
@@ -100,13 +130,21 @@ namespace GlassLP.Controllers.API
             var tblCamp = await _context.TblCamp.FindAsync(id);
             if (tblCamp == null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse<List<object>>(
+                    false,
+                    "not_found",
+                    "Camp not found.",
+                    new List<object>()));
             }
 
             _context.TblCamp.Remove(tblCamp);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Camp deleted successfully.",
+                new List<object>()));
         }
 
         private bool TblCampExists(int id)

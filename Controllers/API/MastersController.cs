@@ -1,6 +1,9 @@
 ﻿using GlassLP.Data;
+using GlassLP.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GlassLP.Controllers.API
 {
@@ -17,56 +20,101 @@ namespace GlassLP.Controllers.API
 
         // GET: api/Glasses
         [HttpGet("Glasses")]
-        public async Task<ActionResult<IEnumerable<MstGlass>>> GetMstGlass()
+        public async Task<IActionResult> GetMstGlass()
         {
-            return await _context.MstGlass.ToListAsync();
+            var glasses = await _context.MstGlass.ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                glasses.Cast<object>().ToList()));
         }
 
         [HttpGet("Districts")]
-        public async Task<ActionResult<IEnumerable<MstDistrict>>> GetMstDistrict()
+        public async Task<IActionResult> GetMstDistrict()
         {
-            return await _context.MstDistrict.Where(x => x.IsActive == true).ToListAsync();
+            var districts = await _context.MstDistrict.Where(x => x.IsActive == true).ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                districts.Cast<object>().ToList()));
         }
 
         [HttpGet("Blocks")]
-        public async Task<ActionResult<IEnumerable<MstBlock>>> GetMstBlock(int DistrictId)
+        public async Task<IActionResult> GetMstBlock(int DistrictId)
         {
-            return await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true).ToListAsync();
+            var blocks = await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true).ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                blocks.Cast<object>().ToList()));
         }
 
         [HttpGet("Panchayats")]
-        public async Task<ActionResult<IEnumerable<MstPanchayat>>> GetMstPanchayat(int DistrictId, int BlockId)
+        public async Task<IActionResult> GetMstPanchayat(int DistrictId, int BlockId)
         {
-            return await _context.MstPanchayat.Where(x => x.DistrictId_fk == DistrictId && x.BlockId_fk == BlockId && x.IsActive == true).ToListAsync();
+            var panchayats = await _context.MstPanchayat.Where(x => x.DistrictId_fk == DistrictId && x.BlockId_fk == BlockId && x.IsActive == true).ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                panchayats.Cast<object>().ToList()));
         }
         [HttpGet("Federations")]
-        public async Task<ActionResult<IEnumerable<MstFederation>>> GetMstFederations(int DistrictId, int BlockId)
+        public async Task<IActionResult> GetMstFederations(int DistrictId, int BlockId)
         {
-            return await _context.MstFederation.Where(x => x.DistrictId_fk == DistrictId && x.BlockId_fk == BlockId && x.IsActive == true).ToListAsync();
+            var federations = await _context.MstFederation.Where(x => x.DistrictId_fk == DistrictId && x.BlockId_fk == BlockId && x.IsActive == true).ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                federations.Cast<object>().ToList()));
         }
 
 		[HttpGet("CampCode")]
-		public async Task<ActionResult<IEnumerable<TblCamp>>> GetCampCode()
+		public async Task<IActionResult> GetCampCode()
 		{
-			return await _context.TblCamp.Where(x => x.IsActive == true).ToListAsync();
+			var camps = await _context.TblCamp.Where(x => x.IsActive == true).ToListAsync();
+			return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                camps.Cast<object>().ToList()));
 		}
 
         [HttpGet("Occupations")]
-        public async Task<ActionResult<IEnumerable<MstOccupation>>> GetOccupations()
+        public async Task<IActionResult> GetOccupations()
         {
-            return await _context.MstOccupation.Where(x => x.IsActive == true).ToListAsync();
+            var occupations = await _context.MstOccupation.Where(x => x.IsActive == true).ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                occupations.Cast<object>().ToList()));
         }
 
 		[HttpGet("PowerofGlasses")]
-		public async Task<ActionResult<IEnumerable<MstPowerGlasses>>> GetPowerofGlasses()
+		public async Task<IActionResult> GetPowerofGlasses()
 		{
-			return await _context.MstPowerGlasses.Where(x => x.IsActive == true).ToListAsync();
+			var powerGlasses = await _context.MstPowerGlasses.Where(x => x.IsActive == true).ToListAsync();
+			return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                powerGlasses.Cast<object>().ToList()));
 		}
 
         [HttpGet("ClfName")]
-        public async Task<ActionResult<IEnumerable<MstCLF>>> GetClfName()
+        public async Task<IActionResult> GetClfName()
         {
-            return await _context.MstCLF.Where(x => x.IsActive == true).ToListAsync();
+            var clfs = await _context.MstCLF.Where(x => x.IsActive == true).ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                clfs.Cast<object>().ToList()));
         }
     }
 }

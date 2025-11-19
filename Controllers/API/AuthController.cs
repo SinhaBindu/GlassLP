@@ -1,90 +1,100 @@
-﻿using GlassLP.Data;
+using GlassLP.Data;
 using GlassLP.DTO;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
-using System.Data;
+using GlassLP.Models;
 using GlassLP.Utilities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GlassLP.Controllers.API
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : BaseController
+    [AllowAnonymous]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JWTHelper _jwtHelper;
 
-        public AuthController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, Utilities.JWTHelper jwtHelper)
+        public AuthController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            JWTHelper jwtHelper)
         {
-            _signInManager = signInManager;
             _userManager = userManager;
+            _signInManager = signInManager;
             _jwtHelper = jwtHelper;
         }
 
-        [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto model)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(new
-                {
-                    status = false,
-                    message = "Validation failed",
-                    reason = "Invalid model state",
-                    data = (object)null
-                });
+                var validationErrors = ModelState
+                    .Where(entry => entry.Value?.Errors.Count > 0)
+                    .ToDictionary(
+                        entry => entry.Key,
+                        entry => entry.Value!.Errors.Select(error => error.ErrorMessage).ToArray());
+
+                return BadRequest(new ApiResponse<List<object>>(
+                    false,
+                    "validation_failed",
+                    "Please provide both username and password.",
+                    new List<object> { validationErrors }));
             }
 
-            var result = await _signInManager.PasswordSignInAsync(
-                model.UserName,
-                model.Password,
-                isPersistent: false,
-                lockoutOnFailure: false
-            );
+            var user = await _userManager.FindByNameAsync(loginDto.UserName)
+                       ?? await _userManager.FindByEmailAsync(loginDto.UserName);
 
-            if (result.Succeeded)
+            if (user == null)
             {
-                
-                var user = await _userManager.FindByNameAsync(model.UserName);
-                var roles = await _userManager.GetRolesAsync(user);
-                // --- JWT Token Generate ---
-                var token = _jwtHelper.GenerateJwtToken(user.Id, user.UserName,roles.FirstOrDefault());
+                return Unauthorized(new ApiResponse<List<object>>(
+                    false,
+                    "invalid_credentials",
+                    "Username or password is incorrect.",
+                    new List<object>()));
+            }
 
-                return Ok(new
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, lockoutOnFailure: false);
+
+            if (!signInResult.Succeeded)
+            {
+                return Unauthorized(new ApiResponse<List<object>>(
+                    false,
+                    "invalid_credentials",
+                    "Username or password is incorrect.",
+                    new List<object>()));
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var primaryRole = roles.FirstOrDefault() ?? string.Empty;
+            var token = _jwtHelper.GenerateJwtToken(user.Id, user.UserName ?? string.Empty, primaryRole);
+
+            var responsePayload = new List<object>
+            {
+                new
                 {
-                    status = true,
-                    message = "Login successful",
-                    reason = "OK",
-                    data = new
+                    token,
+                    user = new
                     {
-                        token = token,
-                        user = new
-                        {
-                            UserId = user.Id,
-                            Name = user.Name,
-                            Role = roles.FirstOrDefault()
-                        }
+                        id = user.Id,
+                        userName = user.UserName,
+                        email = user.Email,
+                        roles
                     }
-                });
-            }
+                }
+            };
 
-            return Unauthorized(new
-            {
-                status = false,
-                message = "Login failed",
-                reason = "Invalid login attempt",
-                data = (object)null
-            });
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                responsePayload));
         }
-
     }
-
-
-
-
 }
+

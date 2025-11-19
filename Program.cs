@@ -58,6 +58,7 @@ app.UseAuthorization();
 // custom middleware after authentication
 app.UseUserAuthenticationLogger();
 
+app.MapControllers();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
