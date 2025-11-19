@@ -2,3 +2,6 @@
 /bin
 /obj
 /bin/Debug/net8.0
+/wwwroot/uploads/*
+/Properties/PublishProfiles/FolderProfile.pubxml.user
+/GlassLP.csproj.user
