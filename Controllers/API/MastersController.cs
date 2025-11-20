@@ -1,6 +1,7 @@
 ﻿using GlassLP.Data;
 using GlassLP.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,10 @@ namespace GlassLP.Controllers.API
     public class MastersController : ControllerBase
     {
         private readonly GlassDbContext _context;
-
-        public MastersController(GlassDbContext context)
+        private readonly CommonData _commonData;
+        public MastersController(GlassDbContext context, CommonData commonData)
         {
+            _commonData = commonData;
             _context = context;
         }
 
@@ -115,6 +117,46 @@ namespace GlassLP.Controllers.API
                 "OK",
                 "Data fetched successfully",
                 clfs.Cast<object>().ToList()));
+        }
+        [HttpGet("DataYesNo")]
+        public async Task<IActionResult> GetYesNo(int isSelect = 0)
+        {
+            var data = _commonData.GetYesNo(isSelect);
+            return await Task.FromResult(
+                Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
+            );
+        }
+        [HttpGet("DataTypeofVisionIssue")]
+        public async Task<IActionResult> GetTypeofVisionIssue(int isSelect = 0)
+        {
+            var data = _commonData.GetTypeofVisionIssue(isSelect);
+            return await Task.FromResult(
+                Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
+            );
+        }
+        [HttpGet("DataFeedbackonComfort")]
+        public async Task<IActionResult> GetFeedbackonComfort(int isSelect = 0)
+        {
+            var data = _commonData.GetFeedbackonComfort(isSelect);
+            return await Task.FromResult(
+                Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
+            );
+        }
+        [HttpGet("DataTypeOfPaticipant")]
+        public async Task<IActionResult> GetTypeOfPaticipant(int isSelect = 0)
+        {
+            var data = _commonData.GetTypeOfPaticipant(isSelect);
+            return await Task.FromResult(
+                Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
+            );
+        }
+        [HttpGet("DataTypeOfModule")]
+        public async Task<IActionResult> GetTypeOfModule(int isSelect = 0)
+        {
+            var data = _commonData.GetTypeOfModule(isSelect);
+            return await Task.FromResult(
+                Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
+            );
         }
     }
 }

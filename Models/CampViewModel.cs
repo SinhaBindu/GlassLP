@@ -58,6 +58,7 @@ namespace GlassLP.Models
         public int? PowerOfGlassId { get; set; }
         [NotMapped]
         [ValidateNever]
+        [DisplayName("Camp Image (JPGE,JPG,PNG)")]
         public IFormFile? PhotoUpload { get; set; }
 
 		public string? PhotoUploadPath { get; set; }
@@ -76,8 +77,9 @@ namespace GlassLP.Models
 		public string? BlockName { get; set; }
 		[NotMapped]
 		public string? PanchayatName { get; set; }
+        public int? VEId { get; set; }
 
-		[NotMapped]
+        [NotMapped]
 		[ValidateNever]
 		public IEnumerable<SelectListItem> TypeOfModuleList { get; set; }
 
@@ -89,6 +91,7 @@ namespace GlassLP.Models
 
 		[ValidateNever]
 		public IEnumerable<SelectListItem> BlockList { get; set; }
+		public IEnumerable<SelectListItem> TypeofModulelist { get; set; }
         // etc.
     }
 }

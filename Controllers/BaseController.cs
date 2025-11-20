@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GlassLP.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -7,8 +8,8 @@ using System.Security.Claims;
 namespace GlassLP.Controllers
 {
     public abstract class BaseController : Controller
-
     {
+        //protected CommonData _commonData;
 
         protected string? UserId => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 

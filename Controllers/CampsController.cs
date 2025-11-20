@@ -15,12 +15,14 @@ namespace GlassLP.Controllers
         private readonly GlassDbContext _context;
         private readonly ICompositeViewEngine _viewEngine;
         private readonly SPManager _spManager;
+        private readonly CommonData _commonData;
         int result = 0;
-        public CampsController(GlassDbContext context, ICompositeViewEngine viewEngine, SPManager spManager)
+        public CampsController(GlassDbContext context, ICompositeViewEngine viewEngine, SPManager spManager, CommonData commonData)
         {
             _context = context;
             _viewEngine = viewEngine;
             _spManager = spManager;
+            _commonData = commonData;
         }
 
         // GET: Camps
@@ -108,6 +110,7 @@ namespace GlassLP.Controllers
         public IActionResult AddCamp(int? CId)
         {
             CampViewModel model = new CampViewModel();
+            model.TypeofModulelist = _commonData.GetTypeOfModule();
             if (CId > 0)
             {
                 var tbl = _context.TblCamp.Find(CId);

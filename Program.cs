@@ -9,6 +9,7 @@ builder.Services.AddHttpContextAccessor();
 // Add DbContext
 builder.Services.AddDbContext<GlassDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<CommonData>();
 
 // Add Identity with roles and the default UI
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

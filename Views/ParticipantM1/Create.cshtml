@@ -29,7 +29,7 @@
                         <div class="col-md-3">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.Age, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "2" } })
+                                @Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "2", @min = "35", @max = "59" } })
                             </div>
                         </div>
                         <div class="col-md-3">

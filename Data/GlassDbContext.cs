@@ -92,11 +92,17 @@ namespace GlassLP.Data
     {
         [Key]
         public int pk_Glassid { get; set; }
-        public int? PowerOfGlass { get; set; }
-
-        [StringLength(100)]
-        public string GlassName { get; set; }
-
+        public int? TypeOfModuleId { get; set; }  
+        public int? PowerOfGlassId { get; set; }
+        public int? NoofGlasses { get; set; }
+        [Range(5,2)]
+        public decimal PerGlassCost { get; set; } = 0;
+        [Range(5, 2)]
+        public decimal TotalGlassCost { get; set; } = 0;
+        [Range(5, 2)]
+        public decimal AdvertisingCost { get; set; } = 0;//m2
+        [Range(5, 2)]
+        public decimal Storagemiscellaneouscost { get; set; } = 0;//m2
         public bool? IsActive { get; set; }
         [StringLength(100)]
         public string CreatedBy { get; set; }

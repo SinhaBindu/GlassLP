@@ -61,7 +61,7 @@ namespace GlassLP.Models
         [DisplayName("Remarks")]
         public string? Remarks { get; set; }
 
-        [DisplayName("Followup Required")]
+        [DisplayName("Referral Required")]
         public int FollowupRequiredId { get; set; }
 
         [DisplayName("Digital Consent")]
