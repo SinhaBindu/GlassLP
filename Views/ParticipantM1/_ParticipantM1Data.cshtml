@@ -28,7 +28,7 @@
             <th class="text-center tblth">Power Of Glass</th>
             <th class="text-center tblth">Feedback Comfort</th>
             <th class="text-center tblth">Remarks</th>
-            <th class="text-center tblth">Action</th>
+            <th class="text-center tblth" style="min-width:100px;">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -52,7 +52,7 @@
                         <td class="text-left">@dr["PowerOfGlass"]</td>
                         <td class="text-left">@dr["FeedbackonComfort"]</td>
                         <td class="text-left">@dr["Remarks"]</td>
-                        <td class="edit">
+                        <td class="edit text-center">
                             <a asp-action="Create"
                                asp-route-PId="ParticipantId_pk"
                                class="btn edit-item-btn icon-btn btn-outline-info">

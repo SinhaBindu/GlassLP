@@ -21,7 +21,7 @@
             <th class="text-center tblth">AOP Name</th>
             <th class="text-center tblth">CLF Name</th>
             <th class="text-center tblth">Dated</th>
-            <th class="text-center tblth">Action</th>
+            <th class="text-center tblth" style="min-width:100px;">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -38,7 +38,7 @@
                         <td class="text-left">@dr["AOPName"]</td>
                         <td class="text-left">@dr["CLFName"]</td>
                         <td class="text-left">@dr["Dated"]</td>
-                        <td class="edit">
+                        <td class="edit text-center">
                             <a asp-action="Create"
                                asp-route-PId="ParticipantId_pk"
                                class="btn edit-item-btn icon-btn btn-outline-info">

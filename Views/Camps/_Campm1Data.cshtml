@@ -29,7 +29,7 @@
             <th class="text-center tblth">Participants Mobilized</th>
             <th class="text-center tblth">Total Screened</th>
             <th class="text-center tblth">Total Glasses Distributed</th>
-            <th class="text-center tblth">Image File</th>
+            <th class="text-center tblth" style="min-width:60px;">Image File</th>
         </tr>
     </thead>
     <tbody>
@@ -58,7 +58,7 @@
                         <td class="text-center">
                             @if (!string.IsNullOrWhiteSpace(dr["PhotoUploadPath"].ToString()))
                             {
-                                <a href="@imgfile" target="_blank" title="Image File" download="@dr["CampCode"].ToString()"><i class="fa fa-download"></i></a>
+                                <a href="@imgfile" class="btn edit-item-btn icon-btn btn-outline-info" target="_blank" title="Image File" download="@dr["CampCode"].ToString()"><i class="fa fa-download"></i></a>
                             }
                         </td>
                     </tr>
