@@ -139,11 +139,19 @@
                 $('.divcrp').hide(); $('.divve').hide();
                 ('#CRPName').val('').removeAttr(); ('#CRPMobileNo').val('').removeAttr();
                 ('#VEId').val('').removeAttr();
-                if($(this).val()==="1"){
-                    $('.divcrp').show(); ('#CRPName').attr("required", "required"); ('#CRPMobileNo').attr("required", "required");
+                if ($(this).val() === "1") {
+                    $('.divcrp').show();
+                    $('#CRPName').attr("required", true);
+                    $('#CRPMobileNo').attr("required", true);
+
+                    $('#VEId').removeAttr("required");
                 }
                 else if ($(this).val() === "2") {
-                    $('.divcrp').(); ('#VEId').attr("required", "required");
+                    $('.divcrp').hide();
+                    $('#VEId').attr("required", true);
+
+                    $('#CRPName').removeAttr("required");
+                    $('#CRPMobileNo').removeAttr("required");
                 }
             });
             $("#DistrictId").change(function () {

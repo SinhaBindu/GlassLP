@@ -202,13 +202,15 @@
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.ScreeningCost, new { @class = "form-label" })
-								@Html.EditorFor(m => m.ScreeningCost, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								@Html.EditorFor(m => m.ScreeningCost, new { htmlAttributes = new { @class = "required form-control numbersOnly two-digit-input", @maxlength = "2", @type = "number", @min = "0", @max = "99" } })
+								@Html.ValidationMessageFor(m => m.ScreeningCost, "", new { @class = "text-danger" })
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.GlassesCost, new { @class = "form-label" })
-								@Html.EditorFor(m => m.GlassesCost, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								@Html.EditorFor(m => m.GlassesCost, new { htmlAttributes = new { @class = "required form-control numbersOnly three-digit-input", @type = "number", @min = "0", @max = "999", @maxlength = "3" } })
+								@Html.ValidationMessageFor(m => m.GlassesCost, "", new { @class = "text-danger" })
 							</div>
 						</div>
 						<div class="col-md-8">
@@ -241,8 +243,8 @@
 			GetPowerofGlasses("PowerofGlassId");
 
 			jQuery('.numbersOnly').keyup(function () {
-				// For age field, don't allow decimals
-				if ($(this).hasClass('age-input')) {
+				// For age and three-digit fields, don't allow decimals
+				if ($(this).hasClass('age-input') || $(this).hasClass('three-digit-input')) {
 					this.value = this.value.replace(/[^0-9]/g, '');
 				} else {
 					this.value = this.value.replace(/[^0-9\.]/g, '');
@@ -273,6 +275,40 @@
 				}
 			});
 
+			// Screening cost validation - numbers only, max 2 digits
+			$('.two-digit-input').on('input', function () {
+				var value = $(this).val();
+				value = value.replace(/[^0-9]/g, '');
+				if (value.length > 2) {
+					value = value.substring(0, 2);
+				}
+				$(this).val(value);
+
+				var amount = parseInt(value);
+				if (value && (amount < 0 || amount > 99)) {
+					$(this).addClass('is-invalid');
+					if (!$(this).next('.two-digit-error').length) {
+						$(this).after('<span class="two-digit-error text-danger small">Value must be a two-digit number</span>');
+					}
+				} else {
+					$(this).removeClass('is-invalid');
+					$(this).next('.two-digit-error').remove();
+				}
+			});
+
+			$('.two-digit-input').on('blur', function () {
+				var value = parseInt($(this).val());
+				if ($(this).val() && (value < 0 || value > 99)) {
+					$(this).addClass('is-invalid');
+					if (!$(this).next('.two-digit-error').length) {
+						$(this).after('<span class="two-digit-error text-danger small">Value must be a two-digit number</span>');
+					}
+				} else {
+					$(this).removeClass('is-invalid');
+					$(this).next('.two-digit-error').remove();
+				}
+			});
+
 			// Also validate on blur
 			$('.age-input').on('blur', function () {
 				var value = parseInt($(this).val());
@@ -284,6 +320,44 @@
 				} else {
 					$(this).removeClass('is-invalid');
 					$(this).next('.age-error').remove();
+				}
+			});
+
+			// Three-digit validation for Glasses Cost - only numbers, max 3 digits, range 0-999
+			$('.three-digit-input').on('input', function () {
+				var value = $(this).val();
+				// Remove any non-numeric characters
+				value = value.replace(/[^0-9]/g, '');
+				// Limit to 3 digits
+				if (value.length > 3) {
+					value = value.substring(0, 3);
+				}
+				$(this).val(value);
+				
+				// Validate range 0-999
+				var numValue = parseInt(value);
+				if (value && (numValue < 0 || numValue > 999)) {
+					$(this).addClass('is-invalid');
+					if (!$(this).next('.three-digit-error').length) {
+						$(this).after('<span class="three-digit-error text-danger small">Value must be between 0 and 999</span>');
+					}
+				} else {
+					$(this).removeClass('is-invalid');
+					$(this).next('.three-digit-error').remove();
+				}
+			});
+
+			// Also validate on blur
+			$('.three-digit-input').on('blur', function () {
+				var value = parseInt($(this).val());
+				if ($(this).val() && (value < 0 || value > 999)) {
+					$(this).addClass('is-invalid');
+					if (!$(this).next('.three-digit-error').length) {
+						$(this).after('<span class="three-digit-error text-danger small">Value must be between 0 and 999</span>');
+					}
+				} else {
+					$(this).removeClass('is-invalid');
+					$(this).next('.three-digit-error').remove();
 				}
 			});
 

@@ -71,9 +71,11 @@ namespace GlassLP.Models
         public int Location{ get; set; }
 
         [DisplayName("Screening Cost")]
+        [Range(0, 99, ErrorMessage = "Screening Cost must be a two-digit number")]
         public int ScreeningCost { get; set; }
 
 		[DisplayName("Glasses Cost")]
+        [Range(0, 999, ErrorMessage = "Glasses Cost must be a three-digit number (0-999)")]
         public int GlassesCost { get; set; }
 
         [DisplayName("Remarks/Action Taken")]

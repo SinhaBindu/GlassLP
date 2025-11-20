@@ -71,6 +71,25 @@
 				success: function (res) {
 					if (res.isSuccess) {
 						$("#subdata").html(res.data);
+						
+						// Select All checkbox functionality
+						$('#selectAll').on('change', function() {
+							$('.camp-checkbox').prop('checked', $(this).prop('checked'));
+						});
+						
+						// Individual checkbox change - uncheck selectAll if any checkbox is unchecked
+						$(document).on('change', '.camp-checkbox', function() {
+							if (!$(this).prop('checked')) {
+								$('#selectAll').prop('checked', false);
+							} else {
+								// Check if all checkboxes are checked
+								var totalCheckboxes = $('.camp-checkbox').length;
+								var checkedCheckboxes = $('.camp-checkbox:checked').length;
+								if (totalCheckboxes === checkedCheckboxes && totalCheckboxes > 0) {
+									$('#selectAll').prop('checked', true);
+								}
+							}
+						});
 					}
 					else {
 						$("#subdata").html('<h6 class="text-danger">' + res.message + ' < / h6>');

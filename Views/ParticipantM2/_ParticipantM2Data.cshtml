@@ -16,6 +16,9 @@
     <thead class="text-center">
         <tr>
             <th class="text-center tblth">Srno.</th>
+            <th class="text-center tblth">
+                <input type="checkbox" id="selectAll" title="Select All" />
+            </th>
             <th class="text-center tblth">Participant Type</th>
             <th class="text-center tblth">District</th>
             <th class="text-center tblth">Block Name</th>
@@ -31,6 +34,7 @@
             <th class="text-center tblth">Glasses Sold</th>
             <th class="text-center tblth">Feedback on Comfort</th>
             <th class="text-center tblth">Remarks</th>
+            <th class="text-center tblth">Status</th>
             <th class="text-center tblth" style="min-width:100px;">Action</th>
         </tr>
     </thead>
@@ -43,6 +47,9 @@
                 {
                     <tr>
                         <td class="text-center">@(srno++)</td>
+                        <td class="text-center">
+                            <input type="checkbox" class="camp-checkbox" name="selectedCamps" value="@dr["ParticipantId_pk"]" />
+                        </td>
                         <td class="text-left">@dr["ParticipantType"]</td>
                         <td class="text-left">@dr["Location"]</td>
                         <td class="text-left">@dr["DistrictName"]</td>
@@ -58,6 +65,7 @@
                         <td class="text-left">@dr["GlassesSold"]</td>
                         <td class="text-left">@dr["FeedbackonComfort"]</td>
                         <td class="text-left">@dr["Remarks"]</td>
+                        <td class="text-left">@dr["IsApproved"]</td>
                         <td class="edit text-center">
                             <a asp-action="Create"
                                asp-route-PId="ParticipantId_pk"
@@ -75,7 +83,7 @@
             else
             {
                 <tr>
-                    <td colspan="16" class="text-center"><strong class="text-danger">Record Not Found !!</strong></td>
+                    <td colspan="19" class="text-center"><strong class="text-danger">Record Not Found !!</strong></td>
                 </tr>
             }
         }
