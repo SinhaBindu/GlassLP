@@ -3,8 +3,8 @@
 
 // Write your JavaScript code.
 
-function GetJSDistricts(eleid) {
-    $.getJSON('/API/Masters/Districts', function (response) {
+function GetJSDistricts(eleid, ModuleId = 0) {
+    $.getJSON('/API/Masters/Districts?ModuleId=' + ModuleId, function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
             $.each(response.data, function (i, item) {
@@ -14,8 +14,8 @@ function GetJSDistricts(eleid) {
         }
     });
 }
-function GetJSBlocks(eleid, Paraid) {
-    $.getJSON('/API/Masters/Blocks?DistrictId=' + Paraid, function (response) {
+function GetJSBlocks(eleid, Paraid, ModuleId = 0) {
+    $.getJSON('/API/Masters/Blocks?DistrictId=' + Paraid + '&ModuleId='+ModuleId, function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
             $.each(response.data, function (i, item) {

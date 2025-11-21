@@ -28,26 +28,13 @@ namespace GlassLP.Controllers
         // GET: Camps
         public async Task<IActionResult> Index()
         {
-            ////return View(await _context.TblCamp.ToListAsync());
-            //var query = from c in _context.TblCamp
-            //            join d in _context.MstDistrict
-            //            on c.DistrictId equals d.DistrictId_pk
-            //            join b in _context.MstBlock
-            //            on new { BlockId = c.BlockId, DistrictId = c.DistrictId } equals new { BlockId = b.BlockId_pk, DistrictId = b.DistrictId_fk }
-            //            select new
-            //            {
-            //                Camp = c,
-            //                District = d,
-            //                Block = b
-            //            };
-
             return View();
         }
-        public Result GetCampm1List()
+        public Result GetCampList(Filtermodel filtermodel)
         {
             try
             {
-                DataTable tbllist = _spManager.SP_Campm1List();
+                DataTable tbllist = _spManager.SP_CampList(filtermodel);
                 if (tbllist.Rows.Count > 0)
                 {
                     string html = RenderPartialViewToString("_Campm1Data", tbllist);
@@ -63,26 +50,26 @@ namespace GlassLP.Controllers
                 return Result.Failure(ex.Message, ex);
             }
         }
-        public Result<string> GetCampm2List()
-        {
-            try
-            {
-                DataTable tbllist = _spManager.SP_Campm1List();
-                if (tbllist.Rows.Count > 0)
-                {
-                    string html = RenderPartialViewToString("_Campm1Data", tbllist);
-                    return Result<string>.Success(html, "Record Found!!");
-                }
-                else
-                {
-                    return Result<string>.Failure("Record Not Found!!");
-                }
-            }
-            catch (Exception ex)
-            {
-                return Result<string>.Failure(ex.Message, ex);
-            }
-        }
+        //public Result<string> GetCampm2List()
+        //{
+        //    try
+        //    {
+        //        DataTable tbllist = _spManager.SP_Campm1List();
+        //        if (tbllist.Rows.Count > 0)
+        //        {
+        //            string html = RenderPartialViewToString("_Campm1Data", tbllist);
+        //            return Result<string>.Success(html, "Record Found!!");
+        //        }
+        //        else
+        //        {
+        //            return Result<string>.Failure("Record Not Found!!");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Result<string>.Failure(ex.Message, ex);
+        //    }
+        //}
         private string RenderPartialViewToString(string viewName, object model)
         {
             ViewData.Model = model;
@@ -110,12 +97,13 @@ namespace GlassLP.Controllers
         public IActionResult AddCamp(int? CId)
         {
             CampViewModel model = new CampViewModel();
-            model.TypeofModulelist = _commonData.GetTypeOfModule();
+            model.TypeOfModuleList = _commonData.GetTypeOfModule();
             if (CId > 0)
             {
                 var tbl = _context.TblCamp.Find(CId);
                 if (tbl != null)
                 {
+                    model.TypeOfModule = tbl.TypeOfModule;
                     model.CampId_pk = tbl.CampId_pk;
                     model.DistrictId = tbl.DistrictId;
                     model.BlockId = tbl.BlockId;
@@ -125,10 +113,9 @@ namespace GlassLP.Controllers
                     model.CampDate = tbl.CampDate;
                     model.Location = tbl.Location;
                     model.CRPName = tbl.CRPName;
+                    model.VEId = tbl.VEId;
                     model.CRPMobileNo = tbl.CRPMobileNo;
                     model.ParticipantMobilized = tbl.ParticipantMobilized;
-                    model.TotalScreened = tbl.TotalScreened;
-                    model.TotalGlassesDistributed = tbl.TotalGlassesDistributed;
                 }
             }
             return View(model);
@@ -146,6 +133,7 @@ namespace GlassLP.Controllers
                     var tbl = model.CampId_pk > 0 ? await _context.TblCamp.FindAsync(model.CampId_pk) : new TblCamp();
                     if (tbl != null)
                     {
+                        tbl.TypeOfModule = model.TypeOfModule;
                         tbl.DistrictId = model.DistrictId;
                         tbl.BlockId = model.BlockId;
                         tbl.CLFId = model.CLFId;
@@ -153,27 +141,35 @@ namespace GlassLP.Controllers
                         tbl.VOName = model.VOName;
                         tbl.CampDate = model.CampDate;
                         tbl.Location = model.Location;
-                        tbl.CRPName = model.CRPName;
-                        tbl.CRPMobileNo = model.CRPMobileNo;
+                        if (model.TypeOfModule == 1)
+                        {
+                            tbl.CRPName = model.CRPName;
+                            tbl.CRPMobileNo = model.CRPMobileNo;
+                        }
+                        else if (model.TypeOfModule == 2)
+                        {
+                            tbl.VEId = model.VEId;
+                        }
                         tbl.ParticipantMobilized = model.ParticipantMobilized;
-                        tbl.TotalScreened = model.TotalScreened;
-                        tbl.TotalGlassesDistributed = model.TotalGlassesDistributed;
-                        tbl.PowerOfGlassId = model.PowerOfGlassId;
-
-                        tbl.PhotoUploadPath = "na";
+                        //tbl.TotalScreened = model.TotalScreened;
+                        //tbl.TotalGlassesDistributed = model.TotalGlassesDistributed;
+                        //tbl.PowerOfGlassId = model.PowerOfGlassId;
                         if (model.CampId_pk == 0)
                         {
+                            
                             tbl.CampCode = _spManager.GenerateCode(model.DistrictId, model.BlockId);// Optional: Generate unique CampCode
                             tbl.CreatedBy = currentUser;
-                            tbl.CreatedOn = DateTime.Now;
-
+                            tbl.CreatedOn = DateTime.Now; 
+                            tbl.IsActive = true;
+                            tbl.PhotoUploadPath = "na";
+                        }
+                        else
+                        {
                             tbl.UpdatedBy = currentUser;
                             tbl.UpdatedOn = DateTime.Now;
-                            tbl.IsActive = true;
                         }
                         if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
                         {
-
                             var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm1");
                             if (!Directory.Exists(uploadsDir))
                                 Directory.CreateDirectory(uploadsDir);
@@ -185,7 +181,6 @@ namespace GlassLP.Controllers
                             }
                             tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
                         }
-
                         _context.TblCamp.Add(tbl);
                         result = await _context.SaveChangesAsync();
                     }
@@ -225,91 +220,6 @@ namespace GlassLP.Controllers
 
             return View(tblCamp);
         }
-
-        // GET: Camps/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Camps/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(TblCamp tblCamp)
-        {
-
-            if (ModelState.IsValid)
-            {
-                var currentUser = GetSubmittedBy();
-
-                tblCamp.CreatedBy = currentUser;  // (typo in your model – should be "CreatedBy" ideally)
-                tblCamp.CreatedOn = DateTime.Now;
-                tblCamp.UpdatedBy = currentUser;
-                tblCamp.UpdatedOn = DateTime.Now;
-
-                tblCamp.CampCode = Utility.GenerateCampCode(tblCamp.DistrictName, tblCamp.BlockName, tblCamp.PanchayatName);
-
-
-                _context.Add(tblCamp);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tblCamp);
-        }
-
-        // GET: Camps/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tblCamp = await _context.TblCamp.FindAsync(id);
-            if (tblCamp == null)
-            {
-                return NotFound();
-            }
-            return View(tblCamp);
-        }
-
-        // POST: Camps/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CampId_pk,TypeOfModule,TypeOfVisit,CampCode,DistrictId,BlockId,CLFId,PanchayatId,VOName,CampDate,Location,CRPName,CRPMobileNo,ParticipantMobilized,TotalScreened,TotalGlassesDistributed,PowerOfGlassId,PhotoUploadPath,IsActive,CreatedBy,CreatedOn,UpdatedBy,UpdatedOn")] TblCamp tblCamp)
-        {
-            if (id != tblCamp.CampId_pk)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tblCamp);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TblCampExists(tblCamp.CampId_pk))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tblCamp);
-        }
-
         // GET: Camps/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

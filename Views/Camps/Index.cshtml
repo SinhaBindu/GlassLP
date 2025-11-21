@@ -1,25 +1,17 @@
-﻿@* @model IEnumerable<GlassLP.Data.TblCamp>
- *@
+﻿@model Filtermodel
 @{
     ViewData["Title"] = "Index";
 }
 <div class="row">
     <div class="col-12">
         <div class="card">
+            <form class="app-form" method="post" enctype="multipart/form-data" id="formid">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="mb-3">
-                            <label class="form-label">label</label>
-                            <select class="form-control">
-                                <option value="">Select</option>
-                                <option value="1">AURANGABAD</option>
-                                <option value="2">BHOJPUR</option>
-                                <option value="3">E.CHAMPARAN</option>
-                                <option value="4">GAYA</option>
-                                <option value="8">PATNA</option>
-                                <option value="9">VAISHALI</option>
-                            </select>
+                            @Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
+                            @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), null, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -40,6 +32,7 @@
                     </div>
                 </div>
             </div>
+            </form>
         </div>
     </div>
     <div class="col-12">
@@ -50,71 +43,6 @@
             </div>
             <div class="card-body p-0" >
                 <div class="table-responsive app-scroll" id="subdata">
-                @* 
-                <table class="table table-bottom-border table-lg align-middle">
-                <thead>
-                <tr class="app-sort">
-                <th>
-                @Html.DisplayNameFor(model => model.CampCode)
-                </th>
-                <th>
-                @Html.DisplayNameFor(model => model.VOName)
-                </th>
-                <th>
-                @Html.DisplayNameFor(model => model.CampDate)
-                </th>
-                <th>
-                @Html.DisplayNameFor(model => model.CRPName)
-                </th>
-                <th>
-                @Html.DisplayNameFor(model => model.CRPMobileNo)
-                </th>
-                <th>
-                @Html.DisplayNameFor(model => model.TotalScreened)
-                </th>
-                <th>
-                @Html.DisplayNameFor(model => model.TotalGlassesDistributed)
-                </th>
-                <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
-                <td>
-                @Html.DisplayFor(modelItem => item.CampCode)
-                </td>
-                <td>
-                @Html.DisplayFor(modelItem => item.VOName)
-                </td>
-                <td>
-                @Html.DisplayFor(modelItem => item.CampDate)
-                </td>
-                <td>
-                @Html.DisplayFor(modelItem => item.CRPName)
-                </td>
-                <td>
-                @Html.DisplayFor(modelItem => item.CRPMobileNo)
-                </td>
-                <td>
-                @Html.DisplayFor(modelItem => item.TotalScreened)
-                </td>
-                <td>
-                @Html.DisplayFor(modelItem => item.TotalGlassesDistributed)
-                </td>
-                <td>
-                <a asp-action="AddCamp" asp-route-CId="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-info">
-                <i class="fa fa-edit"></i>
-                </a>
-                <a asp-action="Details" asp-route-id="@item.CampId_pk" class="btn edit-item-btn icon-btn btn-outline-success">
-                <i class="fa fa-eye"></i>
-                </a>
-                </td>
-                </tr>
-                }
-                </tbody>
-                </table> *@
                 </div>
             </div>
         </div>
@@ -123,23 +51,25 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
+            GetJSDistricts("DistrictId", 0);
             BindData();
+            $('#formid').on('submit', function (e) {
+                e.preventDefault();
+                BindData();
+            });
         });
         function BindData() {
             debugger;
             $("#subdata").html('');
-            // var filtermodel = new Object();
-            // filtermodel.FromDt = $('#FromDt').val() == '' ? '' : $('#FromDt').val();
-            // filtermodel.ToDt = $('#ToDt').val() == '' ? '' : $('#ToDt').val();
-            // filtermodel.BatchId = $('#BatchId').val() == '' ? '' : $('#BatchId').val();
-            // filtermodel.UserId = $('#UserId').val() == '' ? '' : $('#UserId').val();
+             var filtermodel = new Object();
+            filtermodel.DistrictId = $('#DistrictId').val() == '' ? 0 : $('#DistrictId').val();
             // var formData = $('#formid').serialize();
 
             $.ajax({
                 type: "Get",
                 //url: "/Camps/GetCampm1List",
-                url: "/Camps/GetCampm2List",
-                data: '',//filtermodel,//JSON.stringify({ 'Roles': '' }),
+                url: "/Camps/GetCampList",
+                data: filtermodel,//filtermodel,//JSON.stringify({ 'Roles': '' }),
                 //cache: false,
                 success: function (res) {
                     if (res.isSuccess) {

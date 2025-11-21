@@ -58,7 +58,7 @@ namespace GlassLP.Models
         public int? PowerOfGlassId { get; set; }
         [NotMapped]
         [ValidateNever]
-        [DisplayName("Camp Image (JPGE,JPG,PNG)")]
+        [DisplayName("Camp Image")]
         public IFormFile? PhotoUpload { get; set; }
 
 		public string? PhotoUploadPath { get; set; }
@@ -91,7 +91,6 @@ namespace GlassLP.Models
 
 		[ValidateNever]
 		public IEnumerable<SelectListItem> BlockList { get; set; }
-		public IEnumerable<SelectListItem> TypeofModulelist { get; set; }
         // etc.
     }
 }

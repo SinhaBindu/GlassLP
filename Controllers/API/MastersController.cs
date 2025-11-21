@@ -33,9 +33,9 @@ namespace GlassLP.Controllers.API
         }
 
         [HttpGet("Districts")]
-        public async Task<IActionResult> GetMstDistrict()
+        public async Task<IActionResult> GetMstDistrict(int ModuleId = 0)
         {
-            var districts = await _context.MstDistrict.Where(x => x.IsActive == true).ToListAsync();
+            var districts = ModuleId > 0 ? await _context.MstDistrict.Where(x => x.IsActive == true && (x.ModelType == ModuleId || x.ModelType == null)).ToListAsync() : await _context.MstDistrict.Where(x => x.IsActive == true).ToListAsync();
             return Ok(new ApiResponse<List<object>>(
                 true,
                 "OK",
@@ -44,9 +44,9 @@ namespace GlassLP.Controllers.API
         }
 
         [HttpGet("Blocks")]
-        public async Task<IActionResult> GetMstBlock(int DistrictId)
+        public async Task<IActionResult> GetMstBlock(int DistrictId, int ModuleId=0)
         {
-            var blocks = await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true).ToListAsync();
+            var blocks = ModuleId > 0 ? await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true && (x.ModelType == ModuleId || x.ModelType == null)).ToListAsync(): await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true).ToListAsync();
             return Ok(new ApiResponse<List<object>>(
                 true,
                 "OK",
@@ -75,16 +75,16 @@ namespace GlassLP.Controllers.API
                 federations.Cast<object>().ToList()));
         }
 
-		[HttpGet("CampCode")]
-		public async Task<IActionResult> GetCampCode()
-		{
-			var camps = await _context.TblCamp.Where(x => x.IsActive == true).ToListAsync();
-			return Ok(new ApiResponse<List<object>>(
+        [HttpGet("CampCode")]
+        public async Task<IActionResult> GetCampCode()
+        {
+            var camps = await _context.TblCamp.Where(x => x.IsActive == true).ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
                 true,
                 "OK",
                 "Data fetched successfully",
                 camps.Cast<object>().ToList()));
-		}
+        }
 
         [HttpGet("Occupations")]
         public async Task<IActionResult> GetOccupations()
@@ -97,16 +97,16 @@ namespace GlassLP.Controllers.API
                 occupations.Cast<object>().ToList()));
         }
 
-		[HttpGet("PowerofGlasses")]
-		public async Task<IActionResult> GetPowerofGlasses()
-		{
-			var powerGlasses = await _context.MstPowerGlasses.Where(x => x.IsActive == true).ToListAsync();
-			return Ok(new ApiResponse<List<object>>(
+        [HttpGet("PowerofGlasses")]
+        public async Task<IActionResult> GetPowerofGlasses()
+        {
+            var powerGlasses = await _context.MstPowerGlasses.Where(x => x.IsActive == true).ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
                 true,
                 "OK",
                 "Data fetched successfully",
                 powerGlasses.Cast<object>().ToList()));
-		}
+        }
 
         [HttpGet("ClfName")]
         public async Task<IActionResult> GetClfName()

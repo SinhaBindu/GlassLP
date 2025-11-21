@@ -12,35 +12,35 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.TypeOfModule, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.TypeOfModule, Model.TypeofModulelist,null, new { @class = "required form-control" })
+                                @Html.DropDownListFor(m => m.TypeOfModule, Model.TypeOfModuleList, null, new { @class = "required form-control" })
                                 @Html.ValidationMessageFor(m => m.TypeOfModule, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "Select", new { @class = "required form-control" })
+                                @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
                                 @Html.ValidationMessageFor(m => m.DistrictId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "Select", new { @class = "required form-control" })
+                                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
                                 @Html.ValidationMessageFor(m => m.BlockId, "", new { @class = "text-danger" })
                                 </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "Select", new { @class = "required form-control" })
+                                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
                                 @Html.ValidationMessageFor(m => m.CLFId, "", new { @class = "text-danger" })
                                 </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.PanchayatId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "Select", new { @class = "required form-control" })
+                                @Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
                                 @Html.ValidationMessageFor(m => m.PanchayatId, "", new { @class = "text-danger" })
                                 </div>
                         </div>
@@ -65,21 +65,21 @@
                                 @Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-4 divve">
+                        <div class="col-md-4 divve" style="display:none;">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.VEId, new { @class = "form-label" })
                                 @Html.DropDownListFor(m => m.VEId, new List<SelectListItem>(), "Select", new { @class = "required form-control" })
                                 @Html.ValidationMessageFor(m => m.VEId, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-4 divcrp">
+                        <div class="col-md-4 divcrp" style="display:none;">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CRPName, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.CRPName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
                                 @Html.ValidationMessageFor(m => m.CRPName, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-4 divcrp">
+                        <div class="col-md-4 divcrp" style="display:none;">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CRPMobileNo, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.CRPMobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
@@ -89,13 +89,14 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.ParticipantMobilized, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "3" } })
+                                @Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "numbersOnly required form-control",@type="text", @maxlength = "3" } })
                                 @Html.ValidationMessageFor(m => m.ParticipantMobilized, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.PhotoUpload, new { @class = "form-label" })
+                                <span class="text-warning">(JPGE,JPG,PNG)</span>
                                 @if (Model.CampId_pk==0)
                                 {
                                     @Html.EditorFor(m => m.PhotoUpload, new { htmlAttributes = new { @class = "required form-control", type = "file",accept = "image/png, image/gif, image/jpeg" } })
@@ -121,35 +122,37 @@
     </div>
 </div>
 @section Scripts {
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script>
         $(document).ready(function () {
             $("#CampDate").datepicker({
-                dateFormat: "dd-M-yy" // jQuery UI standard
+                dateFormat: "dd-M-yy",
+                maxDate: 0// jQuery UI standard
             });
             jQuery('.numbersOnly').keyup(function () {
                 this.value = this.value.replace(/[^0-9\.]/g, '');
             });
-            GetJSDistricts("DistrictId");
+         
             $("#TypeOfModule").change(function () {
+                debugger;
                 $('.divcrp').hide(); $('.divve').hide();
-                ('#CRPName').val('').removeAttr(); ('#CRPMobileNo').val('').removeAttr();
-                ('#VEId').val('').removeAttr();
+                $('#CRPName').val('').removeAttr(); $('#CRPMobileNo').val('').removeAttr();
+                $('#VEId').val('').removeAttr(); $('#DistrictId').val('');
+                $('.ddl').empty();
+                if ($(this).val() != '')
+                    GetJSDistricts("DistrictId", $(this).val());
                 if ($(this).val() === "1") {
                     $('.divcrp').show();
                     $('#CRPName').attr("required", true);
                     $('#CRPMobileNo').attr("required", true);
-
                     $('#VEId').removeAttr("required");
                 }
                 else if ($(this).val() === "2") {
-                    $('.divcrp').hide();
+                    $('.divcrp').hide(); $('.divve').show();
                     $('#VEId').attr("required", true);
-
                     $('#CRPName').removeAttr("required");
                     $('#CRPMobileNo').removeAttr("required");
                 }

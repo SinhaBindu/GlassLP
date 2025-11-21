@@ -13,10 +13,13 @@ namespace GlassLP.Controllers.API
     public class CampsController : BaseController
     {
         private readonly GlassDbContext _context;
-
-        public CampsController(GlassDbContext context)
+        private readonly SPManager _spManager;
+        private readonly CommonData _commonData;
+        public CampsController(GlassDbContext context, SPManager spManager, CommonData commonData)
         {
             _context = context;
+            _spManager = spManager;
+            _commonData = commonData;
         }
 
         // GET: api/Camps
@@ -256,9 +259,10 @@ namespace GlassLP.Controllers.API
         }
 
         // POST: api/Camps/AddCamp
-        [HttpPost("AddCamp")]
-        public async Task<IActionResult> AddCamp([FromBody] CampViewModel model)
+        [HttpPost("AddCampDetail")]
+        public async Task<IActionResult> AddCampDetail([FromBody] CampViewModel model)
         {
+            int result = 0;
             if (!ModelState.IsValid)
             {
                 var validationErrors = ModelState
@@ -273,56 +277,77 @@ namespace GlassLP.Controllers.API
                     "Please provide all required fields.",
                     new List<object> { validationErrors }));
             }
-
             try
             {
-                var currentUser = GetSubmittedBy();
-
-                var camp = new TblCamp
+                var currentUser = GetSubmittedBy(); // your helper method or identity user
+                var tbl = model.CampId_pk > 0 ? await _context.TblCamp.FindAsync(model.CampId_pk) : new TblCamp();
+                if (tbl != null)
                 {
-                    TypeOfModule = model.TypeOfModule,
-                    TypeOfVisit = model.TypeOfVisit,
-                    DistrictId = model.DistrictId,
-                    BlockId = model.BlockId,
-                    CLFId = model.CLFId,
-                    PanchayatId = model.PanchayatId,
-                    VOName = model.VOName,
-                    CampDate = model.CampDate,
-                    Location = model.Location,
-                    CRPName = model.CRPName,
-                    CRPMobileNo = model.CRPMobileNo,
-                    ParticipantMobilized = model.ParticipantMobilized,
-                    TotalScreened = model.TotalScreened,
-                    TotalGlassesDistributed = model.TotalGlassesDistributed,
-                    PowerOfGlassId = model.PowerOfGlassId,
-                    PhotoUploadPath = model.PhotoUploadPath ?? "na",
-                    IsActive = true,
-                    CreatedBy = currentUser,
-                    CreatedOn = DateTime.Now,
-                    UpdatedBy = currentUser,
-                    UpdatedOn = DateTime.Now
-                };
+                    tbl.TypeOfModule = model.TypeOfModule;
+                    tbl.DistrictId = model.DistrictId;
+                    tbl.BlockId = model.BlockId;
+                    tbl.CLFId = model.CLFId;
+                    tbl.PanchayatId = model.PanchayatId;
+                    tbl.VOName = model.VOName;
+                    tbl.CampDate = model.CampDate;
+                    tbl.Location = model.Location;
+                    if (model.TypeOfModule == 1)
+                    {
+                        tbl.CRPName = model.CRPName;
+                        tbl.CRPMobileNo = model.CRPMobileNo;
+                    }
+                    else if (model.TypeOfModule == 2)
+                    {
+                        tbl.VEId = model.VEId;
+                    }
+                    tbl.ParticipantMobilized = model.ParticipantMobilized;
+                    tbl.TotalScreened = model.TotalScreened;
+                    tbl.TotalGlassesDistributed = model.TotalGlassesDistributed;
+                    tbl.PowerOfGlassId = model.PowerOfGlassId;
 
-                // Generate camp code using new format: DDD_BBB_PPP_XXX
-                if (model.DistrictId.HasValue && model.BlockId.HasValue && model.PanchayatId.HasValue)
-                {
-                    camp.CampCode = await GenerateCampCodeWithIdsAsync(
-                        model.DistrictId.Value,
-                        model.BlockId.Value,
-                        model.PanchayatId.Value);
+                    if (model.CampId_pk == 0)
+                    {
+                        
+                        tbl.CampCode = _spManager.GenerateCode(model.DistrictId, model.BlockId);// Optional: Generate unique CampCode
+                        tbl.CreatedBy = currentUser;
+                        tbl.CreatedOn = DateTime.Now;
+                        tbl.IsActive = true;
+                        tbl.PhotoUploadPath = "na";
+                    }
+                    else
+                    {
+                        tbl.UpdatedBy = currentUser;
+                        tbl.UpdatedOn = DateTime.Now;
+                    }
+                    if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
+                    {
+                        var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm1");
+                        if (!Directory.Exists(uploadsDir))
+                            Directory.CreateDirectory(uploadsDir);
+                        var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
+                        var filePath = Path.Combine(uploadsDir, uniqueFileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await model.PhotoUpload.CopyToAsync(stream);
+                        }
+                        tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
+                    }
+                    _context.TblCamp.Add(tbl);
+                    result = await _context.SaveChangesAsync();
+                    // Get created camp with names
+                    var createdCamp = await GetCampWithNamesAsync(tbl.CampId_pk);
+                    if (result > 0)
+                    {
+                        return Ok(new ApiResponse<List<object>>(
+                     true,
+                     "OK", "Camp created successfully.",
+                     new List<object> { createdCamp }));
+                    }
                 }
-
-                _context.TblCamp.Add(camp);
-                await _context.SaveChangesAsync();
-
-                // Get created camp with names
-                var createdCamp = await GetCampWithNamesAsync(camp.CampId_pk);
-
-                return Ok(new ApiResponse<List<object>>(
-                    true,
-                    "OK",
-                    "Camp created successfully.",
-                    new List<object> { createdCamp }));
+                return StatusCode(300, new ApiResponse<List<object>>(
+                 false, "server_error",
+                 "All fields required!!",
+                 new List<object>()));
             }
             catch (ArgumentException ex)
             {
@@ -335,8 +360,7 @@ namespace GlassLP.Controllers.API
             catch (Exception)
             {
                 return StatusCode(500, new ApiResponse<List<object>>(
-                    false,
-                    "server_error",
+                    false, "server_error",
                     "An error occurred while creating the camp.",
                     new List<object>()));
             }

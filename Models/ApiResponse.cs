@@ -6,6 +6,7 @@
         public string Reason { get; set; }
         public string Msg { get; set; }
         public T Data { get; set; }
+        //public Array ARRData { get; set; }
 
         public ApiResponse(bool status, string reason, string msg, T data)
         {
@@ -15,4 +16,18 @@
             Data = data;
         }
     }
+    //public class ApiResponseArray<Arrary>
+    //{
+    //    public bool Status { get; set; }
+    //    public string Reason { get; set; }
+    //    public string Msg { get; set; }
+    //    public Array ARRData { get; set; }
+    //    public ApiResponseArray(bool status, string reason, string msg, Array arrdata)
+    //    {
+    //        Status = status;
+    //        Reason = reason;
+    //        Msg = msg;
+    //        ARRData = arrdata;
+    //    }
+    //}
 }

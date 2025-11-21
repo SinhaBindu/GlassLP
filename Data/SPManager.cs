@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Globalization;
+using GlassLP.Models;
 
 namespace GlassLP.Data
 {
@@ -58,8 +59,6 @@ namespace GlassLP.Data
                 _lastNumber = 1;
             else
                 _lastNumber++;
-
-
             var district = _context.MstDistrict.Find(DistrictId);
             var disname = district?.DistrictName?.Substring(0, 3).ToUpper() ?? "XXX";
 
@@ -73,7 +72,7 @@ namespace GlassLP.Data
 
             return datePart + numberPart;
         }
-        public DataTable SP_Campm1List()
+        public DataTable SP_CampList(Filtermodel filtermodel)
         {
             //    StoredProcedure sp = new StoredProcedure("SP_Campm1List");
             //    var dbCommand = sp.Command.ToDbCommand();
@@ -83,7 +82,11 @@ namespace GlassLP.Data
             DataTable dt = new DataTable();
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
             using var conn = new SqlConnection(connectionString);
-            using var cmd = new SqlCommand("SP_Campm1List", conn);
+            using var cmd = new SqlCommand("SP_CampList", conn);
+            cmd.Parameters.AddWithValue("@DistrictId", filtermodel.DistrictId);
+            cmd.Parameters.AddWithValue("@BlockId", filtermodel.BlockId);
+            cmd.Parameters.AddWithValue("@VISId", filtermodel.VisionIssueId);
+            cmd.Parameters.AddWithValue("@PWId", filtermodel.PowerOfGlassId);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandTimeout = 500;
             using var da = new SqlDataAdapter(cmd);

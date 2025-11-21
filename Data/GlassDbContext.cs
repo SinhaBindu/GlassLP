@@ -18,6 +18,7 @@ namespace GlassLP.Data
         [Key]
         public int BlockId_pk { get; set; }
         public int? DistrictId_fk { get; set; }
+        public int? ModelType { get; set; }
         [StringLength(500)]
         public string? BlockName { get; set; }
         public bool? IsActive { get; set; }
@@ -53,6 +54,7 @@ namespace GlassLP.Data
     {
         [Key]
         public int DistrictId_pk { get; set; }
+        public int? ModelType { get; set; }
         [StringLength(500)]
         public string DistrictName { get; set; }
         public bool? IsActive { get; set; }
@@ -176,6 +178,7 @@ namespace GlassLP.Data
 
         [StringLength(20)]
         public string CRPMobileNo { get; set; }
+        public int? VEId { get; set; }
 
         public int? ParticipantMobilized { get; set; }
         public int? TotalScreened { get; set; }
@@ -194,7 +197,7 @@ namespace GlassLP.Data
         public DateTime? UpdatedOn { get; set; }
     }
 
-    [Table("mst_Vendors")]
+    [Table("mst_Vendors")]//Vision Entrepreneur 
     public class MstVendor
     {
         [Key]
