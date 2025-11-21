@@ -4,8 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace GlassLP.Controllers
 {
@@ -46,6 +49,45 @@ namespace GlassLP.Controllers
 			catch (Exception ex)
 			{
 				return Result<string>.Failure(ex.Message, ex);
+			}
+		}
+
+		[HttpPost]
+		public Result<string> ActivateSelected([FromBody] List<int> participantIds)
+		{
+			try
+			{
+				if (participantIds == null || !participantIds.Any())
+				{
+					return Result<string>.Failure("No participants selected.");
+				}
+
+				var ids = participantIds.Where(id => id > 0).Distinct().ToList();
+				if (!ids.Any())
+				{
+					return Result<string>.Failure("No valid participants selected.");
+				}
+
+				var currentUser = GetSubmittedBy() ?? "System";
+				var now = DateTime.Now;
+
+				// Build a comma-separated list of IDs for the SQL IN clause
+				var idList = string.Join(",", ids);
+
+				var sql = $@"
+							UPDATE tbl_PaticipantM2 
+							SET IsApproved = 1,
+							ApprovedBy = @p0,
+							ApprovedOn = @p1
+							WHERE ParticipantId_pk IN ({idList})";
+
+				_context.Database.ExecuteSqlRaw(sql, currentUser, now);
+
+				return Result<string>.Success(string.Empty, "Selected participants activated successfully.");
+			}
+			catch (Exception ex)
+			{
+				return Result<string>.Failure("Failed to activate participants: " + ex.Message);
 			}
 		}
 		private string RenderPartialViewToString(string viewName, object model)

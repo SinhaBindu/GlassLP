@@ -46,7 +46,10 @@
 		<div class="card">
 			<div class="card-header d-flex justify-content-between align-items-center">
 				<h5 class="mb-0">Index</h5>
-				<div class=""><a asp-action="Create" class="btn btn-sm btn-outline-info text-uppercase b-r-22"><i class="fa fa-edit"></i> Create New</a></div>
+				<div class="btn-group">
+					<a asp-action="Create" class="btn btn-sm btn-outline-info text-uppercase b-r-22"><i class="fa fa-edit"></i> Create New</a>
+					<button type="button" id="btnActivate" class="btn btn-sm btn-success text-uppercase b-r-22 ms-2">Active</button>
+				</div>
 			</div>
 			<div class="card-body p-0">
 				<div class="table-responsive app-scroll" id="subdata">
@@ -103,5 +106,34 @@
 			});
 		}
 
+		// Activate selected participants (same as ParticipantM1, but for ParticipantM2)
+		$('#btnActivate').on('click', function () {
+			var selectedIds = $('.camp-checkbox:checked').map(function () {
+				return parseInt($(this).val());
+			}).get();
+
+			if (selectedIds.length === 0) {
+				toastr.error('Please select at least one participant.');
+				return;
+			}
+
+			$.ajax({
+				url: '/ParticipantM2/ActivateSelected',
+				type: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(selectedIds),
+				success: function (response) {
+					if (response.isSuccess) {
+						toastr.success(response.message);
+						BindData(); // reload the list
+					} else {
+						toastr.error(response.message || 'Failed to activate participants.');
+					}
+				},
+				error: function () {
+					toastr.error('An error occurred while activating participants.');
+				}
+			});
+		});
 	</script>
 }

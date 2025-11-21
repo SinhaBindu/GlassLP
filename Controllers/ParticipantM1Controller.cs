@@ -27,6 +27,46 @@ namespace GlassLP.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ActivateSelected([FromBody] List<int> participantIds)
+        {
+            if (participantIds == null || !participantIds.Any())
+            {
+                return Json(Result.Failure("No participants selected."));
+            }
+
+            // Ensure distinct, positive IDs only
+            var ids = participantIds.Where(id => id > 0).Distinct().ToList();
+            if (!ids.Any())
+            {
+                return Json(Result.Failure("No valid participants selected."));
+            }
+
+            try
+            {
+                var currentUser = GetSubmittedBy() ?? "System";
+                var now = DateTime.Now;
+
+                // Build a comma-separated list of IDs for the SQL IN clause
+                var idList = string.Join(",", ids);
+
+                var sql = $@"
+                            UPDATE tbl_PaticipantM1 
+                            SET IsApproved = 1,
+                            ApprovedBy = @p0,
+                            ApprovedOn = @p1
+                            WHERE ParticipantId_pk IN ({idList})";
+
+                await _context.Database.ExecuteSqlRawAsync(sql, currentUser, now);
+
+                return Json(Result.Success("Selected participants activated successfully."));
+            }
+            catch (Exception ex)
+            {
+                return Json(Result.Failure("Failed to activate participants: " + ex.Message));
+            }
+        }
+
         public Result<string> GetParticipantM1List()
         {
             try
