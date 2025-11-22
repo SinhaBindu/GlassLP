@@ -260,7 +260,7 @@ namespace GlassLP.Controllers.API
 
         // POST: api/Camps/AddCamp
         [HttpPost("AddCampDetail")]
-        public async Task<IActionResult> AddCampDetail([FromBody] CampViewModel model)
+        public async Task<IActionResult> AddCampDetail([FromForm] CampViewModel model)
         {
             int result = 0;
             if (!ModelState.IsValid)
@@ -332,7 +332,10 @@ namespace GlassLP.Controllers.API
                         }
                         tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
                     }
-                    _context.TblCamp.Add(tbl);
+                    if (model.CampId_pk==0)
+                    {
+                        _context.TblCamp.Add(tbl);
+                    }
                     result = await _context.SaveChangesAsync();
                     // Get created camp with names
                     var createdCamp = await GetCampWithNamesAsync(tbl.CampId_pk);
