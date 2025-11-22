@@ -60,8 +60,12 @@ namespace GlassLP.Models
         [ValidateNever]
         [DisplayName("Camp Image")]
         public IFormFile? PhotoUpload { get; set; }
+        [NotMapped]
+        [ValidateNever]
+        [DisplayName("Camp Image")]
+        public string PhotoUploadBase64 { get; set; }
 
-		public string? PhotoUploadPath { get; set; }
+        public string? PhotoUploadPath { get; set; }
         public bool? IsActive { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }

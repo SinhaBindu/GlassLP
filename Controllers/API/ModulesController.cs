@@ -157,7 +157,13 @@ namespace GlassLP.Controllers.API
 					tbl.FollowupRequiredId = model.FollowupRequiredId;
 					tbl.DigitalConsentId = model.DigitalConsentId;
 
-					if (model.ParticipantId_pk == 0)
+                    byte[] bytes = Convert.FromBase64String(model.PhotoUploadBase64);
+
+                    var fileName = Guid.NewGuid().ToString() + ".jpg";
+                    var filePath = Path.Combine("wwwroot/uploads", fileName);
+
+                    System.IO.File.WriteAllBytes(filePath, bytes);
+                    if (model.ParticipantId_pk == 0)
 					{
 						tbl.CreatedBy = currentUser;
 						tbl.CreatedOn = DateTime.Now;

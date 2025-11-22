@@ -156,10 +156,10 @@ namespace GlassLP.Controllers
                         //tbl.PowerOfGlassId = model.PowerOfGlassId;
                         if (model.CampId_pk == 0)
                         {
-                            
+
                             tbl.CampCode = _spManager.GenerateCode(model.DistrictId, model.BlockId);// Optional: Generate unique CampCode
                             tbl.CreatedBy = currentUser;
-                            tbl.CreatedOn = DateTime.Now; 
+                            tbl.CreatedOn = DateTime.Now;
                             tbl.IsActive = true;
                             tbl.PhotoUploadPath = "na";
                         }
@@ -170,7 +170,7 @@ namespace GlassLP.Controllers
                         }
                         if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
                         {
-                            var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm1");
+                            var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm" + model.TypeOfModule);
                             if (!Directory.Exists(uploadsDir))
                                 Directory.CreateDirectory(uploadsDir);
                             var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";

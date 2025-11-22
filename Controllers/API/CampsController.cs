@@ -260,7 +260,7 @@ namespace GlassLP.Controllers.API
 
         // POST: api/Camps/AddCamp
         [HttpPost("AddCampDetail")]
-        public async Task<IActionResult> AddCampDetail([FromForm] CampViewModel model)
+        public async Task<IActionResult> AddCampDetail([FromBody] CampViewModel model)
         {
             int result = 0;
             if (!ModelState.IsValid)
@@ -319,19 +319,31 @@ namespace GlassLP.Controllers.API
                         tbl.UpdatedBy = currentUser;
                         tbl.UpdatedOn = DateTime.Now;
                     }
-                    if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
+                    if (!string.IsNullOrEmpty(model.PhotoUploadBase64))
                     {
-                        var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm1");
-                        if (!Directory.Exists(uploadsDir))
-                            Directory.CreateDirectory(uploadsDir);
-                        var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
-                        var filePath = Path.Combine(uploadsDir, uniqueFileName);
-                        using (var stream = new FileStream(filePath, FileMode.Create))
-                        {
-                            await model.PhotoUpload.CopyToAsync(stream);
-                        }
-                        tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
+                        byte[] bytes = Convert.FromBase64String(model.PhotoUploadBase64);
+
+                        var fileName = Guid.NewGuid().ToString() + ".jpg";
+                        var filePath = Path.Combine("wwwroot/uploads/campm"+model.TypeOfModule , fileName);
+
+                        System.IO.File.WriteAllBytes(filePath, bytes);
+
+                        var pth = "/uploads/campm" + model.TypeOfModule + "/" + fileName;
+                        model.PhotoUploadPath = pth; //"/uploads/" + fileName;
                     }
+                    //if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
+                    //{
+                    //    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm"+model.TypeOfModule);
+                    //    if (!Directory.Exists(uploadsDir))
+                    //        Directory.CreateDirectory(uploadsDir);
+                    //    var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
+                    //    var filePath = Path.Combine(uploadsDir, uniqueFileName);
+                    //    using (var stream = new FileStream(filePath, FileMode.Create))
+                    //    {
+                    //        await model.PhotoUpload.CopyToAsync(stream);
+                    //    }
+                    //    tbl.PhotoUploadPath = "\\uploads" + "\\campm"+model.TypeOfModule + "\\" + uniqueFileName;
+                    //}
                     if (model.CampId_pk==0)
                     {
                         _context.TblCamp.Add(tbl);
