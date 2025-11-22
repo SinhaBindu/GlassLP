@@ -101,3 +101,14 @@ function GetClfName(eleid) {
         }
     });
 }
+
+$nav = $('.vertical-sidebar');
+$header = $('.app-content');
+$toggle_nav_top = $('.header-toggle');
+$toggle_nav_top.click(function () {
+    $this = $(this);
+    $nav = $('.vertical-sidebar');
+    $nav.toggleClass('open');
+    $header.toggleClass('open');
+});
+

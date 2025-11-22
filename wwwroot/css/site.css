@@ -114,6 +114,10 @@ header.header-main {
     width: 105px;
     margin-left: 15px;
 }
+.cp-logo-right {
+    width: 105px;
+    margin-right: 15px;
+}
 .form-control:focus {
     transition: all 0.3s ease;
 }
@@ -430,6 +434,24 @@ nav .app-nav .menu-item {
 }
 
 /* SIDEBAR CODE END */
+.app-wrapper .app-content.open {
+    margin-left: 0px;
+    width: 100%;
+    -webkit-transition: .3s;
+    transition: .3s;
+}
+    .app-wrapper .app-content.open header.header-main {
+        width: 100%;
+        left: 0;
+        -webkit-transition: .3s;
+        transition: .3s;
+    }
+.app-wrapper .vertical-sidebar.open {
+    display: block;
+    margin-left: calc(-260px);
+    -webkit-transition: .3s;
+    transition: .3s;
+}
 .main-title {
     font-weight: 600;
     text-transform: capitalize;
