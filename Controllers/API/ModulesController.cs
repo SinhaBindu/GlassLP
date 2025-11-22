@@ -164,28 +164,25 @@ namespace GlassLP.Controllers.API
 						tbl.UpdatedBy = currentUser;
 						tbl.UpdatedOn = DateTime.Now;
 						tbl.IsActive = true;
-					}
+                        _context.TblPaticipantM1.Add(tbl);
+                    }
 					else
 					{
 						tbl.UpdatedBy = currentUser;
 						tbl.UpdatedOn = DateTime.Now;
 					}
-					_context.TblPaticipantM1.Add(tbl);
 					result = await _context.SaveChangesAsync();
 					// Get created/updated participant with camp code
 					var savedParticipant = await GetParticipantM1WithNamesAsync(tbl.ParticipantId_pk);
 					if (result > 0)
 					{
-						return Ok(new ApiResponse<List<object>>(
-							true,
-							"OK",
+						return Ok(new ApiResponse<List<object>>(true,"OK",
 							model.ParticipantId_pk > 0 ? "Participant updated successfully." : "Participant created successfully.",
 							new List<object> { savedParticipant }));
 					}
 				}
 				return StatusCode(300, new ApiResponse<List<object>>(
-					false,
-					"server_error",
+					false,"server_error",
 					"All fields required!!",
 					new List<object>()));
 			}
@@ -415,7 +412,10 @@ namespace GlassLP.Controllers.API
 						tbl.UpdatedBy = currentUser;
 						tbl.UpdatedOn = DateTime.Now;
 					}
-					_context.TblPaticipantM2.Add(tbl);
+                    if (model.ParticipantId_pk == 0)
+                    {
+                        _context.TblPaticipantM2.Add(tbl);
+                    }
 					result = await _context.SaveChangesAsync();
 					// Get created/updated participant with camp code
 					var savedParticipant = await GetParticipantM2WithNamesAsync(tbl.ParticipantId_pk);

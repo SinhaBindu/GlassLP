@@ -172,12 +172,14 @@ namespace GlassLP.Controllers
                         {
                             tbl.CreatedBy = currentUser;
                             tbl.CreatedOn = DateTime.Now;
-
+                           
+                            tbl.IsActive = true;
+                            _context.TblPaticipantM1.Add(tbl);
+                        }
+                        else {
                             tbl.UpdatedBy = currentUser;
                             tbl.UpdatedOn = DateTime.Now;
-                            tbl.IsActive = true;
                         }
-                        _context.TblPaticipantM1.Add(tbl);
                         result = await _context.SaveChangesAsync();
                     }
                     if (result > 0)
@@ -200,8 +202,6 @@ namespace GlassLP.Controllers
                 return Result<TblPaticipantM1>.Failure(ex.Message, ex);
             }
         }
-
-
         // GET: Camps/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -209,7 +209,6 @@ namespace GlassLP.Controllers
             {
                 return NotFound();
             }
-
             var tblCamp = await _context.TblCamp
                 .FirstOrDefaultAsync(m => m.CampId_pk == id);
             if (tblCamp == null)
