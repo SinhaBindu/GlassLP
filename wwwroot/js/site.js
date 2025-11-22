@@ -116,7 +116,7 @@ function GetJSVE(eleid, isSelect) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
             $.each(response.data, function (i, item) {
-                items += '<option value="' + item.Value + '">' + item.Text + '</option>';
+                items += '<option value="' + item.pk_VendorsId + '">' + item.VEName + '</option>';
             });
             $('#' + eleid).html(items);
         }

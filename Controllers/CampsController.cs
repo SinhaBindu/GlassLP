@@ -98,6 +98,7 @@ namespace GlassLP.Controllers
         {
             CampViewModel model = new CampViewModel();
             model.TypeOfModuleList = _commonData.GetTypeOfModule();
+            model.VEList = _commonData.GetVE();
             if (CId > 0)
             {
                 var tbl = _context.TblCamp.Find(CId);

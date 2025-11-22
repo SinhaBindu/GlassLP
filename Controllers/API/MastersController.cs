@@ -44,9 +44,9 @@ namespace GlassLP.Controllers.API
         }
 
         [HttpGet("Blocks")]
-        public async Task<IActionResult> GetMstBlock(int DistrictId, int ModuleId=0)
+        public async Task<IActionResult> GetMstBlock(int DistrictId, int ModuleId = 0)
         {
-            var blocks = ModuleId > 0 ? await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true && (x.ModelType == ModuleId || x.ModelType == null)).ToListAsync(): await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true).ToListAsync();
+            var blocks = ModuleId > 0 ? await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true && (x.ModelType == ModuleId || x.ModelType == null)).ToListAsync() : await _context.MstBlock.Where(x => x.DistrictId_fk == DistrictId && x.IsActive == true).ToListAsync();
             return Ok(new ApiResponse<List<object>>(
                 true,
                 "OK",
@@ -161,10 +161,23 @@ namespace GlassLP.Controllers.API
         [HttpGet("VEData")]
         public async Task<IActionResult> GetVEData(int isSelect = 0)
         {
-            var data = _commonData.GetVE(isSelect);
-            return await Task.FromResult(
-                Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
-            );
+            //var data = _commonData.GetVE(isSelect);
+            //return Ok(new ApiResponse<List<object>>(
+            //  true,
+            //  "OK",
+            //  "Data fetched successfully",
+            //  data.Cast<object>().ToList()));
+            var data = await _context.MstVendor.Where(x => x.IsActive == true)
+            .Select(x => new
+            {
+                pk_VendorsId = x.pk_VendorsId,
+                VEName = x.VEName,
+            }).ToListAsync();
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                data.Cast<object>().ToList()));
         }
     }
 }
