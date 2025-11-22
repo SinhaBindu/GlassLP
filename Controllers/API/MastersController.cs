@@ -158,5 +158,13 @@ namespace GlassLP.Controllers.API
                 Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
             );
         }
+        [HttpGet("VEData")]
+        public async Task<IActionResult> GetVEData(int isSelect = 0)
+        {
+            var data = _commonData.GetVE(isSelect);
+            return await Task.FromResult(
+                Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
+            );
+        }
     }
 }
