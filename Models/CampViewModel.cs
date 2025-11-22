@@ -86,8 +86,11 @@ namespace GlassLP.Models
         [NotMapped]
 		[ValidateNever]
 		public IEnumerable<SelectListItem> TypeOfModuleList { get; set; }
+        [NotMapped]
+        [ValidateNever]
+        public IEnumerable<SelectListItem> VEList { get; set; }
 
-		[ValidateNever]
+        [ValidateNever]
 		public IEnumerable<SelectListItem> TypeOfVisitList { get; set; }
 
 		[ValidateNever]

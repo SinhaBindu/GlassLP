@@ -4,6 +4,7 @@
 // Write your JavaScript code.
 
 function GetJSDistricts(eleid, ModuleId = 0) {
+    $('#' + eleid).empty();
     $.getJSON('/API/Masters/Districts?ModuleId=' + ModuleId, function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
@@ -15,6 +16,7 @@ function GetJSDistricts(eleid, ModuleId = 0) {
     });
 }
 function GetJSBlocks(eleid, Paraid, ModuleId = 0) {
+    $('#' + eleid).empty();
     $.getJSON('/API/Masters/Blocks?DistrictId=' + Paraid + '&ModuleId='+ModuleId, function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
@@ -26,6 +28,7 @@ function GetJSBlocks(eleid, Paraid, ModuleId = 0) {
     });
 }
 function GetJSPanchayats(eleid, Paraid1, Paraid2) {
+    $('#' + eleid).empty();
     $.getJSON('/API/Masters/Panchayats?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
@@ -37,6 +40,7 @@ function GetJSPanchayats(eleid, Paraid1, Paraid2) {
     });
 }
 function GetJSFederations(eleid, Paraid1, Paraid2) {
+    $('#' + eleid).empty();
     $.getJSON('/API/Masters/Federations?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
@@ -49,6 +53,7 @@ function GetJSFederations(eleid, Paraid1, Paraid2) {
 }
 
 function GetCampCode(eleid) {
+    $('#' + eleid).empty();
     $.getJSON('/API/Masters/CampCode', function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
@@ -67,6 +72,7 @@ function GetCampCode(eleid) {
 }
 
 function GetOccupations(eleid) {
+    $('#' + eleid).empty();
     $.getJSON('/API/Masters/Occupations', function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
@@ -79,6 +85,7 @@ function GetOccupations(eleid) {
 }
 
 function GetPowerofGlasses(eleid) {
+    $('#' + eleid).empty();
     $.getJSON('/API/Masters/PowerofGlasses', function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
@@ -91,11 +98,37 @@ function GetPowerofGlasses(eleid) {
 }
 
 function GetClfName(eleid) {
+    $('#' + eleid).empty();
     $.getJSON('/API/Masters/ClfName', function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
             $.each(response.data, function (i, item) {
                 items += '<option value="' + item.pk_CLFId + '">' + item.clfName + '</option>';
+            });
+            $('#' + eleid).html(items);
+        }
+    });
+}
+function GetJSVE(eleid, isSelect) {
+    debugger;
+    $('#' + eleid).empty();
+    $.getJSON('/API/Masters/VEData?isSelect=' + isSelect, function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.pk_VendorsId + '">' + item.VEName + '</option>';
+            });
+            $('#' + eleid).html(items);
+        }
+    });
+}
+function GetJSTypeofModuleData(eleid, isSelect) {
+    $('#' + eleid).empty();
+    $.getJSON('/API/Masters/DataTypeOfModule?isSelect=' + isSelect, function (response) {
+        if (response.status && response.data) {
+            let items = '<option value="">Select</option>';
+            $.each(response.data, function (i, item) {
+                items += '<option value="' + item.Value + '">' + item.Text + '</option>';
             });
             $('#' + eleid).html(items);
         }

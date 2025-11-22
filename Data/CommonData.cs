@@ -39,6 +39,21 @@ namespace GlassLP.Data
         }
 
         #endregion
+        public List<SelectListItem> GetVE(int IsSelect = 0)
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            list = _context.MstVendor.Where(SS => SS.IsActive == true).Select(SS => new SelectListItem { Value = SS.pk_VendorsId.ToString(), Text = SS.VEName }).ToList();
+            if (IsSelect == 0)
+            {
+                list.Insert(0, new SelectListItem { Value = "", Text = "Select" });
+            }
+            else if (IsSelect == 1)
+            {
+                list.Insert(0, new SelectListItem { Value = "", Text = "All" });
+            }
+
+            return list;
+        }
         public List<SelectListItem> GetTypeOfModule(int IsSelect = 0)
         {
             List<SelectListItem> list = new List<SelectListItem>();

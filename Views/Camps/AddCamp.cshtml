@@ -135,7 +135,7 @@
             jQuery('.numbersOnly').keyup(function () {
                 this.value = this.value.replace(/[^0-9\.]/g, '');
             });
-         
+           
             $("#TypeOfModule").change(function () {
                 debugger;
                 $('.divcrp').hide(); $('.divve').hide();
@@ -151,6 +151,7 @@
                     $('#VEId').removeAttr("required");
                 }
                 else if ($(this).val() === "2") {
+                    //GetJSVE("VEId",0)
                     $('.divcrp').hide(); $('.divve').show();
                     $('#VEId').attr("required", true);
                     $('#CRPName').removeAttr("required");
