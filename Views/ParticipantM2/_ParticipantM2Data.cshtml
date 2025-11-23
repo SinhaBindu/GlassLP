@@ -1,4 +1,5 @@
 ﻿@using System.Data
+@using System
 @{
     DataTable dt = new DataTable();
     if (Model != null)
@@ -45,10 +46,11 @@
                 int srno = 1;
                 foreach (DataRow dr in dt.Rows)
                 {
+                    var isApproved = dr["IsApproved"] != null && (dr["IsApproved"].ToString() == "1" || dr["IsApproved"].ToString().Equals("Approved", StringComparison.OrdinalIgnoreCase));
                     <tr>
                         <td class="text-center">@(srno++)</td>
                         <td class="text-center">
-                            <input type="checkbox" class="camp-checkbox" name="selectedCamps" value="@dr["ParticipantId_pk"]" />
+                            <input type="checkbox" class="camp-checkbox" name="selectedCamps" value="@dr["ParticipantId_pk"]" @(isApproved ? "disabled" : "") />
                         </td>
                         <td class="text-left">@dr["ParticipantType"]</td>
                         <td class="text-left">@dr["Location"]</td>
@@ -68,14 +70,16 @@
                         <td class="text-left">@dr["IsApproved"]</td>
                         <td class="edit text-center">
                             <a asp-action="Create"
-                               asp-route-PId="ParticipantId_pk"
+                               asp-route-CId="@dr["ParticipantId_pk"]"
                                class="btn edit-item-btn icon-btn btn-outline-info">
                                 <i class="fa fa-edit"></i>
                             </a>
 
-                            <button class="btn edit-item-btn icon-btn btn-outline-success" asp-action="Details" asp-route-PId="ParticipantId_pk">
+                            <a asp-action="Details"
+                               asp-route-id="@dr["ParticipantId_pk"]"
+                               class="btn edit-item-btn icon-btn btn-outline-success">
                                 <i class="fa fa-eye"></i>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 }

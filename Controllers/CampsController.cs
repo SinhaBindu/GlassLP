@@ -98,7 +98,7 @@ namespace GlassLP.Controllers
         {
             CampViewModel model = new CampViewModel();
             model.TypeOfModuleList = _commonData.GetTypeOfModule();
-            model.VEList = _commonData.GetVE();
+            //model.VEList = _commonData.GetVE();
             if (CId > 0)
             {
                 var tbl = _context.TblCamp.Find(CId);
@@ -124,7 +124,7 @@ namespace GlassLP.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<Result<TblCamp>> AddCamp(CampViewModel model, IFormFile? PhotoFile)
+        public async Task<Result<TblCamp>> AddCamp(CampViewModel model)
         {
             try
             {
@@ -169,20 +169,21 @@ namespace GlassLP.Controllers
                             tbl.UpdatedBy = currentUser;
                             tbl.UpdatedOn = DateTime.Now;
                         }
-                        if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
-                        {
-                            var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm" + model.TypeOfModule);
-                            if (!Directory.Exists(uploadsDir))
-                                Directory.CreateDirectory(uploadsDir);
-                            var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
-                            var filePath = Path.Combine(uploadsDir, uniqueFileName);
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await model.PhotoUpload.CopyToAsync(stream);
-                            }
-                            tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
-                        }
-                        _context.TblCamp.Add(tbl);
+                        //if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
+                        //{
+                        //    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm" + model.TypeOfModule);
+                        //    if (!Directory.Exists(uploadsDir))
+                        //        Directory.CreateDirectory(uploadsDir);
+                        //    var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
+                        //    var filePath = Path.Combine(uploadsDir, uniqueFileName);
+                        //    using (var stream = new FileStream(filePath, FileMode.Create))
+                        //    {
+                        //        await model.PhotoUpload.CopyToAsync(stream);
+                        //    }
+                        //    tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
+                        //}
+                        //tbl.PhotoUploadPath = "a";
+						_context.TblCamp.Add(tbl);
                         result = await _context.SaveChangesAsync();
                     }
                     if (result > 0)

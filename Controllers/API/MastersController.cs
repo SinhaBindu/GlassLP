@@ -64,6 +64,7 @@ namespace GlassLP.Controllers.API
                 "Data fetched successfully",
                 panchayats.Cast<object>().ToList()));
         }
+        
         [HttpGet("Federations")]
         public async Task<IActionResult> GetMstFederations(int DistrictId, int BlockId)
         {
@@ -75,21 +76,42 @@ namespace GlassLP.Controllers.API
                 federations.Cast<object>().ToList()));
         }
 
-        [HttpGet("CampCode")]
-        public async Task<IActionResult> GetCampCode()
-        {
-            var camps = await _context.TblCamp.Where(x => x.IsActive == true).ToListAsync();
-            return Ok(new ApiResponse<List<object>>(
-                true,
-                "OK",
-                "Data fetched successfully",
-                camps.Cast<object>().ToList()));
-        }
+        //[HttpGet("CampCode")]
+		//public async Task<IActionResult> GetCampCode()
+		//{
+		//    var camps = await _context.TblCamp.Where(x => x.IsActive == true).ToListAsync();
+		//    return Ok(new ApiResponse<List<object>>(
+		//        true,
+		//        "OK",
+		//        "Data fetched successfully",
+		//        camps.Cast<object>().ToList()));
+		//}
 
-        [HttpGet("Occupations")]
+		[HttpGet("CampCode")]
+		public async Task<IActionResult> GetCampCode()
+		{
+			var camps = await _context.TblCamp
+				.Where(x => x.IsActive == true && x.TypeOfModule == 1)
+				.Select(c => new
+				{
+					campId_pk = c.CampId_pk,
+					campCode = c.CampCode
+				})
+				.ToListAsync();
+
+			return Ok(new ApiResponse<List<object>>(
+				true,
+				"OK",
+				"Data fetched successfully",
+				camps.Cast<object>().ToList()));
+		}
+
+
+		[HttpGet("Occupations")]
         public async Task<IActionResult> GetOccupations()
         {
-            var occupations = await _context.MstOccupation.Where(x => x.IsActive == true).ToListAsync();
+            var occupations = await _context.MstOccupation
+                .Where(x => x.IsActive == true).ToListAsync();
             return Ok(new ApiResponse<List<object>>(
                 true,
                 "OK",
@@ -118,6 +140,7 @@ namespace GlassLP.Controllers.API
                 "Data fetched successfully",
                 clfs.Cast<object>().ToList()));
         }
+        
         [HttpGet("DataYesNo")]
         public async Task<IActionResult> GetYesNo(int isSelect = 0)
         {
@@ -126,6 +149,7 @@ namespace GlassLP.Controllers.API
                 Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
             );
         }
+        
         [HttpGet("DataTypeofVisionIssue")]
         public async Task<IActionResult> GetTypeofVisionIssue(int isSelect = 0)
         {
@@ -134,6 +158,7 @@ namespace GlassLP.Controllers.API
                 Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
             );
         }
+        
         [HttpGet("DataFeedbackonComfort")]
         public async Task<IActionResult> GetFeedbackonComfort(int isSelect = 0)
         {
@@ -142,6 +167,7 @@ namespace GlassLP.Controllers.API
                 Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
             );
         }
+       
         [HttpGet("DataTypeOfPaticipant")]
         public async Task<IActionResult> GetTypeOfPaticipant(int isSelect = 0)
         {
@@ -150,6 +176,7 @@ namespace GlassLP.Controllers.API
                 Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
             );
         }
+        
         [HttpGet("DataTypeOfModule")]
         public async Task<IActionResult> GetTypeOfModule(int isSelect = 0)
         {
@@ -158,6 +185,7 @@ namespace GlassLP.Controllers.API
                 Ok(new ApiResponse<List<SelectListItem>>(true, "OK", "Data fetched successfully", data))
             );
         }
+        
         [HttpGet("VEData")]
         public async Task<IActionResult> GetVEData(int isSelect = 0)
         {

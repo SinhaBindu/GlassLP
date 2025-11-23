@@ -48,7 +48,7 @@
 				<h5 class="mb-0">Index</h5>
 				<div class="btn-group">
 					<a asp-action="Create" class="btn btn-sm btn-outline-info text-uppercase b-r-22"><i class="fa fa-edit"></i> Create New</a>
-					<button type="button" id="btnActivate" class="btn btn-sm btn-success text-uppercase b-r-22 ms-2">Active</button>
+					<button type="button" id="btnActivate" class="btn btn-sm btn-success text-uppercase b-r-22 ms-2">Approved</button>
 				</div>
 			</div>
 			<div class="card-body p-0">
@@ -75,20 +75,20 @@
 					if (res.isSuccess) {
 						$("#subdata").html(res.data);
 						
-						// Select All checkbox functionality
+						// Select All checkbox functionality - only check enabled checkboxes
 						$('#selectAll').on('change', function() {
-							$('.camp-checkbox').prop('checked', $(this).prop('checked'));
+							$('.camp-checkbox:not(:disabled)').prop('checked', $(this).prop('checked'));
 						});
 						
 						// Individual checkbox change - uncheck selectAll if any checkbox is unchecked
-						$(document).on('change', '.camp-checkbox', function() {
+						$(document).on('change', '.camp-checkbox:not(:disabled)', function() {
 							if (!$(this).prop('checked')) {
 								$('#selectAll').prop('checked', false);
 							} else {
-								// Check if all checkboxes are checked
-								var totalCheckboxes = $('.camp-checkbox').length;
-								var checkedCheckboxes = $('.camp-checkbox:checked').length;
-								if (totalCheckboxes === checkedCheckboxes && totalCheckboxes > 0) {
+								// Check if all enabled checkboxes are checked
+								var totalEnabledCheckboxes = $('.camp-checkbox:not(:disabled)').length;
+								var checkedCheckboxes = $('.camp-checkbox:not(:disabled):checked').length;
+								if (totalEnabledCheckboxes === checkedCheckboxes && totalEnabledCheckboxes > 0) {
 									$('#selectAll').prop('checked', true);
 								}
 							}
@@ -108,7 +108,7 @@
 
 		// Activate selected participants (same as ParticipantM1, but for ParticipantM2)
 		$('#btnActivate').on('click', function () {
-			var selectedIds = $('.camp-checkbox:checked').map(function () {
+			var selectedIds = $('.camp-checkbox:checked:not(:disabled)').map(function () {
 				return parseInt($(this).val());
 			}).get();
 
