@@ -122,6 +122,7 @@ namespace GlassLP.Controllers
 				var tbl = _context.TblPaticipantM2.Find(CId);
 				if (tbl != null)
 				{
+					model.ParticipantId_pk = tbl.ParticipantId_pk;
 					model.TypeofParticipantId = tbl.TypeofParticipantId;
 					model.CampId_fk = tbl.CampId_fk;
 					model.DistrictId = tbl.DistrictId;
@@ -164,8 +165,8 @@ namespace GlassLP.Controllers
 					{
 						tbl.TypeofParticipantId = model.TypeofParticipantId;
 						tbl.CampId_fk = model.CampId_fk;
-						tbl.DistrictId =  model.DistrictId ;
-						model.BlockId = tbl.BlockId;
+						tbl.DistrictId = model.DistrictId;
+						tbl.BlockId = model.BlockId;
 						tbl.ParticipantName = model.ParticipantName;
 						tbl.MobileNo = model.MobileNo;
 						tbl.Age = model.Age;
@@ -182,20 +183,37 @@ namespace GlassLP.Controllers
 						tbl.FollowupRequiredId = model.FollowupRequiredId;
 						tbl.DigitalConsentId = model.DigitalConsentId;
 						tbl.Location = model.Location;
-						tbl.ScreeningCost = model.ScreeningCost;
-						tbl.GlassesCost = model.GlassesCost;
-						tbl.RemarksActionTaken = model.RemarksActionTaken;
+					tbl.ScreeningCost = model.ScreeningCost;
+					tbl.GlassesCost = model.GlassesCost;
+					tbl.RemarksActionTaken = model.RemarksActionTaken;
 
-						_context.TblPaticipantM2.Add(tbl);
-						result = await _context.SaveChangesAsync();
-					}
-					if (result > 0)
+					if (model.ParticipantId_pk == 0)
 					{
-						return Result<TblPaticipantM2>.Success(tbl, $"Participant Model 2 added successfully!");
+						tbl.CreatedBy = currentUser;
+						tbl.CreatedOn = DateTime.Now;
+						tbl.IsActive = true;
+						_context.TblPaticipantM2.Add(tbl);
 					}
 					else
 					{
-						return Result<TblPaticipantM2>.Failure("Error occurred while adding Participant Model 2.");
+						tbl.UpdatedBy = currentUser;
+						tbl.UpdatedOn = DateTime.Now;
+					}
+					result = await _context.SaveChangesAsync();
+					}
+					if (result > 0)
+					{
+						var message = model.ParticipantId_pk == 0 
+							? "Participant Model 2 added successfully!" 
+							: "Participant Model 2 updated successfully!";
+						return Result<TblPaticipantM2>.Success(tbl, message);
+					}
+					else
+					{
+						var errorMessage = model.ParticipantId_pk == 0 
+							? "Error occurred while adding Participant Model 2." 
+							: "Error occurred while updating Participant Model 2.";
+						return Result<TblPaticipantM2>.Failure(errorMessage);
 					}
 				}
 				else
@@ -210,5 +228,79 @@ namespace GlassLP.Controllers
 
 		}
 
+		// GET: ParticipantM2/Details/5
+		public async Task<IActionResult> Details(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			var participant = await _context.TblPaticipantM2
+				.FirstOrDefaultAsync(m => m.ParticipantId_pk == id);
+
+			if (participant == null)
+			{
+				return NotFound();
+			}
+
+			// Create view model with related data
+			var model = new ParticipantM2ViewModel
+			{
+				ParticipantId_pk = participant.ParticipantId_pk,
+				TypeofParticipantId = participant.TypeofParticipantId,
+				CampId_fk = participant.CampId_fk,
+				DistrictId = participant.DistrictId,
+				BlockId = participant.BlockId,
+				ParticipantName = participant.ParticipantName,
+				MobileNo = participant.MobileNo,
+				Age = participant.Age,
+				ScreeningDate = participant.ScreeningDate,
+				SHGName = participant.SHGName,
+				OccupationId = participant.OccupationId,
+				Occupation_Others = participant.Occupation_Others,
+				VisionIssueIdentifiedId = participant.VisionIssueIdentifiedId,
+				TypeofVisionIssueId = participant.TypeofVisionIssueId,
+				GlassesSold = participant.GlassesSold,
+				PowerofGlassId = participant.PowerofGlassId,
+				FeedbackonComfort = participant.FeedbackonComfort,
+				Remarks = participant.Remarks,
+				FollowupRequiredId = participant.FollowupRequiredId,
+				DigitalConsentId = participant.DigitalConsentId,
+				Location = participant.Location,
+				ScreeningCost = participant.ScreeningCost,
+				GlassesCost = participant.GlassesCost,
+				RemarksActionTaken = participant.RemarksActionTaken,
+				IsActive = participant.IsActive
+			};
+
+			// Get related names for display
+			ViewBag.CampCode = await _context.TblCamp
+				.Where(c => c.CampId_pk == participant.CampId_fk)
+				.Select(c => c.CampCode)
+				.FirstOrDefaultAsync() ?? "N/A";
+
+			ViewBag.DistrictName = await _context.MstDistrict
+				.Where(d => d.DistrictId_pk == participant.DistrictId)
+				.Select(d => d.DistrictName)
+				.FirstOrDefaultAsync() ?? "N/A";
+
+			ViewBag.BlockName = await _context.MstBlock
+				.Where(b => b.BlockId_pk == participant.BlockId)
+				.Select(b => b.BlockName)
+				.FirstOrDefaultAsync() ?? "N/A";
+
+			ViewBag.OccupationName = await _context.MstOccupation
+				.Where(o => o.pk_OccupationId == participant.OccupationId)
+				.Select(o => o.OccupatioName)
+				.FirstOrDefaultAsync() ?? "N/A";
+
+			ViewBag.PowerOfGlassName = await _context.MstPowerGlasses
+				.Where(p => p.pk_PowerGlassId == participant.PowerofGlassId)
+				.Select(p => p.PowerofGlass)
+				.FirstOrDefaultAsync() ?? "N/A";
+
+			return View(model);
+		}
 	}
 }

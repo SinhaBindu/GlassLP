@@ -3,10 +3,14 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header d-flex align-items-center">
-                <h5 class="mb-0">Add Participant Module One</h5>
+                <h5 class="mb-0">@(Model != null && Model.ParticipantId_pk > 0 ? "Update Participant Module One" : "Add Participant Module One")</h5>
             </div>
             <div class="card-body">
                 <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
+                    @if (Model != null && Model.ParticipantId_pk > 0)
+                    {
+                        @Html.HiddenFor(m => m.ParticipantId_pk)
+                    }
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
@@ -171,6 +175,103 @@
     }
     <script>
         $(document).ready(function () {
+            @if (Model != null && Model.ParticipantId_pk > 0)
+            {
+                <text>
+                // Store values to bind (edit mode)
+                var campIdToBind = '@Model.CampId_fk';
+                var occupationIdToBind = '@Model.OccupationId';
+                var powerOfGlassIdToBind = '@Model.PowerofGlassId';
+                
+                // Function to bind form data after dropdowns load
+                function bindFormData() {
+                    setTimeout(function() {
+                        // Bind Camp Code
+                        if (campIdToBind) {
+                            var campIdStr = String(campIdToBind);
+                            if ($("#CampId_fk option[value='" + campIdStr + "']").length > 0) {
+                                $("#CampId_fk").val(campIdStr).trigger('change');
+                            } else {
+                                // Try number match
+                                var campIdNum = parseInt(campIdToBind);
+                                $("#CampId_fk option").each(function() {
+                                    if (parseInt($(this).val()) === campIdNum) {
+                                        $("#CampId_fk").val($(this).val()).trigger('change');
+                                        return false;
+                                    }
+                                });
+                            }
+                        }
+                        
+                        // Bind Occupation
+                        if (occupationIdToBind) {
+                            var occIdStr = String(occupationIdToBind);
+                            if ($("#OccupationId option[value='" + occIdStr + "']").length > 0) {
+                                $("#OccupationId").val(occIdStr).trigger('change');
+                            }
+                        }
+                        
+                        // Bind Power of Glass
+                        if (powerOfGlassIdToBind) {
+                            var powIdStr = String(powerOfGlassIdToBind);
+                            if ($("#PowerofGlassId option[value='" + powIdStr + "']").length > 0) {
+                                $("#PowerofGlassId").val(powIdStr).trigger('change');
+                            }
+                        }
+                        
+                        // Set text field values
+                        $("#ParticipantName").val('@Html.Raw(Model.ParticipantName ?? "")');
+                        $("#MobileNo").val('@(Model.MobileNo ?? "")');
+                        $("#Age").val('@Model.Age');
+                        $("#SHGName").val('@Html.Raw(Model.SHGName ?? "")');
+                        $("#Occupation_Others").val('@Html.Raw(Model.Occupation_Others ?? "")');
+                        $("#Remarks").val('@Html.Raw(Model.Remarks ?? "")');
+                        
+                        // Set radio button values
+                        $("input[name='VisionIssueIdentifiedId'][value='@Model.VisionIssueIdentifiedId']").prop('checked', true);
+                        $("input[name='GlassesProvidedId'][value='@Model.GlassesProvidedId']").prop('checked', true);
+                        $("input[name='FollowupRequiredId'][value='@Model.FollowupRequiredId']").prop('checked', true);
+                        $("input[name='DigitalConsentId'][value='@Model.DigitalConsentId']").prop('checked', true);
+                        
+                        // Set dropdown values
+                        $("#TypeofVisionIssueId").val('@Model.TypeofVisionIssueId');
+                        $("#FeedbackonComfort").val('@Model.FeedbackonComfort');
+                        
+                        // Trigger occupation toggle
+                        toggleOtherOccupation();
+                    }, 500);
+                }
+                
+                // Track when dropdowns are loaded
+                var loadedCount = 0;
+                var totalDropdowns = 3;
+                
+                function checkAndBind() {
+                    loadedCount++;
+                    if (loadedCount === totalDropdowns) {
+                        bindFormData();
+                    }
+                }
+                
+                // Set up event listeners
+                $("#CampId_fk").on('campcode:loaded', checkAndBind);
+                $("#OccupationId").on('occupations:loaded', checkAndBind);
+                $("#PowerofGlassId").on('powerofglasses:loaded', checkAndBind);
+                
+                // Fallback check after 1.5 seconds
+                setTimeout(function() {
+                    if (loadedCount < totalDropdowns) {
+                        if ($("#CampId_fk option").length > 1) loadedCount++;
+                        if ($("#OccupationId option").length > 1) loadedCount++;
+                        if ($("#PowerofGlassId option").length > 1) loadedCount++;
+                        if (loadedCount === totalDropdowns) {
+                            bindFormData();
+                        }
+                    }
+                }, 1500);
+                </text>
+            }
+            
             GetCampCode("CampId_fk");
             GetOccupations("OccupationId");
             GetPowerofGlasses("PowerofGlassId");
@@ -214,7 +315,40 @@
                     success: function (response) {
                         if (response.isSuccess === true) {
                             toastr.success(response.message);
+                            
+                            // Clear all form fields
                             $('#addForm')[0].reset();
+                            
+                            // Clear all text inputs
+                            $('#addForm input[type="text"]').val('');
+                            $('#addForm input[type="number"]').val('');
+                            $('#addForm textarea').val('');
+                            
+                            // Reset all dropdowns to first option (empty/select option)
+                            $('#addForm select').each(function() {
+                                $(this).val($(this).find('option:first').val());
+                            });
+                            
+                            // Uncheck all radio buttons
+                            $('#addForm input[type="radio"]').prop('checked', false);
+                            
+                            // Clear hidden ParticipantId_pk field
+                            $('#ParticipantId_pk').val('0');
+                            
+                            // Disable Occupation_Others if needed
+                            $("#Occupation_Others").prop("disabled", true).val('');
+                            
+                            // Update header and button text back to "Add" mode
+                            $('.card-header h5').text('Add Participant Module One');
+                            $('button[type="submit"]').text('Submit');
+                            
+                            // Remove the hidden field if it exists
+                            $('#ParticipantId_pk').remove();
+                            
+                            // Redirect to index page after a short delay
+                            setTimeout(function() {
+                                window.location.href = '/ParticipantM1/Index';
+                            }, 1500);
                         } else {
                             toastr.error(response.message);
                         }

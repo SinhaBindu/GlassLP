@@ -319,18 +319,18 @@ namespace GlassLP.Controllers.API
                         tbl.UpdatedBy = currentUser;
                         tbl.UpdatedOn = DateTime.Now;
                     }
-                    if (!string.IsNullOrEmpty(model.PhotoUploadBase64))
-                    {
-                        byte[] bytes = Convert.FromBase64String(model.PhotoUploadBase64);
+                    //if (!string.IsNullOrEmpty(model.PhotoUploadBase64))
+                    //{
+                    //    byte[] bytes = Convert.FromBase64String(model.PhotoUploadBase64);
 
-                        var fileName = Guid.NewGuid().ToString() + ".jpg";
-                        var filePath = Path.Combine("wwwroot/uploads/campm"+model.TypeOfModule , fileName);
+                    //    var fileName = Guid.NewGuid().ToString() + ".jpg";
+                    //    var filePath = Path.Combine("wwwroot/uploads/campm"+model.TypeOfModule , fileName);
 
-                        System.IO.File.WriteAllBytes(filePath, bytes);
+                    //    System.IO.File.WriteAllBytes(filePath, bytes);
 
-                        var pth = "/uploads/campm" + model.TypeOfModule + "/" + fileName;
-                        model.PhotoUploadPath = pth; //"/uploads/" + fileName;
-                    }
+                    //    var pth = "/uploads/campm" + model.TypeOfModule + "/" + fileName;
+                    //    model.PhotoUploadPath = pth; //"/uploads/" + fileName;
+                    //}
                     //if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
                     //{
                     //    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm"+model.TypeOfModule);

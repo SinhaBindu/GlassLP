@@ -3,10 +3,14 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header d-flex align-items-center">
-				<h5 class="mb-0">Add Participant Module Two</h5>
+				<h5 class="mb-0">@(Model != null && Model.ParticipantId_pk > 0 ? "Update Participant Module Two" : "Add Participant Module Two")</h5>
 			</div>
 			<div class="card-body">
 				<form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
+					@if (Model != null && Model.ParticipantId_pk > 0)
+					{
+						@Html.HiddenFor(m => m.ParticipantId_pk)
+					}
 					<div class="row">
 						<div class="col-md-3">
 							<div class="mb-3">
@@ -223,7 +227,7 @@
 						<div class="col-12">
 							<div class="text-end">
 								<button class="btn btn-primary b-r-22" type="submit">
-									Submit
+									@(Model != null && Model.ParticipantId_pk > 0 ? "Update" : "Submit")
 								</button>
 							</div>
 						</div>
@@ -239,6 +243,26 @@
 	}
 	<script>
 		$(document).ready(function () {
+			@if (Model != null && Model.ParticipantId_pk > 0)
+			{
+				<text>
+				// Store values to bind (edit mode)
+				var campIdToBind = '@Model.CampId_fk';
+				var occupationIdToBind = '@Model.OccupationId';
+				var powerofGlassIdToBind = '@Model.PowerofGlassId';
+				var districtIdToBind = '@Model.DistrictId';
+				var blockIdToBind = '@Model.BlockId';
+				var locationToBind = '@Model.Location';
+				var typeofParticipantIdToBind = '@Model.TypeofParticipantId';
+				</text>
+			}
+
+			// Initialize datepicker for ScreeningDate
+			$("#ScreeningDate").datepicker({
+				dateFormat: "dd-M-yy",
+				maxDate: 0
+			});
+
 			GetOccupations("OccupationId");
 			GetPowerofGlasses("PowerofGlassId");
 
@@ -361,7 +385,19 @@
 				}
 			});
 
-			GetJSDistricts("DistrictId");
+			@if (Model != null && Model.ParticipantId_pk > 0)
+			{
+				<text>
+				// For edit mode, we'll load districts after setting up listeners
+				</text>
+			}
+			else
+			{
+				<text>
+				GetJSDistricts("DistrictId");
+				</text>
+			}
+			
 			$("#DistrictId").change(function () {
 				GetJSBlocks("BlockId", $(this).val());
 				$('#BlockId').val();
@@ -411,6 +447,224 @@
 			// run on page load (important for Edit page)
 			toggleOtherOccupation();
 
+			@if (Model != null && Model.ParticipantId_pk > 0)
+			{
+				<text>
+				// Function to bind form data after all dropdowns are loaded
+				function bindFormDataAfterLoad() {
+					setTimeout(function() {
+						console.log('Binding form data...');
+						
+						// Bind District first (this will trigger Block loading)
+						if (districtIdToBind && districtIdToBind !== '0' && districtIdToBind !== '') {
+							var districtSelect = $("#DistrictId");
+							var districtOption = districtSelect.find('option[value="' + districtIdToBind + '"]');
+							if (districtOption.length > 0) {
+								districtSelect.val(districtIdToBind).trigger('change');
+								console.log('District ID bound:', districtIdToBind);
+								
+								// Wait for blocks to load, then bind block
+								setTimeout(function() {
+									if (blockIdToBind && blockIdToBind !== '0' && blockIdToBind !== '') {
+										var blockSelect = $("#BlockId");
+										var blockOption = blockSelect.find('option[value="' + blockIdToBind + '"]');
+										if (blockOption.length > 0) {
+											blockSelect.val(blockIdToBind);
+											console.log('Block ID bound:', blockIdToBind);
+										} else {
+											blockSelect.find('option').each(function() {
+												if ($(this).val() == blockIdToBind || $(this).val() === blockIdToBind) {
+													blockSelect.val($(this).val());
+													console.log('Block ID bound (fallback):', blockIdToBind);
+													return false;
+												}
+											});
+										}
+									}
+								}, 500);
+							} else {
+								districtSelect.find('option').each(function() {
+									if ($(this).val() == districtIdToBind || $(this).val() === districtIdToBind) {
+										districtSelect.val($(this).val()).trigger('change');
+										console.log('District ID bound (fallback):', districtIdToBind);
+										setTimeout(function() {
+											if (blockIdToBind && blockIdToBind !== '0' && blockIdToBind !== '') {
+												var blockSelect = $("#BlockId");
+												blockSelect.find('option').each(function() {
+													if ($(this).val() == blockIdToBind || $(this).val() === blockIdToBind) {
+														blockSelect.val($(this).val());
+														return false;
+													}
+												});
+											}
+										}, 500);
+										return false;
+									}
+								});
+							}
+						}
+						
+						// Bind Camp Code dropdown
+						if (campIdToBind && campIdToBind !== '0' && campIdToBind !== '') {
+							var campSelect = $("#CampId_fk");
+							// Temporarily enable if disabled
+							var wasDisabled = campSelect.prop('disabled');
+							if (wasDisabled) {
+								campSelect.prop('disabled', false);
+							}
+							
+							var campOption = campSelect.find('option[value="' + campIdToBind + '"]');
+							if (campOption.length > 0) {
+								campSelect.val(campIdToBind);
+								console.log('Camp ID bound:', campIdToBind);
+							} else {
+								// Try with string comparison
+								campSelect.find('option').each(function() {
+									if ($(this).val() == campIdToBind || $(this).val() === campIdToBind) {
+										campSelect.val($(this).val());
+										console.log('Camp ID bound (fallback):', campIdToBind);
+										return false;
+									}
+								});
+							}
+							
+							// Restore disabled state if it was disabled
+							if (wasDisabled) {
+								campSelect.prop('disabled', true);
+							}
+						}
+						
+						// Bind Occupation
+						if (occupationIdToBind && occupationIdToBind !== '0' && occupationIdToBind !== '') {
+							var occSelect = $("#OccupationId");
+							var occOption = occSelect.find('option[value="' + occupationIdToBind + '"]');
+							if (occOption.length > 0) {
+								occSelect.val(occupationIdToBind).trigger('change');
+								console.log('Occupation ID bound:', occupationIdToBind);
+							} else {
+								occSelect.find('option').each(function() {
+									if ($(this).val() == occupationIdToBind || $(this).val() === occupationIdToBind) {
+										occSelect.val($(this).val()).trigger('change');
+										console.log('Occupation ID bound (fallback):', occupationIdToBind);
+										return false;
+									}
+								});
+							}
+							toggleOtherOccupation();
+						}
+						
+						// Bind Power of Glass
+						if (powerofGlassIdToBind && powerofGlassIdToBind !== '0' && powerofGlassIdToBind !== '') {
+							var powerSelect = $("#PowerofGlassId");
+							var powerOption = powerSelect.find('option[value="' + powerofGlassIdToBind + '"]');
+							if (powerOption.length > 0) {
+								powerSelect.val(powerofGlassIdToBind);
+								console.log('Power of Glass ID bound:', powerofGlassIdToBind);
+							} else {
+								powerSelect.find('option').each(function() {
+									if ($(this).val() == powerofGlassIdToBind || $(this).val() === powerofGlassIdToBind) {
+										powerSelect.val($(this).val());
+										console.log('Power of Glass ID bound (fallback):', powerofGlassIdToBind);
+										return false;
+									}
+								});
+							}
+						}
+						
+						// Set text field values
+						$("#ParticipantName").val('@Html.Raw(Model.ParticipantName ?? "")');
+						$("#MobileNo").val('@(Model.MobileNo ?? "")');
+						$("#Age").val('@Model.Age');
+						$("#SHGName").val('@Html.Raw(Model.SHGName ?? "")');
+						$("#Occupation_Others").val('@Html.Raw(Model.Occupation_Others ?? "")');
+						$("#Remarks").val('@Html.Raw(Model.Remarks ?? "")');
+						$("#ScreeningCost").val('@Model.ScreeningCost');
+						$("#GlassesCost").val('@Model.GlassesCost');
+						$("#RemarksActionTaken").val('@Html.Raw(Model.RemarksActionTaken ?? "")');
+						
+						// Set date field
+						@if (Model.ScreeningDate.HasValue)
+						{
+							<text>
+							var screeningDate = '@Model.ScreeningDate.Value.ToString("dd-MMM-yy")';
+							$("#ScreeningDate").val(screeningDate);
+							</text>
+						}
+						
+						// Set radio button values
+						if (locationToBind && locationToBind !== '0' && locationToBind !== '') {
+							$("input[name='Location'][value='" + locationToBind + "']").prop('checked', true);
+							toggleCampDropdown();
+						}
+						
+						if (typeofParticipantIdToBind && typeofParticipantIdToBind !== '0' && typeofParticipantIdToBind !== '') {
+							$("input[name='TypeofParticipantId'][value='" + typeofParticipantIdToBind + "']").prop('checked', true);
+						}
+						
+						$("input[name='VisionIssueIdentifiedId'][value='@Model.VisionIssueIdentifiedId']").prop('checked', true);
+						$("input[name='TypeofVisionIssueId'][value='@Model.TypeofVisionIssueId']").prop('checked', true);
+						$("input[name='GlassesSold'][value='@Model.GlassesSold']").prop('checked', true);
+						$("input[name='FeedbackonComfort'][value='@Model.FeedbackonComfort']").prop('checked', true);
+						$("input[name='FollowupRequiredId'][value='@Model.FollowupRequiredId']").prop('checked', true);
+						$("input[name='DigitalConsentId'][value='@Model.DigitalConsentId']").prop('checked', true);
+						
+						console.log('Form data binding completed');
+					}, 500);
+				}
+				
+				// Track when dropdowns are loaded
+				var loadedCount = 0;
+				var totalDropdowns = 4; // CampCode, Occupations, PowerofGlasses, Districts
+				
+				function checkAndBind() {
+					loadedCount++;
+					console.log('Dropdown loaded:', loadedCount, 'of', totalDropdowns);
+					if (loadedCount >= totalDropdowns) {
+						bindFormDataAfterLoad();
+					}
+				}
+				
+				// Listen for custom events from site.js
+				$("#CampId_fk").on('campcode:loaded', function() {
+					checkAndBind();
+				});
+				
+				$("#OccupationId").on('occupations:loaded', function() {
+					checkAndBind();
+				});
+				
+				$("#PowerofGlassId").on('powerofglasses:loaded', function() {
+					checkAndBind();
+				});
+				
+				// Load districts and wait for it to complete
+				GetJSDistricts("DistrictId");
+				
+				// Check when districts are loaded
+				var checkDistrictInterval = setInterval(function() {
+					if ($("#DistrictId option").length > 1) {
+						clearInterval(checkDistrictInterval);
+						checkAndBind();
+					}
+				}, 100);
+				
+				// Fallback: if all dropdowns have options after 2 seconds, bind anyway
+				setTimeout(function() {
+					clearInterval(checkDistrictInterval);
+					if (loadedCount < totalDropdowns) {
+						var hasCamp = $("#CampId_fk option").length > 1;
+						var hasOcc = $("#OccupationId option").length > 1;
+						var hasPower = $("#PowerofGlassId option").length > 1;
+						var hasDistrict = $("#DistrictId option").length > 1;
+						
+						if (hasCamp && hasOcc && hasPower && hasDistrict) {
+							bindFormDataAfterLoad();
+						}
+					}
+				}, 2000);
+				</text>
+			}
+
 			//Post sumbitted Data
 			$('#addForm').on('submit', function (e) {
 				e.preventDefault(); // <- prevent normal form post
@@ -425,12 +679,18 @@
 					success: function (response) {
 						if (response.isSuccess === true) {
 							toastr.success(response.message);
-							$('#addForm')[0].reset();
-							//setTimeout(function () {
-							//if (confirm("Do you want to add Participant?") == true) {
-							//window.location.href = "/ParticipantM1/Create?code=" + response.data.campCode;
-							//}
-							//}, 200);
+							
+							// Check if it's an update (ParticipantId_pk > 0)
+							var participantId = $('#ParticipantId_pk').val();
+							if (participantId && participantId !== '0' && participantId !== '') {
+								// Redirect to Index page after update
+								setTimeout(function () {
+									window.location.href = '/ParticipantM2/Index';
+								}, 1500);
+							} else {
+								// For create, just reset the form
+								$('#addForm')[0].reset();
+							}
 						} else {
 							toastr.error(response.message);
 						}

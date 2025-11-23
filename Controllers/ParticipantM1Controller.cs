@@ -120,6 +120,7 @@ namespace GlassLP.Controllers
                 var tbl = _context.TblPaticipantM1.Find(PId);
                 if (tbl != null)
                 {
+                    model.ParticipantId_pk = tbl.ParticipantId_pk;
                     model.CampId_fk = tbl.CampId_fk;
                     model.ParticipantName = tbl.ParticipantName;
                     model.MobileNo = tbl.MobileNo;
@@ -184,16 +185,25 @@ namespace GlassLP.Controllers
                     }
                     if (result > 0)
                     {
-                        return Result<TblPaticipantM1>.Success(tbl, $"Paticipant model one  added successfully!");
+                        var message = model.ParticipantId_pk == 0 
+                            ? "Paticipant model one added successfully!" 
+                            : "Paticipant model one updated successfully!";
+                        return Result<TblPaticipantM1>.Success(tbl, message);
                     }
                     else
                     {
-                        return Result<TblPaticipantM1>.Failure("Error occurred while adding paticipant model one.");
+                        var errorMessage = model.ParticipantId_pk == 0 
+                            ? "Error occurred while adding paticipant model one." 
+                            : "Error occurred while updating paticipant model one.";
+                        return Result<TblPaticipantM1>.Failure(errorMessage);
                     }
                 }
                 else
                 {
-                    return Result<TblPaticipantM1>.Failure("Error occurred while adding paticipant model one.");
+                    var errorMessage = model.ParticipantId_pk == 0 
+                        ? "Error occurred while adding paticipant model one." 
+                        : "Error occurred while updating paticipant model one.";
+                    return Result<TblPaticipantM1>.Failure(errorMessage);
                 }
             }
             catch (Exception ex)
@@ -202,21 +212,61 @@ namespace GlassLP.Controllers
                 return Result<TblPaticipantM1>.Failure(ex.Message, ex);
             }
         }
-        // GET: Camps/Details/5
+        // GET: ParticipantM1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var tblCamp = await _context.TblCamp
-                .FirstOrDefaultAsync(m => m.CampId_pk == id);
-            if (tblCamp == null)
+            
+            var participant = await _context.TblPaticipantM1
+                .FirstOrDefaultAsync(m => m.ParticipantId_pk == id);
+            
+            if (participant == null)
             {
                 return NotFound();
             }
 
-            return View(tblCamp);
+            // Create view model with related data
+            var model = new ParticipantM1ViewModel
+            {
+                ParticipantId_pk = participant.ParticipantId_pk,
+                CampId_fk = participant.CampId_fk,
+                ParticipantName = participant.ParticipantName,
+                MobileNo = participant.MobileNo,
+                Age = participant.Age,
+                SHGName = participant.SHGName,
+                OccupationId = participant.OccupationId,
+                Occupation_Others = participant.Occupation_Others,
+                VisionIssueIdentifiedId = participant.VisionIssueIdentifiedId,
+                TypeofVisionIssueId = participant.TypeofVisionIssueId,
+                GlassesProvidedId = participant.GlassesProvidedId,
+                PowerofGlassId = participant.PowerofGlassId,
+                FeedbackonComfort = participant.FeedbackonComfort,
+                Remarks = participant.Remarks,
+                FollowupRequiredId = participant.FollowupRequiredId,
+                DigitalConsentId = participant.DigitalConsentId,
+                IsActive = participant.IsActive
+            };
+
+            // Get related names for display
+            ViewBag.CampCode = await _context.TblCamp
+                .Where(c => c.CampId_pk == participant.CampId_fk)
+                .Select(c => c.CampCode)
+                .FirstOrDefaultAsync() ?? "N/A";
+
+            ViewBag.OccupationName = await _context.MstOccupation
+                .Where(o => o.pk_OccupationId == participant.OccupationId)
+                .Select(o => o.OccupatioName)
+                .FirstOrDefaultAsync() ?? "N/A";
+
+            ViewBag.PowerOfGlassName = await _context.MstPowerGlasses
+                .Where(p => p.pk_PowerGlassId == participant.PowerofGlassId)
+                .Select(p => p.PowerofGlass)
+                .FirstOrDefaultAsync() ?? "N/A";
+
+            return View(model);
         }
 
     }
