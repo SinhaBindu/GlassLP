@@ -146,57 +146,56 @@ namespace GlassLP.Controllers.API
                     new List<object>()));
             }
         }
-        //// GET: api/Camps
-        //[HttpGet]
-        //public async Task<IActionResult> GetTblCamp()
-        //{
-        //    var camps = await _context.TblCamp
-        //        .Select(c => new
-        //        {
-        //            campId_pk = c.CampId_pk,
-        //            typeOfModule = c.TypeOfModule,
-        //            typeOfVisit = c.TypeOfVisit,
-        //            campCode = c.CampCode,
-        //            districtId = c.DistrictId,
-        //            districtName = _context.MstDistrict
-        //                .Where(d => d.DistrictId_pk == c.DistrictId)
-        //                .Select(d => d.DistrictName)
-        //                .FirstOrDefault() ?? string.Empty,
-        //            blockId = c.BlockId,
-        //            blockName = _context.MstBlock
-        //                .Where(b => b.BlockId_pk == c.BlockId)
-        //                .Select(b => b.BlockName)
-        //                .FirstOrDefault() ?? string.Empty,
-        //            clfId = c.CLFId,
-        //            panchayatId = c.PanchayatId,
-        //            panchayatName = _context.MstPanchayat
-        //                .Where(p => p.PanchayatId_pk == c.PanchayatId)
-        //                .Select(p => p.PanchayatName)
-        //                .FirstOrDefault() ?? string.Empty,
-        //            voName = c.VOName,
-        //            campDate = c.CampDate,
-        //            location = c.Location,
-        //            crpName = c.CRPName,
-        //            crpMobileNo = c.CRPMobileNo,
-        //            participantMobilized = c.ParticipantMobilized,
-        //            totalScreened = c.TotalScreened,
-        //            totalGlassesDistributed = c.TotalGlassesDistributed,
-        //            powerOfGlassId = c.PowerOfGlassId,
-        //            photoUploadPath = c.PhotoUploadPath,
-        //            isActive = c.IsActive,
-        //            createdBy = c.CreatedBy,
-        //            createdOn = c.CreatedOn,
-        //            updatedBy = c.UpdatedBy,
-        //            updatedOn = c.UpdatedOn
-        //        })
-        //        .ToListAsync();
+        // GET: api/Camps
+        [HttpGet]
+        public async Task<IActionResult> GetTblCamp()
+        {
+            var camps = await _context.TblCamp
+                .Select(c => new
+                {
+                    campId_pk = c.CampId_pk,
+                    typeOfModule = c.TypeOfModule ?? 0,
+                    typeOfVisit = c.TypeOfVisit ?? 0,
+                    campCode = c.CampCode ?? string.Empty,
+                    districtId = c.DistrictId ?? 0,
+                    districtName = _context.MstDistrict
+            .Where(d => d.DistrictId_pk == c.DistrictId)
+            .Select(d => d.DistrictName)
+            .FirstOrDefault() ?? string.Empty,
 
-        //    return Ok(new ApiResponse<List<object>>(
-        //        true,
-        //        "OK",
-        //        "Data fetched successfully",
-        //        camps.Cast<object>().ToList()));
-        //}
+                    blockId = c.BlockId ?? 0,
+                    blockName = _context.MstBlock
+                    .Where(b => b.BlockId_pk == c.BlockId)
+                    .Select(b => b.BlockName)
+                    .FirstOrDefault() ?? string.Empty,
+
+                    clfId = c.CLFId ?? 0,
+                    panchayatId = c.PanchayatId ?? 0,
+                    panchayatName = _context.MstPanchayat
+                    .Where(p => p.PanchayatId_pk == c.PanchayatId)
+                    .Select(p => p.PanchayatName)
+                    .FirstOrDefault() ?? string.Empty,
+
+                    voName = c.VOName ?? string.Empty,
+                    campDate = c.CampDate,
+                    location = c.Location ?? string.Empty,
+                    crpName = c.CRPName ?? string.Empty,
+                    crpMobileNo = c.CRPMobileNo ?? string.Empty,
+                    participantMobilized = c.ParticipantMobilized ?? 0,
+                    totalScreened = c.TotalScreened ?? 0,
+                    totalGlassesDistributed = c.TotalGlassesDistributed ?? 0,
+                    powerOfGlassId = c.PowerOfGlassId ?? 0,
+                    photoUploadPath = c.PhotoUploadPath ?? string.Empty,
+                    isActive = c.IsActive ?? false
+                })
+                .ToListAsync();
+
+            return Ok(new ApiResponse<List<object>>(
+                true,
+                "OK",
+                "Data fetched successfully",
+                camps.Cast<object>().ToList()));
+        }
 
         //// GET: api/Camps/5
         //[HttpGet("{id}")]

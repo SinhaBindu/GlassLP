@@ -1,0 +1,103 @@
+@model GlassLP.Data.MstGlass
+
+@{
+    ViewData["Title"] = "Glass Details";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Glass Details</h5>
+                <div>
+                    <a asp-action="Create" asp-route-GId="@Model?.pk_Glassid" class="btn btn-sm btn-outline-info">
+                        <i class="fa fa-edit"></i> Edit
+                    </a>
+                    <a asp-action="Index" class="btn btn-sm btn-outline-secondary">
+                        <i class="fa fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Type of Module:</label>
+                            <div class="form-control-plaintext">@ViewBag.TypeOfModuleName</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Power of Glass:</label>
+                            <div class="form-control-plaintext">@ViewBag.PowerOfGlassName</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">No. of Glasses:</label>
+                            <div class="form-control-plaintext">@Model.NoofGlasses</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Per Glass Cost:</label>
+                            <div class="form-control-plaintext">@Model.PerGlassCost.ToString()</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Total Glass Cost:</label>
+                            <div class="form-control-plaintext">@Model.TotalGlassCost.ToString()</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Advertising Cost:</label>
+                            <div class="form-control-plaintext">@Model.AdvertisingCost.ToString()</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Storage/Miscellaneous Cost:</label>
+                            <div class="form-control-plaintext">@Model.Storagemiscellaneouscost.ToString()</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Is Active:</label>
+                            <div class="form-control-plaintext">@(Model.IsActive == true ? "Yes" : "No")</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Created By:</label>
+                            <div class="form-control-plaintext">@Model.CreatedBy</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Created On:</label>
+                            <div class="form-control-plaintext">@(Model.CreatedOn?.ToString("dd-MMM-yyyy HH:mm") ?? "")</div>
+                        </div>
+                    </div>
+                    @if (Model.UpdatedOn.HasValue)
+                    {
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Updated By:</label>
+                                <div class="form-control-plaintext">@Model.UpdatedBy</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Updated On:</label>
+                                <div class="form-control-plaintext">@Model.UpdatedOn.Value.ToString("dd-MMM-yyyy HH:mm")</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,141 @@
+@model GlassViewModel
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h5 class="mb-0">@(Model != null && Model.pk_Glassid > 0 ? "Update Glass Master" : "Add Glass Master")</h5>
+            </div>
+            <div class="card-body">
+                <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
+                    @if (Model != null && Model.pk_Glassid > 0)
+                    {
+                        @Html.HiddenFor(m => m.pk_Glassid)
+                    }
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.TypeOfModuleId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.TypeOfModuleId, Model.TypeOfModuleList, null, new { @class = "required form-control" })
+                                @Html.ValidationMessageFor(m => m.TypeOfModuleId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.PowerOfGlassId, new { @class = "form-label" })
+                                @Html.DropDownListFor(m => m.PowerOfGlassId, Model.PowerOfGlassList, "Select", new { @class = "required form-control" })
+                                @Html.ValidationMessageFor(m => m.PowerOfGlassId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.NoofGlasses, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.NoofGlasses, new { htmlAttributes = new { @class = "required numbersOnly form-control", @type = "text", @maxlength = "10" } })
+                                @Html.ValidationMessageFor(m => m.NoofGlasses, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.PerGlassCost, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.PerGlassCost, new { htmlAttributes = new { @class = "required numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
+                                @Html.ValidationMessageFor(m => m.PerGlassCost, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.TotalGlassCost, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.TotalGlassCost, new { htmlAttributes = new { @class = "required numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
+                                @Html.ValidationMessageFor(m => m.TotalGlassCost, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.AdvertisingCost, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.AdvertisingCost, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
+                                @Html.ValidationMessageFor(m => m.AdvertisingCost, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.Storagemiscellaneouscost, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.Storagemiscellaneouscost, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
+                                @Html.ValidationMessageFor(m => m.Storagemiscellaneouscost, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-end">
+                                <button class="btn btn-primary b-r-22" type="submit">
+                                    @(Model != null && Model.pk_Glassid > 0 ? "Update" : "Submit")
+                                </button>
+                                <a asp-action="Index" class="btn btn-secondary b-r-22">Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            jQuery('.numbersOnly').keyup(function () {
+                this.value = this.value.replace(/[^0-9\.]/g, '');
+            });
+
+            // Calculate TotalGlassCost when PerGlassCost or NoofGlasses changes
+            $('#PerGlassCost, #NoofGlasses').on('blur', function () {
+                var perGlassCost = parseFloat($('#PerGlassCost').val()) || 0;
+                var noofGlasses = parseFloat($('#NoofGlasses').val()) || 0;
+                var totalCost = perGlassCost * noofGlasses;
+                $('#TotalGlassCost').val(totalCost.toFixed(2));
+            });
+
+            //Post submitted Data
+            $('#addForm').on('submit', function (e) {
+                e.preventDefault();
+                var isvalid = $('#addForm').valid();
+                if (!$('#addForm').valid()) {
+                    return;
+                }
+                var form = $('#addForm')[0];
+                var formData = new FormData(form);
+                $.ajax({
+                    url: '/GlassesMst/Create',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.isSuccess === true) {
+                            toastr.success(response.message);
+                            
+                            // Check if it's an update
+                            var glassId = $('#pk_Glassid').val();
+                            if (glassId && glassId !== '0' && glassId !== '') {
+                                // Redirect to Index page after update
+                                setTimeout(function () {
+                                    window.location.href = '/GlassesMst/Index';
+                                }, 1500);
+                            } else {
+                                // For create, reset the form
+                                $('#addForm')[0].reset();
+                            }
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        $('#responseMessage').html(
+                            '<div class="alert alert-danger">Error: ' + xhr.responseText + '</div>'
+                        );
+                    }
+                });
+            });
+        });
+    </script>
+}
+
