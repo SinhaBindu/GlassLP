@@ -155,14 +155,48 @@ namespace GlassLP.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<Result<TblPaticipantM2>> Create(ParticipantM2ViewModel model)
 		{
-			try
+		try
+		{
+			if (ModelState.IsValid)
 			{
-				if (ModelState.IsValid)
+				// Check for duplicate participant (only for new records)
+				if (model.ParticipantId_pk == 0)
 				{
-					var currentUser = GetSubmittedBy(); // your helper method or identity user
-					var tbl = model.ParticipantId_pk > 0 ? await _context.TblPaticipantM2.FindAsync(model.ParticipantId_pk) : new TblPaticipantM2();
-					if (tbl != null)
+					var participantName = model.ParticipantName?.Trim();
+					var mobileNo = model.MobileNo?.Trim();
+
+					var duplicateExists = await _context.TblPaticipantM2
+						.AnyAsync(p => p.IsActive == true &&
+							p.ParticipantName != null && p.ParticipantName.Trim() == participantName &&
+							p.MobileNo != null && p.MobileNo.Trim() == mobileNo);
+
+					if (duplicateExists)
 					{
+						return Result<TblPaticipantM2>.Failure("A participant with the same name and mobile number already exists.");
+					}
+				}
+				else
+				{
+					// For updates, check if another participant (excluding current one) has the same name and mobile
+					var participantName = model.ParticipantName?.Trim();
+					var mobileNo = model.MobileNo?.Trim();
+
+					var duplicateExists = await _context.TblPaticipantM2
+						.AnyAsync(p => p.IsActive == true &&
+							p.ParticipantId_pk != model.ParticipantId_pk &&
+							p.ParticipantName != null && p.ParticipantName.Trim() == participantName &&
+							p.MobileNo != null && p.MobileNo.Trim() == mobileNo);
+
+					if (duplicateExists)
+					{
+						return Result<TblPaticipantM2>.Failure("A participant with the same name and mobile number already exists.");
+					}
+				}
+
+				var currentUser = GetSubmittedBy(); // your helper method or identity user
+				var tbl = model.ParticipantId_pk > 0 ? await _context.TblPaticipantM2.FindAsync(model.ParticipantId_pk) : new TblPaticipantM2();
+				if (tbl != null)
+				{
 						tbl.TypeofParticipantId = model.TypeofParticipantId;
 						tbl.CampId_fk = model.CampId_fk;
 						tbl.DistrictId = model.DistrictId;

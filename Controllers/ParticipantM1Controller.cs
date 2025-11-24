@@ -152,6 +152,40 @@ namespace GlassLP.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    // Check for duplicate participant (only for new records)
+                    if (model.ParticipantId_pk == 0)
+                    {
+                        var participantName = model.ParticipantName?.Trim();
+                        var mobileNo = model.MobileNo?.Trim();
+
+                        var duplicateExists = await _context.TblPaticipantM1
+                            .AnyAsync(p => p.IsActive == true &&
+                                p.ParticipantName != null && p.ParticipantName.Trim() == participantName &&
+                                p.MobileNo != null && p.MobileNo.Trim() == mobileNo);
+
+                        if (duplicateExists)
+                        {
+                            return Result<TblPaticipantM1>.Failure("A participant with the same name and mobile number already exists.");
+                        }
+                    }
+                    else
+                    {
+                        // For updates, check if another participant (excluding current one) has the same name and mobile
+                        var participantName = model.ParticipantName?.Trim();
+                        var mobileNo = model.MobileNo?.Trim();
+
+                        var duplicateExists = await _context.TblPaticipantM1
+                            .AnyAsync(p => p.IsActive == true &&
+                                p.ParticipantId_pk != model.ParticipantId_pk &&
+                                p.ParticipantName != null && p.ParticipantName.Trim() == participantName &&
+                                p.MobileNo != null && p.MobileNo.Trim() == mobileNo);
+
+                        if (duplicateExists)
+                        {
+                            return Result<TblPaticipantM1>.Failure("A participant with the same name and mobile number already exists.");
+                        }
+                    }
+
                     var currentUser = GetSubmittedBy(); // your helper method or identity user
                     var tbl = model.ParticipantId_pk > 0 ? await _context.TblPaticipantM1.FindAsync(model.ParticipantId_pk) : new TblPaticipantM1();
                     if (tbl != null)
