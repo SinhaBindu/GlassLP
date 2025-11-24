@@ -55,7 +55,9 @@ namespace GlassLP.Models
         [DisplayName("Digital Consent")]
         public int DigitalConsentId { get; set; }
 
-
+        [NotMapped]
+        [ValidateNever]
+        public IEnumerable<SelectListItem> VSIdList { get; set; }
         public bool? IsActive { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }

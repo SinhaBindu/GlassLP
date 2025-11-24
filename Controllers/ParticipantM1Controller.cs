@@ -14,12 +14,14 @@ namespace GlassLP.Controllers
         private readonly GlassDbContext _context;
         private readonly ICompositeViewEngine _viewEngine;
         private readonly SPManager _spManager;
+        private readonly CommonData _commonData;
         int result = 0;
-        public ParticipantM1Controller(GlassDbContext context, ICompositeViewEngine viewEngine, SPManager spManager)
+        public ParticipantM1Controller(GlassDbContext context, ICompositeViewEngine viewEngine, SPManager spManager,CommonData commonData)
         {
             _context = context;
             _viewEngine = viewEngine;
             _spManager = spManager;
+            _commonData = commonData;
         }
 
         public async Task<IActionResult> Index()
@@ -112,10 +114,11 @@ namespace GlassLP.Controllers
             }
         }
 
-        public IActionResult Create(int? PId)
+        public IActionResult Create(int? PId,string Code="")
         {
             ParticipantM1ViewModel model = new ParticipantM1ViewModel();
-            if (PId > 0 && PId > 0)
+            model.VSIdList = _commonData.GetTypeofVisionIssue();
+            if (PId > 0)
             {
                 var tbl = _context.TblPaticipantM1.Find(PId);
                 if (tbl != null)

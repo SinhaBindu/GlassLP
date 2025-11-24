@@ -42,11 +42,11 @@ namespace GlassLP.Models
 
         [DisplayName("Camp Location")]
         public string? Location { get; set; }
-        [Required]
+        //[Required]
         [DisplayName("CRP Name")]
         public string? CRPName { get; set; }
         [DisplayName("CRP Mobile No")]
-        [Required]
+        //[Required]
         public string? CRPMobileNo { get; set; }
         [DisplayName("Participants Mobilized")]
         public int? ParticipantMobilized { get; set; }
@@ -64,7 +64,6 @@ namespace GlassLP.Models
         [ValidateNever]
         [DisplayName("Camp Image")]
         public string PhotoUploadBase64 { get; set; }
-
         public string? PhotoUploadPath { get; set; }
         public bool? IsActive { get; set; }
         public string? CreatedBy { get; set; }

@@ -146,10 +146,13 @@ namespace GlassLP.Controllers
                         {
                             tbl.CRPName = model.CRPName;
                             tbl.CRPMobileNo = model.CRPMobileNo;
+                            tbl.VEId = null;
                         }
                         else if (model.TypeOfModule == 2)
                         {
                             tbl.VEId = model.VEId;
+                            tbl.CRPName = null;
+                            tbl.CRPMobileNo = null;
                         }
                         tbl.ParticipantMobilized = model.ParticipantMobilized;
                         //tbl.TotalScreened = model.TotalScreened;

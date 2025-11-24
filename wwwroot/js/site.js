@@ -17,7 +17,7 @@ function GetJSDistricts(eleid, ModuleId = 0) {
 }
 function GetJSBlocks(eleid, Paraid, ModuleId = 0) {
     $('#' + eleid).empty();
-    $.getJSON('/API/Masters/Blocks?DistrictId=' + Paraid + '&ModuleId='+ModuleId, function (response) {
+    $.getJSON('/API/Masters/Blocks?DistrictId=' + Paraid + '&ModuleId=' + ModuleId, function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
             $.each(response.data, function (i, item) {
@@ -52,41 +52,18 @@ function GetJSFederations(eleid, Paraid1, Paraid2) {
     });
 }
 
-function GetCampCode(eleid) {
-    $('#' + eleid).empty();
-    $.getJSON('/API/Masters/CampCode', function (response) {
-        console.log('CampCode API Response:', response);
-        
+function GetCampCode(eleid, code, TypeMId,isselect) {
+    //debugger;
+    $('#' + eleid).empty(); let items;
+    $.getJSON('/API/Masters/CampCode?code=' + code + '&&TypeMId=' + TypeMId, function (response) {
         if (response.status && response.data) {
-            console.log('CampCode Data:', response.data);
-            console.log('First Item:', response.data[0]);
-            console.log('First Item Keys:', Object.keys(response.data[0] || {}));
-            
-            let items = '<option value="">Select</option>';
+            if (code == "" || code == "0" || code == undefined) {
+                items = '<option value="">Select</option>';
+            }
+            //items = '<option value="">Select</option>';
             $.each(response.data, function (i, item) {
-                // Log the first item to see actual structure
-                if (i === 0) {
-                    console.log('Processing first item:', item);
-                    console.log('campId_pk:', item.campId_pk);
-                    console.log('CampId_pk:', item.CampId_pk);
-                    console.log('campCode:', item.campCode);
-                    console.log('CampCode:', item.CampCode);
-                }
-                
-                // Handle both camelCase and PascalCase (check all possible property name variations)
-                var campId = item.campId_pk || item.CampId_pk || item.campIdPk || item.CampIdPk;
-                var campCode = item.campCode || item.CampCode;
-                
-                if (!campId || !campCode) {
-                    console.error('Missing property in item:', item);
-                    return; // Skip this item if properties are missing
-                }
-                
-                items += '<option value="' + campId + '">' + campCode + '</option>';
+                items += '<option value="' + item.campId_pk + '">' + item.campCode + '</option>';
             });
-            
-            console.log('Generated options HTML length:', items.length);
-            
             // Temporarily enable dropdown to set HTML, then restore disabled state if needed
             var wasDisabled = $('#' + eleid).prop('disabled');
             $('#' + eleid).prop('disabled', false);
@@ -94,17 +71,7 @@ function GetCampCode(eleid) {
             if (wasDisabled) {
                 $('#' + eleid).prop('disabled', true);
             }
-            
-            console.log('CampCode dropdown populated with', $('#' + eleid + ' option').length, 'options');
-            
-            // Trigger custom event after dropdown is populated
-            $('#' + eleid).trigger('campcode:loaded');
-        } else {
-            console.error('CampCode API response error:', response);
         }
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.error('CampCode API request failed:', textStatus, errorThrown);
-        console.error('Response:', jqXHR.responseText);
     });
 }
 
@@ -117,8 +84,6 @@ function GetOccupations(eleid) {
                 items += '<option value="' + item.pk_OccupationId + '">' + item.occupatioName + '</option>';
             });
             $('#' + eleid).html(items);
-            // Trigger custom event after dropdown is populated
-            $('#' + eleid).trigger('occupations:loaded');
         }
     });
 }
@@ -132,8 +97,6 @@ function GetPowerofGlasses(eleid) {
                 items += '<option value="' + item.pk_PowerGlassId + '">' + item.powerofGlass + '</option>';
             });
             $('#' + eleid).html(items);
-            // Trigger custom event after dropdown is populated
-            $('#' + eleid).trigger('powerofglasses:loaded');
         }
     });
 }
@@ -157,7 +120,7 @@ function GetJSVE(eleid, isSelect) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
             $.each(response.data, function (i, item) {
-                items += '<option value="' + item.pk_VendorsId + '">' + item.VEName + '</option>';
+                items += '<option value="' + item.pk_VendorsId + '">' + item.veName + '</option>';
             });
             $('#' + eleid).html(items);
         }

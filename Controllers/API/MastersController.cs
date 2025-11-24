@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using static Azure.Core.HttpHeader;
 
 namespace GlassLP.Controllers.API
 {
@@ -76,36 +77,58 @@ namespace GlassLP.Controllers.API
                 federations.Cast<object>().ToList()));
         }
 
-        //[HttpGet("CampCode")]
-		//public async Task<IActionResult> GetCampCode()
-		//{
-		//    var camps = await _context.TblCamp.Where(x => x.IsActive == true).ToListAsync();
-		//    return Ok(new ApiResponse<List<object>>(
-		//        true,
-		//        "OK",
-		//        "Data fetched successfully",
-		//        camps.Cast<object>().ToList()));
-		//}
+        [HttpGet("CampCode")]
+        public async Task<IActionResult> GetCampCode(string code="", int TypeMId = 0)
+        {
+            try
+            {
+                var query = _context.TblCamp.AsQueryable();
 
-		[HttpGet("CampCode")]
-		public async Task<IActionResult> GetCampCode()
-		{
-			var camps = await _context.TblCamp
-				.Where(x => x.IsActive == true && x.TypeOfModule == 1)
-				.Select(c => new
-				{
-					campId_pk = c.CampId_pk,
-					campCode = c.CampCode
-				})
-				.ToListAsync();
+                // Build dynamic conditions
+                if (TypeMId > 0)
+                    query = query.Where(x => x.TypeOfModule == TypeMId);
 
-			return Ok(new ApiResponse<List<object>>(
-				true,
-				"OK",
-				"Data fetched successfully",
-				camps.Cast<object>().ToList()));
-		}
+                if (!string.IsNullOrEmpty(code))
+                    query = query.Where(x => x.CampCode == code);
 
+                query = query.Where(x => x.IsActive == true);
+
+                var camps = await query
+                    .Select(x => new
+                    {
+                        campId_pk = x.CampId_pk,
+                        campCode = x.CampCode
+                    })
+                    .ToListAsync();
+
+                if (camps.Count == 0)
+                {
+                    return Ok(new ApiResponse<List<object>>(
+                        false,
+                        "error",
+                        "Record not found!",
+                        new List<object>()
+                    ));
+                }
+
+                return Ok(new ApiResponse<List<object>>(
+                    true,
+                    "OK",
+                    "Data fetched successfully",
+                    camps.Cast<object>().ToList()
+                ));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse<string>(
+                    false,
+                    "error",
+                    ex.Message,
+                    null
+                ));
+            }
+
+        }
 
 		[HttpGet("Occupations")]
         public async Task<IActionResult> GetOccupations()

@@ -33,7 +33,7 @@
                         <div class="col-md-3">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.Age, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "2", @min = "35", @max = "59" } })
+                                @Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "numbersOnly required form-control", @type="text", @maxlength = "2", @min = "35", @max = "59" } })
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -57,13 +57,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.TypeofVisionIssueId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.TypeofVisionIssueId, new List<SelectListItem>
-                                {
-                                new SelectListItem { Text = "pyesMyopia", Value = "1" },
-                                new SelectListItem { Text = "Other", Value = "2" }
-                                },
-                                         "Select",
-                                         new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.TypeofVisionIssueId, Model.VSIdList, null, new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -175,104 +169,13 @@
     }
     <script>
         $(document).ready(function () {
-            @if (Model != null && Model.ParticipantId_pk > 0)
-            {
-                <text>
-                // Store values to bind (edit mode)
-                var campIdToBind = '@Model.CampId_fk';
-                var occupationIdToBind = '@Model.OccupationId';
-                var powerOfGlassIdToBind = '@Model.PowerofGlassId';
-                
-                // Function to bind form data after dropdowns load
-                function bindFormData() {
-                    setTimeout(function() {
-                        // Bind Camp Code
-                        if (campIdToBind) {
-                            var campIdStr = String(campIdToBind);
-                            if ($("#CampId_fk option[value='" + campIdStr + "']").length > 0) {
-                                $("#CampId_fk").val(campIdStr).trigger('change');
-                            } else {
-                                // Try number match
-                                var campIdNum = parseInt(campIdToBind);
-                                $("#CampId_fk option").each(function() {
-                                    if (parseInt($(this).val()) === campIdNum) {
-                                        $("#CampId_fk").val($(this).val()).trigger('change');
-                                        return false;
-                                    }
-                                });
-                            }
-                        }
-                        
-                        // Bind Occupation
-                        if (occupationIdToBind) {
-                            var occIdStr = String(occupationIdToBind);
-                            if ($("#OccupationId option[value='" + occIdStr + "']").length > 0) {
-                                $("#OccupationId").val(occIdStr).trigger('change');
-                            }
-                        }
-                        
-                        // Bind Power of Glass
-                        if (powerOfGlassIdToBind) {
-                            var powIdStr = String(powerOfGlassIdToBind);
-                            if ($("#PowerofGlassId option[value='" + powIdStr + "']").length > 0) {
-                                $("#PowerofGlassId").val(powIdStr).trigger('change');
-                            }
-                        }
-                        
-                        // Set text field values
-                        $("#ParticipantName").val('@Html.Raw(Model.ParticipantName ?? "")');
-                        $("#MobileNo").val('@(Model.MobileNo ?? "")');
-                        $("#Age").val('@Model.Age');
-                        $("#SHGName").val('@Html.Raw(Model.SHGName ?? "")');
-                        $("#Occupation_Others").val('@Html.Raw(Model.Occupation_Others ?? "")');
-                        $("#Remarks").val('@Html.Raw(Model.Remarks ?? "")');
-                        
-                        // Set radio button values
-                        $("input[name='VisionIssueIdentifiedId'][value='@Model.VisionIssueIdentifiedId']").prop('checked', true);
-                        $("input[name='GlassesProvidedId'][value='@Model.GlassesProvidedId']").prop('checked', true);
-                        $("input[name='FollowupRequiredId'][value='@Model.FollowupRequiredId']").prop('checked', true);
-                        $("input[name='DigitalConsentId'][value='@Model.DigitalConsentId']").prop('checked', true);
-                        
-                        // Set dropdown values
-                        $("#TypeofVisionIssueId").val('@Model.TypeofVisionIssueId');
-                        $("#FeedbackonComfort").val('@Model.FeedbackonComfort');
-                        
-                        // Trigger occupation toggle
-                        toggleOtherOccupation();
-                    }, 500);
-                }
-                
-                // Track when dropdowns are loaded
-                var loadedCount = 0;
-                var totalDropdowns = 3;
-                
-                function checkAndBind() {
-                    loadedCount++;
-                    if (loadedCount === totalDropdowns) {
-                        bindFormData();
-                    }
-                }
-                
-                // Set up event listeners
-                $("#CampId_fk").on('campcode:loaded', checkAndBind);
-                $("#OccupationId").on('occupations:loaded', checkAndBind);
-                $("#PowerofGlassId").on('powerofglasses:loaded', checkAndBind);
-                
-                // Fallback check after 1.5 seconds
-                setTimeout(function() {
-                    if (loadedCount < totalDropdowns) {
-                        if ($("#CampId_fk option").length > 1) loadedCount++;
-                        if ($("#OccupationId option").length > 1) loadedCount++;
-                        if ($("#PowerofGlassId option").length > 1) loadedCount++;
-                        if (loadedCount === totalDropdowns) {
-                            bindFormData();
-                        }
-                    }
-                }, 1500);
-                </text>
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            if (code) {
+                GetCampCode("CampId_fk", code, 0, 0);
             }
-            
-            GetCampCode("CampId_fk");
+            GetCampCode("CampId_fk", "", 1, 0);
+
             GetOccupations("OccupationId");
             GetPowerofGlasses("PowerofGlassId");
 
@@ -361,5 +264,103 @@
                 });
             });
         });
+
+        // //if (Model != null && Model.ParticipantId_pk > 0)
+            // {
+            //     <text>
+            //     // Store values to bind (edit mode)
+            //     var campIdToBind = '@Model.CampId_fk';
+            //     var occupationIdToBind = '@Model.OccupationId';
+            //     var powerOfGlassIdToBind = '@Model.PowerofGlassId';
+                
+            //     // Function to bind form data after dropdowns load
+            //     function bindFormData() {
+            //         setTimeout(function() {
+            //             // Bind Camp Code
+            //             if (campIdToBind) {
+            //                 var campIdStr = String(campIdToBind);
+            //                 if ($("#CampId_fk option[value='" + campIdStr + "']").length > 0) {
+            //                     $("#CampId_fk").val(campIdStr).trigger('change');
+            //                 } else {
+            //                     // Try number match
+            //                     var campIdNum = parseInt(campIdToBind);
+            //                     $("#CampId_fk option").each(function() {
+            //                         if (parseInt($(this).val()) === campIdNum) {
+            //                             $("#CampId_fk").val($(this).val()).trigger('change');
+            //                             return false;
+            //                         }
+            //                     });
+            //                 }
+            //             }
+                        
+            //             // Bind Occupation
+            //             if (occupationIdToBind) {
+            //                 var occIdStr = String(occupationIdToBind);
+            //                 if ($("#OccupationId option[value='" + occIdStr + "']").length > 0) {
+            //                     $("#OccupationId").val(occIdStr).trigger('change');
+            //                 }
+            //             }
+                        
+            //             // Bind Power of Glass
+            //             if (powerOfGlassIdToBind) {
+            //                 var powIdStr = String(powerOfGlassIdToBind);
+            //                 if ($("#PowerofGlassId option[value='" + powIdStr + "']").length > 0) {
+            //                     $("#PowerofGlassId").val(powIdStr).trigger('change');
+            //                 }
+            //             }
+                        
+            //             // Set text field values
+            //             $("#ParticipantName").val('@Html.Raw(Model.ParticipantName ?? "")');
+            //             $("#MobileNo").val('@(Model.MobileNo ?? "")');
+            //             $("#Age").val('@Model.Age');
+            //             $("#SHGName").val('@Html.Raw(Model.SHGName ?? "")');
+            //             $("#Occupation_Others").val('@Html.Raw(Model.Occupation_Others ?? "")');
+            //             $("#Remarks").val('@Html.Raw(Model.Remarks ?? "")');
+                        
+            //             // Set radio button values
+            //             $("input[name='VisionIssueIdentifiedId'][value='@Model.VisionIssueIdentifiedId']").prop('checked', true);
+            //             $("input[name='GlassesProvidedId'][value='@Model.GlassesProvidedId']").prop('checked', true);
+            //             $("input[name='FollowupRequiredId'][value='@Model.FollowupRequiredId']").prop('checked', true);
+            //             $("input[name='DigitalConsentId'][value='@Model.DigitalConsentId']").prop('checked', true);
+                        
+            //             // Set dropdown values
+            //             $("#TypeofVisionIssueId").val('@Model.TypeofVisionIssueId');
+            //             $("#FeedbackonComfort").val('@Model.FeedbackonComfort');
+                        
+            //             // Trigger occupation toggle
+            //             toggleOtherOccupation();
+            //         }, 500);
+            //     }
+                
+            //     // Track when dropdowns are loaded
+            //     var loadedCount = 0;
+            //     var totalDropdowns = 3;
+                
+            //     function checkAndBind() {
+            //         loadedCount++;
+            //         if (loadedCount === totalDropdowns) {
+            //             bindFormData();
+            //         }
+            //     }
+                
+            //     // Set up event listeners
+            //     $("#CampId_fk").on('campcode:loaded', checkAndBind);
+            //     $("#OccupationId").on('occupations:loaded', checkAndBind);
+            //     $("#PowerofGlassId").on('powerofglasses:loaded', checkAndBind);
+                
+            //     // Fallback check after 1.5 seconds
+            //     setTimeout(function() {
+            //         if (loadedCount < totalDropdowns) {
+            //             if ($("#CampId_fk option").length > 1) loadedCount++;
+            //             if ($("#OccupationId option").length > 1) loadedCount++;
+            //             if ($("#PowerofGlassId option").length > 1) loadedCount++;
+            //             if (loadedCount === totalDropdowns) {
+            //                 bindFormData();
+            //             }
+            //         }
+            //     }, 1500);
+            //     </text>
+            // }
+
     </script>
 }
