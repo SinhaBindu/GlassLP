@@ -172,21 +172,21 @@ namespace GlassLP.Controllers
                             tbl.UpdatedBy = currentUser;
                             tbl.UpdatedOn = DateTime.Now;
                         }
-                        //if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
-                        //{
-                        //    var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm" + model.TypeOfModule);
-                        //    if (!Directory.Exists(uploadsDir))
-                        //        Directory.CreateDirectory(uploadsDir);
-                        //    var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
-                        //    var filePath = Path.Combine(uploadsDir, uniqueFileName);
-                        //    using (var stream = new FileStream(filePath, FileMode.Create))
-                        //    {
-                        //        await model.PhotoUpload.CopyToAsync(stream);
-                        //    }
-                        //    tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
-                        //}
+                        if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
+                        {
+                            var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "campm" + model.TypeOfModule);
+                            if (!Directory.Exists(uploadsDir))
+                                Directory.CreateDirectory(uploadsDir);
+                            var uniqueFileName = $"{tbl.CampCode}_{model.PhotoUpload.FileName}";
+                            var filePath = Path.Combine(uploadsDir, uniqueFileName);
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await model.PhotoUpload.CopyToAsync(stream);
+                            }
+                            tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
+                        }
                         //tbl.PhotoUploadPath = "a";
-						_context.TblCamp.Add(tbl);
+                        _context.TblCamp.Add(tbl);
                         result = await _context.SaveChangesAsync();
                     }
                     if (result > 0)
