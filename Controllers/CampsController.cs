@@ -38,6 +38,9 @@ namespace GlassLP.Controllers
                 DataTable tbllist = _spManager.SP_CampList(filtermodel);
                 if (tbllist.Rows.Count > 0)
                 {
+                    // Pass base URL to view via ViewData
+                    var baseUrl = $"{Request.Scheme}://{Request.Host.Value}";
+                    ViewData["BaseUrl"] = baseUrl;
                     string html = RenderPartialViewToString("_Campm1Data", tbllist);
                     return Result.Success(html, "Record Found!!");
                 }

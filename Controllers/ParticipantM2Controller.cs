@@ -127,6 +127,8 @@ namespace GlassLP.Controllers
 					model.CampId_fk = tbl.CampId_fk;
 					model.DistrictId = tbl.DistrictId;
 					model.BlockId = tbl.BlockId;
+					model.CLFId = tbl.CLFId;
+					model.PanchayatId = tbl.PanchayatId;
 					model.ParticipantName = tbl.ParticipantName;
 					model.MobileNo = tbl.MobileNo;
 					model.Age = tbl.Age;
@@ -199,9 +201,11 @@ namespace GlassLP.Controllers
 				{
 						tbl.TypeofParticipantId = model.TypeofParticipantId;
 						tbl.CampId_fk = model.CampId_fk;
-						tbl.DistrictId = model.DistrictId;
-						tbl.BlockId = model.BlockId;
-						tbl.ParticipantName = model.ParticipantName;
+					tbl.DistrictId = model.DistrictId;
+					tbl.BlockId = model.BlockId;
+					tbl.CLFId = model.CLFId;
+					tbl.PanchayatId = model.PanchayatId;
+					tbl.ParticipantName = model.ParticipantName;
 						tbl.MobileNo = model.MobileNo;
 						tbl.Age = model.Age;
 						tbl.ScreeningDate = model.ScreeningDate;
@@ -286,6 +290,8 @@ namespace GlassLP.Controllers
 				CampId_fk = participant.CampId_fk,
 				DistrictId = participant.DistrictId,
 				BlockId = participant.BlockId,
+				CLFId = participant.CLFId,
+				PanchayatId = participant.PanchayatId,
 				ParticipantName = participant.ParticipantName,
 				MobileNo = participant.MobileNo,
 				Age = participant.Age,
@@ -322,6 +328,16 @@ namespace GlassLP.Controllers
 			ViewBag.BlockName = await _context.MstBlock
 				.Where(b => b.BlockId_pk == participant.BlockId)
 				.Select(b => b.BlockName)
+				.FirstOrDefaultAsync() ?? "N/A";
+
+			ViewBag.CLFName = await _context.MstCLF
+				.Where(c => c.pk_CLFId == participant.CLFId)
+				.Select(c => c.CLFName)
+				.FirstOrDefaultAsync() ?? "N/A";
+
+			ViewBag.PanchayatName = await _context.MstPanchayat
+				.Where(p => p.PanchayatId_pk == participant.PanchayatId)
+				.Select(p => p.PanchayatName)
 				.FirstOrDefaultAsync() ?? "N/A";
 
 			ViewBag.OccupationName = await _context.MstOccupation

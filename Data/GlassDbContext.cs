@@ -292,6 +292,12 @@ namespace GlassLP.Data
 		[DisplayName("Block")]
 		public int? BlockId { get; set; }
 
+		[DisplayName("CLF")]
+		public int? CLFId { get; set; }
+
+		[DisplayName("Panchayat")]
+		public int? PanchayatId { get; set; }
+
 		[DisplayName("Participant Name")]
 		public string? ParticipantName { get; set; }
 

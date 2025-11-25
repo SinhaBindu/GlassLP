@@ -38,7 +38,23 @@
                 int srno = 1;
                 foreach (DataRow dr in dt.Rows)
                 {
-                    var imgfile = GlassLP.Data.UrlUtility.GetBaseUrl() + dr["PhotoUploadPath"].ToString();
+                    var photoPath = dr["PhotoUploadPath"]?.ToString() ?? "";
+                    string imgfile = "";
+                    bool hasValidImage = false;
+                    
+                    if (!string.IsNullOrWhiteSpace(photoPath) && photoPath.ToLower() != "na")
+                    {
+                        // Convert backslashes to forward slashes and ensure it starts with /
+                        var normalizedPath = photoPath.Replace("\\", "/");
+                        if (!normalizedPath.StartsWith("/"))
+                        {
+                            normalizedPath = "/" + normalizedPath;
+                        }
+                        var baseUrl = ViewData["BaseUrl"]?.ToString() ?? "";
+                        imgfile = baseUrl + normalizedPath;
+                        hasValidImage = true;
+                    }
+                    
                     <tr>
                         <td class="text-center">@(srno++)</td>
                         <td class="text-left">@dr["CampCode"]</td>
@@ -54,7 +70,7 @@
                         <td class="text-left">@dr["ParticipantMobilized"]</td>
                         <td class="text-left">@dr["VEName"]</td>
                         <td class="text-center">
-                            @if (!string.IsNullOrWhiteSpace(dr["PhotoUploadPath"].ToString()))
+                            @if (hasValidImage)
                             {
                                 <a href="@imgfile" class="btn edit-item-btn icon-btn btn-outline-info" target="_blank" title="Image File" download="@dr["CampCode"].ToString()"><i class="fa fa-download"></i></a>
                             }

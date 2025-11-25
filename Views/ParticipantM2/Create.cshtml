@@ -59,6 +59,18 @@
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
+								@Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.PanchayatId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
 								@Html.LabelFor(m => m.ParticipantName, new { @class = "form-label" })
 								@Html.EditorFor(m => m.ParticipantName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
 							</div>
@@ -252,6 +264,8 @@
 				var powerofGlassIdToBind = '@Model.PowerofGlassId';
 				var districtIdToBind = '@Model.DistrictId';
 				var blockIdToBind = '@Model.BlockId';
+				var clfIdToBind = '@Model.CLFId';
+				var panchayatIdToBind = '@Model.PanchayatId';
 				var locationToBind = '@Model.Location';
 				var typeofParticipantIdToBind = '@Model.TypeofParticipantId';
 				</text>
@@ -400,7 +414,21 @@
 			
 			$("#DistrictId").change(function () {
 				GetJSBlocks("BlockId", $(this).val());
-				$('#BlockId').val();
+				$('#BlockId').val('');
+				$('#CLFId').empty().append('<option value="">-- Select CLF --</option>');
+				$('#PanchayatId').empty().append('<option value="">-- Select Panchayat --</option>');
+			});
+
+			$("#BlockId").change(function () {
+				var districtId = $('#DistrictId').val();
+				var blockId = $(this).val();
+				if (districtId && blockId) {
+					GetJSPanchayats("PanchayatId", districtId, blockId);
+					GetJSFederations("CLFId", districtId, blockId);
+				} else {
+					$('#CLFId').empty().append('<option value="">-- Select CLF --</option>');
+					$('#PanchayatId').empty().append('<option value="">-- Select Panchayat --</option>');
+				}
 			});
 
 			// Camp dropdown disable or enable based on Location
@@ -469,13 +497,55 @@
 										var blockSelect = $("#BlockId");
 										var blockOption = blockSelect.find('option[value="' + blockIdToBind + '"]');
 										if (blockOption.length > 0) {
-											blockSelect.val(blockIdToBind);
+											blockSelect.val(blockIdToBind).trigger('change');
 											console.log('Block ID bound:', blockIdToBind);
+											// After block loads, bind CLF and Panchayat
+											setTimeout(function() {
+												if (clfIdToBind && clfIdToBind !== '0' && clfIdToBind !== '') {
+													var clfSelect = $("#CLFId");
+													clfSelect.find('option').each(function() {
+														if ($(this).val() == clfIdToBind || $(this).val() === clfIdToBind) {
+															clfSelect.val($(this).val());
+															return false;
+														}
+													});
+												}
+												if (panchayatIdToBind && panchayatIdToBind !== '0' && panchayatIdToBind !== '') {
+													var panchayatSelect = $("#PanchayatId");
+													panchayatSelect.find('option').each(function() {
+														if ($(this).val() == panchayatIdToBind || $(this).val() === panchayatIdToBind) {
+															panchayatSelect.val($(this).val());
+															return false;
+														}
+													});
+												}
+											}, 500);
 										} else {
 											blockSelect.find('option').each(function() {
 												if ($(this).val() == blockIdToBind || $(this).val() === blockIdToBind) {
-													blockSelect.val($(this).val());
+													blockSelect.val($(this).val()).trigger('change');
 													console.log('Block ID bound (fallback):', blockIdToBind);
+													// After block loads, bind CLF and Panchayat
+													setTimeout(function() {
+														if (clfIdToBind && clfIdToBind !== '0' && clfIdToBind !== '') {
+															var clfSelect = $("#CLFId");
+															clfSelect.find('option').each(function() {
+																if ($(this).val() == clfIdToBind || $(this).val() === clfIdToBind) {
+																	clfSelect.val($(this).val());
+																	return false;
+																}
+															});
+														}
+														if (panchayatIdToBind && panchayatIdToBind !== '0' && panchayatIdToBind !== '') {
+															var panchayatSelect = $("#PanchayatId");
+															panchayatSelect.find('option').each(function() {
+																if ($(this).val() == panchayatIdToBind || $(this).val() === panchayatIdToBind) {
+																	panchayatSelect.val($(this).val());
+																	return false;
+																}
+															});
+														}
+													}, 500);
 													return false;
 												}
 											});
@@ -492,7 +562,28 @@
 												var blockSelect = $("#BlockId");
 												blockSelect.find('option').each(function() {
 													if ($(this).val() == blockIdToBind || $(this).val() === blockIdToBind) {
-														blockSelect.val($(this).val());
+														blockSelect.val($(this).val()).trigger('change');
+														// After block loads, bind CLF and Panchayat
+														setTimeout(function() {
+															if (clfIdToBind && clfIdToBind !== '0' && clfIdToBind !== '') {
+																var clfSelect = $("#CLFId");
+																clfSelect.find('option').each(function() {
+																	if ($(this).val() == clfIdToBind || $(this).val() === clfIdToBind) {
+																		clfSelect.val($(this).val());
+																		return false;
+																	}
+																});
+															}
+															if (panchayatIdToBind && panchayatIdToBind !== '0' && panchayatIdToBind !== '') {
+																var panchayatSelect = $("#PanchayatId");
+																panchayatSelect.find('option').each(function() {
+																	if ($(this).val() == panchayatIdToBind || $(this).val() === panchayatIdToBind) {
+																		panchayatSelect.val($(this).val());
+																		return false;
+																	}
+																});
+															}
+														}, 500);
 														return false;
 													}
 												});
