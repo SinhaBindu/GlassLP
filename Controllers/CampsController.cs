@@ -28,7 +28,8 @@ namespace GlassLP.Controllers
         // GET: Camps
         public async Task<IActionResult> Index()
         {
-            return View();
+            Filtermodel filtermodel = new Filtermodel();
+			return View(filtermodel);
         }
         public Result GetCampList(Filtermodel filtermodel)
         {

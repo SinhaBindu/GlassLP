@@ -36,6 +36,8 @@ namespace GlassLP.Models
 
         [DisplayName("Type of Vision Issue")]
         public int TypeofVisionIssueId { get; set; }
+        [DisplayName("Type of Vision Issue (Other)")]
+        public string TypeofVisionIssue_Others { get; set; }
 
         [DisplayName("Glasses Provided")]
         public int GlassesProvidedId { get; set; }

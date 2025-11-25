@@ -69,11 +69,12 @@ namespace GlassLP.Controllers
             }
         }
 
-        public Result<string> GetParticipantM1List()
+
+        public Result<string> GetParticipantM1List(Filtermodel filtermodel)
         {
             try
             {
-                DataTable tbllist = _spManager.SP_ParticipantM1List();
+                DataTable tbllist = _spManager.SP_ParticipantM1List(filtermodel);
                 if (tbllist.Rows.Count > 0)
                 {
                     string html = RenderPartialViewToString("_ParticipantM1Data", tbllist);

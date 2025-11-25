@@ -109,12 +109,16 @@ namespace GlassLP.Data
 			return dt;
 		}
 
-		public DataTable SP_ParticipantM1List()
+		public DataTable SP_ParticipantM1List(Filtermodel filtermodel)
 		{
 			DataTable dt = new DataTable();
 			string connectionString = _configuration.GetConnectionString("DefaultConnection");
 			using var conn = new SqlConnection(connectionString);
 			using var cmd = new SqlCommand("SP_ParticipantM1List", conn);
+			cmd.Parameters.AddWithValue("@DistrictId", filtermodel.DistrictId);
+			cmd.Parameters.AddWithValue("@BlockId", filtermodel.BlockId);
+			cmd.Parameters.AddWithValue("@VISId", filtermodel.VisionIssueId);
+			cmd.Parameters.AddWithValue("@PWId", filtermodel.PowerOfGlassId);
 			cmd.CommandType = CommandType.StoredProcedure;
 			cmd.CommandTimeout = 500;
 			using var da = new SqlDataAdapter(cmd);

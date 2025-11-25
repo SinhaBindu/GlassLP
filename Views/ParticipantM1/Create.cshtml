@@ -15,56 +15,72 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CampId_fk, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "form-control" })
-                            </div>
+                                @Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "required form-control" })
+                                <div>@Html.ValidationMessageFor(m => m.CampId_fk, "", new { @class = "text-danger" })</div>
+                                </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.ParticipantName, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.ParticipantName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                <div>@Html.ValidationMessageFor(m => m.ParticipantName, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.MobileNo, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.MobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
+                                <div>@Html.ValidationMessageFor(m => m.MobileNo, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.Age, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "numbersOnly required form-control", @type="text", @maxlength = "2", @min = "35", @max = "59" } })
+                                <div>@Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.SHGName, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.SHGName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                <div>@Html.ValidationMessageFor(m => m.SHGName, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.OccupationId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select Occupation --", new { @class = "form-control" })
-                            </div>
+                                @Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select Occupation --", new { @class = "form-control required" })
+                                <div>@Html.ValidationMessageFor(m => m.OccupationId, "", new { @class = "text-danger" })</div>
+                                </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.Occupation_Others, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.Occupation_Others, new { htmlAttributes = new { @class = "required form-control", @disabled = "disabled", id = "Occupation_Others" , @maxlength = "100" } })
+                                <div>@Html.ValidationMessageFor(m => m.Occupation_Others, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.TypeofVisionIssueId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.TypeofVisionIssueId, Model.VSIdList, null, new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.TypeofVisionIssueId, Model.VSIdList, null, new { @class = "required form-control" })
+                                <div>@Html.ValidationMessageFor(m => m.TypeofVisionIssueId, "", new { @class = "text-danger" })</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 div_TypeVissue" style="display:none;">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.TypeofVisionIssue_Others, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.TypeofVisionIssue_Others, new { htmlAttributes = new { @class = "required form-control", @maxlength = "100" } })
+                                <div>@Html.ValidationMessageFor(m => m.TypeofVisionIssue_Others, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.PowerofGlassId, new { @class = "form-label" })
                                 @Html.DropDownListFor(m => m.PowerofGlassId, new List<SelectListItem>(),
-                                         "Select", new { @class = "form-control" })
+                                         "Select", new { @class = "required form-control" })
+                                <div>@Html.ValidationMessageFor(m => m.PowerofGlassId, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -76,7 +92,8 @@
                                 new SelectListItem { Text = "Not Satisfied", Value = "2" },
                                 new SelectListItem { Text = "Adjustment Needed", Value = "3" }
                                 },
-                                         "Select", new { @class = "form-control" })
+                                         "Select", new { @class = "required form-control" })
+                                <div>@Html.ValidationMessageFor(m => m.FeedbackonComfort, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -188,7 +205,6 @@
             // GetOccupations Disable
             function toggleOtherOccupation() {
                 var selectedValue = $("#OccupationId").val();
-
                 if (selectedValue == "6") {   // 999 = Other
                     $("#Occupation_Others").prop("disabled", false);
                 } else {
@@ -196,6 +212,16 @@
                 }
             }
 
+            // run on dropdown change TypeofVisionIssueId
+            $("#TypeofVisionIssueId").change(function () {
+                var selectedValue = $(this).val(); $('.div_TypeVissue').hide();
+                $("#TypeofVisionIssue_Others").val('');//.prop("disabled", true).val('');
+                $("#TypeofVisionIssue_Others").removeAttr("required");//.prop("disabled", true).val('');
+                if (selectedValue == "2") {   // 999 = Other
+                    $('.div_TypeVissue').show();
+                    $("#TypeofVisionIssue_Others").attr("required", 'required');//.prop("disabled", false);
+                } 
+            });
             // run on dropdown change
             $("#OccupationId").change(function () {
                 toggleOtherOccupation();
