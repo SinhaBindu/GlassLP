@@ -80,7 +80,8 @@ namespace GlassLP.Models
 		public string? BlockName { get; set; }
 		[NotMapped]
 		public string? PanchayatName { get; set; }
-        public int? VEId { get; set; }
+		[DisplayName("Vision Entrepreneur")]
+		public int? VEId { get; set; }
 
         [NotMapped]
 		[ValidateNever]

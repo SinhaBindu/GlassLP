@@ -13,7 +13,12 @@
     <link rel="stylesheet" href="~/GlassLP.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
      <base href="@GlassLP.Data.UrlUtility.GetBaseUrl()" />
-
+     <style>
+        .main-nav li.active > a {
+            color: #fff;
+            background-color: #0d6efd; /* example */
+        }
+     </style>
 </head>
 
 <body>
@@ -147,6 +152,53 @@
         //     orientation: "top",
         //     endDate: "today"
         // });
+        $(document).ready(function () {
+            var currentUrl = window.location.href.toLowerCase();
+
+            // $('.main-nav a').each(function () {
+            //     var linkUrl = this.href.toLowerCase();
+
+            //     // Check if current URL matches the link's href or contains it (for partial matching)
+            //     if (currentUrl === linkUrl || currentUrl.indexOf(linkUrl) !== -1) {
+            //         // Add active class to the clicked item's parent <li>
+            //         $(this).parent('li').addClass('active');
+
+            //         // If this is a submenu item, also add active class to the parent menu item <li>
+            //         $(this).closest('ul.collapse').parent('li').addClass('active');
+            //     }
+            // });
+          var currentUrl = window.location.href.toLowerCase().replace(/\/+$/, "");
+
+    $('.main-nav a').each(function () {
+        var linkUrl = this.href.toLowerCase().replace(/\/+$/, "");
+
+        // Clear prior aria-current and aria-expanded attributes
+        $(this).removeAttr('aria-current');
+        $(this).attr('aria-expanded', 'false');
+
+        if (currentUrl === linkUrl || currentUrl.indexOf(linkUrl) !== -1) {
+            // Add active class on parent <li>
+            $(this).parent('li').addClass('active');
+
+            // Add aria-current on the link to indicate current page
+            $(this).attr('aria-current', 'page');
+
+            // If this link controls a collapsible submenu, set aria-expanded true
+            if ($(this).attr('data-bs-toggle') === 'collapse' || $(this).attr('aria-expanded') === 'false') {
+                $(this).attr('aria-expanded', 'true');
+            }
+
+            // Handle submenu parent <li> activated when submenu item is active
+            var $submenuParentLi = $(this).closest('ul.collapse').parent('li');
+            if ($submenuParentLi.length > 0) {
+                $submenuParentLi.addClass('active');
+
+                // For accessibility, toggle aria-expanded on the submenu toggle link (<a>)
+                $submenuParentLi.children('a').attr('aria-expanded', 'true');
+            }
+        }
+    });
+        })
     </script>
 </body>
 </html>

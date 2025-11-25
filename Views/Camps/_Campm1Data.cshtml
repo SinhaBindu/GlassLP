@@ -27,8 +27,7 @@
             <th class="text-center tblth">CRP Mobile No</th>
             <th class="text-center tblth">Location</th>
             <th class="text-center tblth">Participants Mobilized</th>
-            <th class="text-center tblth">Total Screened</th>
-            <th class="text-center tblth">Total Glasses Distributed</th>
+            <th class="text-center tblth">VE Name</th>
             <th class="text-center tblth" style="min-width:60px;">Image File</th>
         </tr>
     </thead>
@@ -53,8 +52,7 @@
                         <td class="text-left">@dr["CRPMobileNo"]</td>
                         <td class="text-left">@dr["Location"]</td>
                         <td class="text-left">@dr["ParticipantMobilized"]</td>
-                        <td class="text-left">@dr["TotalScreened"]</td>
-                        <td class="text-left">@dr["TotalGlassesDistributed"]</td>
+                        <td class="text-left">@dr["VEName"]</td>
                         <td class="text-center">
                             @if (!string.IsNullOrWhiteSpace(dr["PhotoUploadPath"].ToString()))
                             {
