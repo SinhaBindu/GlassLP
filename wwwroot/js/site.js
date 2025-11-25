@@ -52,7 +52,7 @@ function GetJSFederations(eleid, Paraid1, Paraid2) {
     });
 }
 
-function GetCampCode(eleid, code, TypeMId,isselect) {
+function GetCampCode(eleid, code, TypeMId,isselect, callback) {
     //debugger;
     $('#' + eleid).empty(); let items;
     $.getJSON('/API/Masters/CampCode?code=' + code + '&&TypeMId=' + TypeMId, function (response) {
@@ -62,7 +62,10 @@ function GetCampCode(eleid, code, TypeMId,isselect) {
             }
             //items = '<option value="">Select</option>';
             $.each(response.data, function (i, item) {
-                items += '<option value="' + item.campId_pk + '">' + item.campCode + '</option>';
+                // Handle both camelCase and PascalCase from API
+                var campId = item.campId_pk || item.CampId_pk || item.campId_pk;
+                var campCode = item.campCode || item.CampCode || item.campCode;
+                items += '<option value="' + campId + '">' + campCode + '</option>';
             });
             // Temporarily enable dropdown to set HTML, then restore disabled state if needed
             var wasDisabled = $('#' + eleid).prop('disabled');
@@ -71,6 +74,17 @@ function GetCampCode(eleid, code, TypeMId,isselect) {
             if (wasDisabled) {
                 $('#' + eleid).prop('disabled', true);
             }
+            // Trigger custom event for binding in edit mode
+            $('#' + eleid).trigger('campcode:loaded');
+        }
+        // Always call callback if provided (even on error)
+        if (callback && typeof callback === 'function') {
+            callback(response);
+        }
+    }).fail(function() {
+        // Call callback on error too
+        if (callback && typeof callback === 'function') {
+            callback({ status: false, data: [] });
         }
     });
 }

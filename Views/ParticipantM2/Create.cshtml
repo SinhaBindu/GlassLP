@@ -449,7 +449,8 @@
 			toggleCampDropdown();
 			
 			// Then populate the dropdown (function handles disabled state)
-			GetCampCode("CampId_fk");
+			// For ParticipantM2, TypeMId = 2 (Module 2)
+			GetCampCode("CampId_fk", "", 2, 0);
 
 			// On Location change
 			$("input[name='Location']").change(function () {
