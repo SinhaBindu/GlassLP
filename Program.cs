@@ -20,7 +20,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequireUppercase = false;
 
-    options.User.RequireUniqueEmail = true;
+    options.User.RequireUniqueEmail = false; // Allow duplicate emails
 })
 .AddEntityFrameworkStores<GlassDbContext>()
 .AddDefaultUI()
@@ -79,7 +79,7 @@ using (var scope = app.Services.CreateScope())
 
     var defaultUserName = "admin";
     var defaultEmail = "admin@gmail.com";
-    var defaultPassword = "Admin@1234";
+    var defaultPassword = "User@123";//"Admin@1234";
     var adminUser = await userManager.FindByEmailAsync(defaultEmail);
     if (adminUser == null)
     {

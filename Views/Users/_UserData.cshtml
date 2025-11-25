@@ -1,0 +1,92 @@
+@using System.Collections.Generic
+@{
+    List<object> users = new List<object>();
+    if (Model != null)
+    {
+        users = Model as List<object>;
+    }
+}
+<style>
+    table.dataTable thead > tr > th.sorting, table.dataTable thead > tr > th.sorting_asc, table.dataTable thead > tr > th.sorting_desc, table.dataTable thead > tr > th.sorting_asc_disabled, table.dataTable thead > tr > th.sorting_desc_disabled, table.dataTable thead > tr > td.sorting, table.dataTable thead > tr > td.sorting_asc, table.dataTable thead > tr > td.sorting_desc, table.dataTable thead > tr > td.sorting_asc_disabled, table.dataTable thead > tr > td.sorting_desc_disabled {
+        padding-right: 0px !important;
+    }
+</style>
+
+<table class="table table-bottom-border table-lg align-middle tbl" id="tbl">
+    <thead class="text-center">
+        <tr>
+            <th class="text-center tblth">Sr. No.</th>
+            <th class="text-center tblth">User Name</th>
+            <th class="text-center tblth">Email</th>
+            <th class="text-center tblth">Name</th>
+            <th class="text-center tblth">Role</th>
+            <th class="text-center tblth">Phone Number</th>
+            <th class="text-center tblth">Email Confirmed</th>
+            <th class="text-center tblth">Status</th>
+            <th class="text-center tblth">Created On</th>
+            <th class="text-center tblth" style="min-width:120px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (users != null && users.Count > 0)
+            {
+                int srno = 1;
+                foreach (dynamic user in users)
+                {
+                    <tr>
+                        <td class="text-center">@(srno++)</td>
+                        <td class="text-left">@user.UserName</td>
+                        <td class="text-left">@user.Email</td>
+                        <td class="text-left">@user.Name</td>
+                        <td class="text-left">
+                            <span class="badge bg-info">@user.Role</span>
+                        </td>
+                        <td class="text-left">@user.PhoneNumber</td>
+                        <td class="text-center">
+                            @if (user.EmailConfirmed)
+                            {
+                                <span class="badge bg-success">Confirmed</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning">Not Confirmed</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            <span class="badge bg-success">Active</span>
+                        </td>
+                        <td class="text-left">@user.CreatedOn</td>
+                        <td class="edit text-center">
+                            <a asp-action="Create"
+                               asp-route-id="@user.Id"
+                               class="btn edit-item-btn icon-btn btn-outline-info"
+                               title="Edit">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a asp-action="Details"
+                               asp-route-id="@user.Id"
+                               class="btn edit-item-btn icon-btn btn-outline-success"
+                               title="View Details">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <button type="button"
+                                    class="btn edit-item-btn icon-btn btn-outline-danger"
+                                    title="Deactivate"
+                                    onclick="deleteUser('@user.Id', '@user.UserName')">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="10" class="text-center"><strong class="text-danger">Record Not Found !!</strong></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

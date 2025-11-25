@@ -1,0 +1,76 @@
+@{
+	ViewData["Title"] = "Users";
+}
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h5 class="mb-0">Users Management</h5>
+				<div class="btn-group">
+					<a asp-action="Create" class="btn btn-sm btn-outline-info text-uppercase b-r-22"><i class="fa fa-plus"></i> Create New User</a>
+				</div>
+			</div>
+			<div class="card-body p-0">
+				<div class="table-responsive app-scroll" id="subdata">
+					<!-- User list will be loaded here -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			BindData();
+		});
+
+		function BindData() {
+			$("#subdata").html('');
+			$.ajax({
+				type: "GET",
+				url: "/Users/GetUserList",
+				cache: false,
+				success: function (res) {
+					if (res.isSuccess) {
+						$("#subdata").html(res.data);
+					}
+					else {
+						$("#subdata").html('<h6 class="text-danger p-3">' + res.message + '</h6>');
+					}
+				},
+				error: function (req, error) {
+					if (error === 'error') { error = req.statusText; }
+					var errormsg = 'There was a communication error: ' + error;
+					$("#subdata").html('<h6 class="text-danger p-3">' + errormsg + '</h6>');
+				}
+			});
+		}
+
+		// Delete user function
+		function deleteUser(userId, userName) {
+			if (!confirm('Are you sure you want to deactivate user "' + userName + '"?')) {
+				return;
+			}
+
+			$.ajax({
+				url: '/Users/Delete',
+				type: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(userId),
+				success: function (response) {
+					if (response.isSuccess) {
+						toastr.success(response.message);
+						BindData(); // reload the list
+					} else {
+						toastr.error(response.message || 'Failed to deactivate user.');
+					}
+				},
+				error: function () {
+					toastr.error('An error occurred while deactivating user.');
+				}
+			});
+		}
+	</script>
+}
+

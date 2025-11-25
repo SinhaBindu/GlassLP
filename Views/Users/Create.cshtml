@@ -1,0 +1,290 @@
+@model UserViewModel
+@{
+	ViewData["Title"] = Model != null && !string.IsNullOrEmpty(Model.Id) ? "Edit User" : "Create User";
+}
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h5 class="mb-0">@(Model != null && !string.IsNullOrEmpty(Model.Id) ? "Update User" : "Add New User")</h5>
+			</div>
+			<div class="card-body">
+				<form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
+					@if (Model != null && !string.IsNullOrEmpty(Model.Id))
+					{
+						@Html.HiddenFor(m => m.Id)
+					}
+					<div class="row">
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.UserName, new { @class = "form-label" })
+								@Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "100" } })
+								<div>@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.Email, new { @class = "form-label" })
+								@Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "required form-control", @type = "email", @maxlength = "100" } })
+								<div>@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.Name, new { @class = "form-label" })
+								@Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", @maxlength = "200" } })
+								<div>@Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.Password, new { @class = "form-label" })
+								@Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @maxlength = "100", @placeholder = Model != null && !string.IsNullOrEmpty(Model.Id) ? "Leave empty to keep current password" : "", @id = "Password" } })
+								<div>@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div>
+								@if (Model != null && !string.IsNullOrEmpty(Model.Id))
+								{
+									<small class="text-muted">Leave empty to keep current password</small>
+								}
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label" })
+								@Html.EditorFor(m => m.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @type = "password", @maxlength = "100", @id = "ConfirmPassword" } })
+								<div>@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.Role, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.Role, Model?.RoleList ?? new List<SelectListItem>(), "-- Select Role --", new { @class = "required form-control" })
+								<div>@Html.ValidationMessageFor(m => m.Role, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.PhoneNumber, new { @class = "form-label" })
+								@Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control numbersOnly", @maxlength = "15" } })
+								<div>@Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.DistrictId, Model?.DistrictList ?? new List<SelectListItem>(), "-- Select District --", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.DistrictId, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.BlockId, Model?.BlockList ?? new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.BlockId, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.PanchayatId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.PanchayatId, Model?.PanchayatList ?? new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.PanchayatId, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.CLFId, Model?.CLFList ?? new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.CLFId, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.IsActive, new { @class = "form-label d-block" })
+								<div class="form-check form-switch">
+									@Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+									<label class="form-check-label" for="IsActive">Active</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.EmailConfirmed, new { @class = "form-label d-block" })
+								<div class="form-check form-switch">
+									@Html.CheckBoxFor(m => m.EmailConfirmed, new { @class = "form-check-input" })
+									<label class="form-check-label" for="EmailConfirmed">Email Confirmed</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="text-end">
+								<a asp-action="Index" class="btn btn-secondary b-r-22 me-2">Cancel</a>
+								<button class="btn btn-primary b-r-22" type="submit">
+									@(Model != null && !string.IsNullOrEmpty(Model.Id) ? "Update" : "Submit")
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script>
+		$(document).ready(function () {
+			// Set default password for new users
+			var isEditMode = '@(Model != null && !string.IsNullOrEmpty(Model.Id) ? "true" : "false")';
+			if (isEditMode === 'false') {
+				$('#Password').val('User@123');
+				$('#ConfirmPassword').val('User@123');
+			}
+
+			// Load dropdowns
+			var currentDistrictId = '@(Model?.DistrictId?.ToString() ?? "")';
+			var currentBlockId = '@(Model?.BlockId?.ToString() ?? "")';
+			var currentPanchayatId = '@(Model?.PanchayatId?.ToString() ?? "")';
+			var currentCLFId = '@(Model?.CLFId?.ToString() ?? "")';
+
+			GetJSDistricts("DistrictId", 1);
+			
+			// District change event
+			$("#DistrictId").change(function () {
+				var districtId = $(this).val();
+				GetJSBlocks("BlockId", districtId, 1);
+				// Clear panchayat when district changes
+				$("#PanchayatId").empty().append('<option value="">Select</option>');
+			});
+
+			// Block change event
+			$("#BlockId").change(function () {
+				var districtId = $("#DistrictId").val();
+				var blockId = $(this).val();
+				if (districtId && blockId) {
+					GetJSPanchayats("PanchayatId", districtId, blockId);
+				}
+			});
+
+			// Load CLFs if not already populated from model
+			if ($("#CLFId option").length <= 1) {
+				GetJSCLFs("CLFId");
+			}
+
+			// Bind values after dropdowns load (for edit mode)
+			setTimeout(function() {
+				if (currentDistrictId) {
+					$("#DistrictId").val(currentDistrictId).trigger('change');
+					
+					setTimeout(function() {
+						if (currentBlockId) {
+							$("#BlockId").val(currentBlockId).trigger('change');
+							
+							setTimeout(function() {
+								if (currentPanchayatId) {
+									$("#PanchayatId").val(currentPanchayatId);
+								}
+							}, 500);
+						}
+					}, 500);
+				}
+				
+				if (currentCLFId) {
+					$("#CLFId").val(currentCLFId);
+				}
+			}, 500);
+
+			// Numbers only for phone
+			jQuery('.numbersOnly').keyup(function () {
+				this.value = this.value.replace(/[^0-9\.]/g, '');
+			});
+
+			// Password validation - only required for new users
+			var isEditMode = '@(Model != null && !string.IsNullOrEmpty(Model.Id) ? "true" : "false")';
+			
+			if (isEditMode === 'true') {
+				// Remove required attribute for password fields in edit mode
+				$('#Password').removeAttr('required');
+				$('#ConfirmPassword').removeAttr('required');
+			}
+
+			// Custom validation for password
+			$('#addForm').on('submit', function (e) {
+				var password = $('#Password').val();
+				var confirmPassword = $('#ConfirmPassword').val();
+				var isEdit = isEditMode === 'true';
+
+				// If editing and password is provided, both must match
+				if (isEdit && password) {
+					if (password !== confirmPassword) {
+						e.preventDefault();
+						toastr.error('Password and Confirm Password do not match.');
+						return false;
+					}
+				}
+				// If new user, password is required
+				if (!isEdit && !password) {
+					e.preventDefault();
+					toastr.error('Password is required for new user.');
+					return false;
+				}
+			});
+
+			// Post form data
+			$('#addForm').on('submit', function (e) {
+				e.preventDefault();
+				var form = $('#addForm')[0];
+				var formData = new FormData(form);
+
+				$.ajax({
+					url: '/Users/Create',
+					type: 'POST',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function (response) {
+						if (response.isSuccess === true) {
+							toastr.success(response.message);
+							setTimeout(function () {
+								window.location.href = '/Users/Index';
+							}, 1500);
+						} else {
+							if (response.validationErrors && response.validationErrors.length > 0) {
+								var errorMsg = response.validationErrors.join('<br>');
+								toastr.error(errorMsg);
+							} else {
+								toastr.error(response.message || 'An error occurred.');
+							}
+						}
+					},
+					error: function (xhr) {
+						var errorMsg = 'Error occurred while saving user.';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						toastr.error(errorMsg);
+					}
+				});
+			});
+		});
+
+		// Function to load CLFs
+		function GetJSCLFs(eleid) {
+			$('#' + eleid).empty();
+			$.getJSON('/API/Masters/ClfName', function (response) {
+				if (response.status && response.data) {
+					let items = '<option value="">Select</option>';
+					$.each(response.data, function (i, item) {
+						var clfId = item.pk_CLFId || item.pk_CLFId;
+						var clfName = item.clfName || item.CLFName || item.cLFName || '';
+						items += '<option value="' + clfId + '">' + clfName + '</option>';
+					});
+					$('#' + eleid).html(items);
+				}
+			});
+		}
+	</script>
+}
+
