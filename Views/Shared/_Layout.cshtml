@@ -4,21 +4,22 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GlassLP</title>
-	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-	<link href="~/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/all.min.css" rel="stylesheet" />
     <link href="~/css/toastr.css" rel="stylesheet" />
     <!-- Datepicker CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GlassLP.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
-     <base href="@GlassLP.Data.UrlUtility.GetBaseUrl()" />
-     <style>
-        .main-nav li.active > a {
+    <base href="@GlassLP.Data.UrlUtility.GetBaseUrl()" />
+    <style>
+        .main-nav li.active > a
+        {
             color: #fff;
             background-color: #0d6efd; /* example */
         }
-     </style>
+    </style>
 </head>
 
 <body>
@@ -26,9 +27,9 @@
         <nav class="vertical-sidebar">
             <div class="app-logo">
                 <a class="logo d-inline-block" href="index.html">
-					<img src="~/images/logo.jpg" />
+                    <img src="~/images/logo.jpg" />
                 </a>
-                </div>
+            </div>
             <div class="app-nav">
                 <ul class="main-nav p-0 mt-2">
                     <li class="menu-title">
@@ -139,67 +140,83 @@
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/lib/jquery/toster/toastr.min.js"></script>
+    <script src="~/lib/jquery/toster/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <!-- Datepicker JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
-   
+
     <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
     <script>
-        // $('.datepicker').datepicker({
-        //     format:'dd-mm-yyyy', /* mapToBootstrapFormat(dateFormat), */
-        //     autoclose: true,
-        //     orientation: "top",
-        //     endDate: "today"
-        // });
-        $(document).ready(function () {
-            var currentUrl = window.location.href.toLowerCase();
-
-            // $('.main-nav a').each(function () {
-            //     var linkUrl = this.href.toLowerCase();
-
-            //     // Check if current URL matches the link's href or contains it (for partial matching)
-            //     if (currentUrl === linkUrl || currentUrl.indexOf(linkUrl) !== -1) {
-            //         // Add active class to the clicked item's parent <li>
-            //         $(this).parent('li').addClass('active');
-
-            //         // If this is a submenu item, also add active class to the parent menu item <li>
-            //         $(this).closest('ul.collapse').parent('li').addClass('active');
-            //     }
+            // $('.datepicker').datepicker({
+            //     format:'dd-mm-yyyy', /* mapToBootstrapFormat(dateFormat), */
+            //     autoclose: true,
+            //     orientation: "top",
+            //     endDate: "today"
             // });
-          var currentUrl = window.location.href.toLowerCase().replace(/\/+$/, "");
+            $(document).ready(function () {
+                var currentUrl = window.location.href.toLowerCase();
 
-    $('.main-nav a').each(function () {
-        var linkUrl = this.href.toLowerCase().replace(/\/+$/, "");
+                // $('.main-nav a').each(function () {
+                //     var linkUrl = this.href.toLowerCase();
 
-        // Clear prior aria-current and aria-expanded attributes
-        $(this).removeAttr('aria-current');
-        $(this).attr('aria-expanded', 'false');
+                //     // Check if current URL matches the link's href or contains it (for partial matching)
+                //     if (currentUrl === linkUrl || currentUrl.indexOf(linkUrl) !== -1) {
+                //         // Add active class to the clicked item's parent <li>
+                //         $(this).parent('li').addClass('active');
 
-        if (currentUrl === linkUrl || currentUrl.indexOf(linkUrl) !== -1) {
-            // Add active class on parent <li>
-            $(this).parent('li').addClass('active');
+                //         // If this is a submenu item, also add active class to the parent menu item <li>
+                //         $(this).closest('ul.collapse').parent('li').addClass('active');
+                //     }
+                // });
+                var currentUrl = window.location.href.toLowerCase().replace(/\/+$/, "");
+                $('.main-nav a').each(function () {
+                    var linkUrl = this.href.toLowerCase().replace(/\/+$/, "");
 
-            // Add aria-current on the link to indicate current page
-            $(this).attr('aria-current', 'page');
+                    // Reset first
+                    $(this).removeAttr('aria-current');
+                    $(this).attr('aria-expanded', 'false');
+                    $(this).parent('li').removeClass('active');
 
-            // If this link controls a collapsible submenu, set aria-expanded true
-            if ($(this).attr('data-bs-toggle') === 'collapse' || $(this).attr('aria-expanded') === 'false') {
-                $(this).attr('aria-expanded', 'true');
-            }
+                    if (currentUrl === linkUrl || currentUrl.indexOf(linkUrl) !== -1) {
 
-            // Handle submenu parent <li> activated when submenu item is active
-            var $submenuParentLi = $(this).closest('ul.collapse').parent('li');
-            if ($submenuParentLi.length > 0) {
-                $submenuParentLi.addClass('active');
+                        // ✅ Active LI
+                        $(this).parent('li').addClass('active');
 
-                // For accessibility, toggle aria-expanded on the submenu toggle link (<a>)
-                $submenuParentLi.children('a').attr('aria-expanded', 'true');
-            }
-        }
-    });
-        })
+                        // ✅ Mark current link
+                        $(this).attr('aria-current', 'page');
+
+                        // ✅ If link opens submenu itself
+                        if ($(this).attr('data-bs-toggle') === 'collapse') {
+                            $(this).attr('aria-expanded', 'true');
+
+                            var targetId = $(this).attr("href");
+                            if (targetId.startsWith("#")) {
+                                $(targetId).addClass("show collapse");
+                            }
+                        }
+
+                        // ✅ If link is inside submenu
+                        var $submenu = $(this).closest('ul.collapse');
+                        if ($submenu.length > 0) {
+
+                            // Add classes to UL
+                            $submenu.addClass("show collapse");
+
+                            // Activate parent menu item
+                            var $submenuParentLi = $submenu.closest('li');
+                            $submenuParentLi.addClass('active');
+
+                            // Update parent toggle link
+                            var $toggleLink = $submenuParentLi.children('a[data-bs-toggle="collapse"]');
+                            $toggleLink.attr('aria-expanded', 'true').addClass('active');
+                        }
+
+                        // 🔴 STOP LOOP AFTER FIRST MATCH FOUND
+                        return false;
+                    }
+                });
+            });
     </script>
 </body>
 </html>
