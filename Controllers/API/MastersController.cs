@@ -145,7 +145,15 @@ namespace GlassLP.Controllers.API
         [HttpGet("PowerofGlasses")]
         public async Task<IActionResult> GetPowerofGlasses()
         {
-            var powerGlasses = await _context.MstPowerGlasses.Where(x => x.IsActive == true).ToListAsync();
+            var powerGlasses = await _context.MstPowerGlasses
+                .Where(x => x.IsActive == true)
+                .Select(p => new
+                {
+                    pk_PowerGlassId = p.pk_PowerGlassId,
+                    powerofGlass = p.PowerofGlass ?? string.Empty
+                })
+                .ToListAsync();
+
             return Ok(new ApiResponse<List<object>>(
                 true,
                 "OK",

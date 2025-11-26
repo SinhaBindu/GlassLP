@@ -102,15 +102,32 @@ function GetOccupations(eleid) {
     });
 }
 
-function GetPowerofGlasses(eleid) {
+function GetPowerofGlasses(eleid, callback) {
     $('#' + eleid).empty();
     $.getJSON('/API/Masters/PowerofGlasses', function (response) {
         if (response.status && response.data) {
             let items = '<option value="">Select</option>';
             $.each(response.data, function (i, item) {
-                items += '<option value="' + item.pk_PowerGlassId + '">' + item.powerofGlass + '</option>';
+                // Handle both camelCase and PascalCase from API
+                var powerGlassId = item.pk_PowerGlassId || item.Pk_PowerGlassId;
+                var powerofGlass = item.powerofGlass || item.PowerofGlass || '';
+                if (powerGlassId) {
+                    items += '<option value="' + powerGlassId + '">' + powerofGlass + '</option>';
+                }
             });
             $('#' + eleid).html(items);
+            // Trigger custom event for binding in edit mode
+            $('#' + eleid).trigger('powerofglasses:loaded');
+        }
+        // Always call callback if provided (even on error)
+        if (callback && typeof callback === 'function') {
+            callback(response);
+        }
+    }).fail(function(xhr, status, error) {
+        console.error('Error loading PowerofGlasses:', error);
+        // Call callback on error too
+        if (callback && typeof callback === 'function') {
+            callback({ status: false, data: [] });
         }
     });
 }

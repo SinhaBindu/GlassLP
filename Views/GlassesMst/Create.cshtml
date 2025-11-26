@@ -48,14 +48,14 @@
                                 @Html.ValidationMessageFor(m => m.TotalGlassCost, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 module2-field" style="display: none;">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.AdvertisingCost, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.AdvertisingCost, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
                                 @Html.ValidationMessageFor(m => m.AdvertisingCost, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 module2-field" style="display: none;">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.Storagemiscellaneouscost, new { @class = "form-label" })
                                 @Html.EditorFor(m => m.Storagemiscellaneouscost, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
@@ -82,6 +82,32 @@
     }
     <script>
         $(document).ready(function () {
+            // Function to toggle Module 2 fields based on TypeOfModuleId
+            function toggleModule2Fields() {
+                var typeOfModuleId = $('#TypeOfModuleId').val();
+                if (typeOfModuleId == '1') {
+                    // Module 1 - Hide Module 2 fields
+                    $('.module2-field').hide();
+                    // Clear Module 2 field values
+                    $('#AdvertisingCost').val('');
+                    $('#Storagemiscellaneouscost').val('');
+                    // Remove required validation from Module 2 fields
+                    $('.module2-field input').removeAttr('required');
+                    $('.module2-field input').removeClass('required');
+                } else {
+                    // Module 2 or other - Show Module 2 fields
+                    $('.module2-field').show();
+                }
+            }
+
+            // Initialize on page load
+            toggleModule2Fields();
+
+            // Toggle on TypeOfModuleId change
+            $('#TypeOfModuleId').on('change', function () {
+                toggleModule2Fields();
+            });
+
             jQuery('.numbersOnly').keyup(function () {
                 this.value = this.value.replace(/[^0-9\.]/g, '');
             });
