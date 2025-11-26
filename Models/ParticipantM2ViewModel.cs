@@ -54,6 +54,8 @@ namespace GlassLP.Models
 
         [DisplayName("Type of Vision Issue")]
         public int TypeofVisionIssueId { get; set; }
+        [DisplayName("Type of Vision Issue (Other)")]
+        public string TypeofVisionIssue_Others { get; set; }
 
         [DisplayName("Glasses Sold")]
         public int GlassesSold { get; set; }
@@ -91,5 +93,8 @@ namespace GlassLP.Models
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
+        public string Version { get; set; }
+        public DateTime SynDate { get; set; }
+        public string uuid { get; set; }
     }
 }
