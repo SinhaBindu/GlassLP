@@ -70,34 +70,32 @@ namespace GlassLP.Models
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
-
 		// ...other properties...
-
-		
-		public string? DistrictName { get; set; }
-
-		[NotMapped]
-		public string? BlockName { get; set; }
-		[NotMapped]
-		public string? PanchayatName { get; set; }
+		//public string? DistrictName { get; set; }
+		//[NotMapped]
+		//public string? BlockName { get; set; }
+		//[NotMapped]
+		//public string? PanchayatName { get; set; }
 		[DisplayName("Vision Entrepreneur")]
 		public int? VEId { get; set; }
+		public string Version { get; set; }
+		public DateTime SynDate { get; set; }
+        public string uuid { get; set; }
 
         [NotMapped]
 		[ValidateNever]
 		public IEnumerable<SelectListItem> TypeOfModuleList { get; set; }
-        [NotMapped]
-        [ValidateNever]
-        public IEnumerable<SelectListItem> VEList { get; set; }
+        //[NotMapped]
+        //[ValidateNever]
+        //public IEnumerable<SelectListItem> VEList { get; set; }
 
-        [ValidateNever]
-		public IEnumerable<SelectListItem> TypeOfVisitList { get; set; }
+  //      [ValidateNever]
+		//public IEnumerable<SelectListItem> TypeOfVisitList { get; set; }
 
-		[ValidateNever]
-		public IEnumerable<SelectListItem> DistrictList { get; set; }
+		//[ValidateNever]
+		//public IEnumerable<SelectListItem> DistrictList { get; set; }
 
-		[ValidateNever]
-		public IEnumerable<SelectListItem> BlockList { get; set; }
-        // etc.
+		//[ValidateNever]
+		//public IEnumerable<SelectListItem> BlockList { get; set; }
     }
 }

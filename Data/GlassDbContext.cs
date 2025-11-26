@@ -195,6 +195,9 @@ namespace GlassLP.Data
         [ValidateNever]
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
+        public string Version { get; set; }
+        public DateTime SynDate { get; set; }
+        public string uuid { get; set; }
     }
 
     [Table("mst_Vendors")]//Vision Entrepreneur 
