@@ -38,7 +38,7 @@ namespace GlassLP.Models
         public string? VOName { get; set; }
 
         [DisplayName("Camp Date")]
-        public DateTime CampDate { get; set; }
+        public DateTime? CampDate { get; set; }
 
         [DisplayName("Camp Location")]
         public string? Location { get; set; }

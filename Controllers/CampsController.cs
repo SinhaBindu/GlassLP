@@ -144,7 +144,7 @@ namespace GlassLP.Controllers
                         tbl.CLFId = model.CLFId;
                         tbl.PanchayatId = model.PanchayatId;
                         tbl.VOName = model.VOName;
-                        tbl.CampDate = model.CampDate;
+                        tbl.CampDate = model.CampDate.Value;
                         tbl.Location = model.Location;
                         if (model.TypeOfModule == 1)
                         {
