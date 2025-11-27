@@ -451,7 +451,7 @@ namespace GlassLP.Controllers.API
                     //totalScreened = c.TotalScreened,
                     //totalGlassesDistributed = c.TotalGlassesDistributed,
                     powerOfGlassId = c.PowerOfGlassId,
-                    photoUploadPath = UrlUtility.GetBaseUrl() + c.PhotoUploadPath,
+                    photoUploadPath = UrlUtility.GetBaseUrl() + "/wwwroot/" + c.PhotoUploadPath,
                     isActive = c.IsActive,
                     createdBy = c.CreatedBy,
                     createdOn = c.CreatedOn,

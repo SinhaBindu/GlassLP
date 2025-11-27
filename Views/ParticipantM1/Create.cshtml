@@ -285,9 +285,7 @@
                         }
                     },
                     error: function (xhr) {
-                        $('#responseMessage').html(
-                            '<div class="alert alert-danger">Error: ' + xhr.responseText + '</div>'
-                        );
+                        toastr.error(xhr.message);
                     }
                 });
             });
