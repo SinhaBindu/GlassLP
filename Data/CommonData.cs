@@ -37,7 +37,11 @@ namespace GlassLP.Data
                 return publicIPAddress;
             }
         }
-
+        //public static string GetBaseUrl(HttpContext httpContext)
+        //{
+        //    var request = httpContext.Request;
+        //    return $"{request.Scheme}://{request.Host.Value}";
+        //}
         #endregion
         public List<SelectListItem> GetVE(int IsSelect = 0)
         {
@@ -51,7 +55,6 @@ namespace GlassLP.Data
             {
                 list.Insert(0, new SelectListItem { Value = "", Text = "All" });
             }
-
             return list;
         }
         public List<SelectListItem> GetTypeOfModule(int IsSelect = 0)

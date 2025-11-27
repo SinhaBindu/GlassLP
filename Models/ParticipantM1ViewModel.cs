@@ -67,6 +67,8 @@ namespace GlassLP.Models
         public DateTime? UpdatedOn { get; set; }
         public string Version { get; set; }
         public DateTime SynDate { get; set; }
+        [NotMapped]
+        [ValidateNever]
         public string uuid { get; set; }
     }
 }

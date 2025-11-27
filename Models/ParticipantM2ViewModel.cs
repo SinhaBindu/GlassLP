@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GlassLP.Models
 {
@@ -95,6 +96,8 @@ namespace GlassLP.Models
         public DateTime? UpdatedOn { get; set; }
         public string Version { get; set; }
         public DateTime SynDate { get; set; }
+        [NotMapped]
+        [ValidateNever]
         public string uuid { get; set; }
     }
 }
