@@ -159,7 +159,7 @@ namespace GlassLP.Data
         [StringLength(500)]
         public string VOName { get; set; }
 
-        public DateTime? CampDate { get; set; }
+        public DateTime CampDate { get; set; }
         public string Location { get; set; }
 
         [StringLength(500)]

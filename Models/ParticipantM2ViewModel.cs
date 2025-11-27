@@ -99,7 +99,7 @@ namespace GlassLP.Models
         public string Version { get; set; }
         [NotMapped]
         [ValidateNever]
-        public DateTime? SynDate { get; set; }
+        public DateTime SynDate { get; set; }
         [NotMapped]
         [ValidateNever]
         public string uuid { get; set; }
