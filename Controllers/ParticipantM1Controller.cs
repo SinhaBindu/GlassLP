@@ -69,7 +69,6 @@ namespace GlassLP.Controllers
             }
         }
 
-
         public Result<string> GetParticipantM1List(Filtermodel filtermodel)
         {
             try

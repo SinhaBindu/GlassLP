@@ -27,15 +27,15 @@ namespace GlassLP.Controllers
 
 		public async Task<IActionResult> Index()
 		{
-			return View();
+			Filtermodel filtermodel = new Filtermodel();
+			return View(filtermodel);
 		}
 
-
-		public Result<string> GetParticipantM2List()
+		public Result<string> GetParticipantM2List(Filtermodel filtermodel)
 		{
 			try
 			{
-				DataTable tbllist = _spManager.SP_ParticipantM2List();
+				DataTable tbllist = _spManager.SP_ParticipantM2List(filtermodel);
 				if (tbllist.Rows.Count > 0)
 				{
 					string html = RenderPartialViewToString("_ParticipantM2Data", tbllist);

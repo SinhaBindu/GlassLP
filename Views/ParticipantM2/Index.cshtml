@@ -1,4 +1,5 @@
-﻿@* @model IEnumerable<GlassLP.Data.TblCamp>
+﻿@model Filtermodel
+@* @model IEnumerable<GlassLP.Data.TblCamp>
  *@
 @{
 	ViewData["Title"] = "Index";
@@ -6,26 +7,19 @@
 <div class="row">
 	<div class="col-12">
 		<div class="card">
+			<form class="app-form" method="post" enctype="multipart/form-data" id="formid">
 			<div class="card-body">
 				<div class="row">
 					<div class="col-md-4">
 						<div class="mb-3">
-							<label class="form-label">label</label>
-							<select class="form-control">
-								<option value="">Select</option>
-								<option value="1">AURANGABAD</option>
-								<option value="2">BHOJPUR</option>
-								<option value="3">E.CHAMPARAN</option>
-								<option value="4">GAYA</option>
-								<option value="8">PATNA</option>
-								<option value="9">VAISHALI</option>
-							</select>
+							@Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
+							@Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), null, new { @class = "form-control" })
 						</div>
 					</div>
 					<div class="col-md-4">
 						<div class="mb-3">
-							<label class="form-label">label</label>
-							<input class="form-control">
+							@Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
+							@Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), null, new { @class = "form-control" })
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -40,12 +34,13 @@
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	<div class="col-12">
 		<div class="card">
 			<div class="card-header d-flex justify-content-between align-items-center">
-				<h5 class="mb-0">Index</h5>
+				<h5 class="mb-0">Participant Module Two List</h5>
 				<div class="btn-group">
 					<a asp-action="Create" class="btn btn-sm btn-outline-info text-uppercase b-r-22"><i class="fa fa-edit"></i> Create New</a>
 					<button type="button" id="btnActivate" class="btn btn-sm btn-success text-uppercase b-r-22 ms-2">Approved</button>
@@ -61,15 +56,27 @@
 @section Scripts {
 	<script>
 		$(document).ready(function () {
+			GetJSDistricts("DistrictId", 1);
+			$("#DistrictId").change(function () {
+				GetJSBlocks("BlockId", $(this).val(), 1);
+			});
 			BindData();
+			$('#formid').on('submit', function (e) {
+				e.preventDefault();
+				BindData();
+			});
 		});
 		function BindData() {
 			debugger;
 			$("#subdata").html('');
+			var filtermodel = new Object();
+			filtermodel.DistrictId = $('#DistrictId').val() == '' ? 0 : $('#DistrictId').val();
+			filtermodel.BlockId = $('#BlockId').val() == '' ? 0 : $('#BlockId').val();
+
 			$.ajax({
 				type: "Get",
 				url: "/ParticipantM2/GetParticipantM2List",
-				data: '',//filtermodel,//JSON.stringify({ 'Roles': '' }),
+				data: filtermodel,//JSON.stringify({ 'Roles': '' }),
 				//cache: false,
 				success: function (res) {
 					if (res.isSuccess) {

@@ -124,16 +124,26 @@ namespace GlassLP.Controllers
 					}
 					if (result > 0)
 					{
-						return Result<MstVendor>.Success(tbl, $"Vendor added successfully!");
+						var message = model.pk_VendorsId == 0
+							? "Vendor added successfully!"
+							: "Vendor updated successfully!";
+						return Result<MstVendor>.Success(tbl, message);
+						
 					}
 					else
 					{
-						return Result<MstVendor>.Failure("Error occurred while adding vendor.");
+						var errorMessage = model.pk_VendorsId == 0
+							? "Error occurred while adding vendor."
+							: "Error occurred while updating vendor.";
+						return Result<MstVendor>.Failure(errorMessage);
 					}
 				}
 				else
 				{
-					return Result<MstVendor>.ValidationFailure(ModelState);
+					var errorMessage = model.pk_VendorsId == 0
+							? "Error occurred while adding vendor."
+							: "Error occurred while updating vendor.";
+					return Result<MstVendor>.Failure(errorMessage);
 				}
 			}
 			catch (Exception ex)
