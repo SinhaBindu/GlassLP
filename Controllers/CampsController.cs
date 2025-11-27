@@ -144,7 +144,7 @@ namespace GlassLP.Controllers
                         tbl.CLFId = model.CLFId;
                         tbl.PanchayatId = model.PanchayatId;
                         tbl.VOName = model.VOName;
-                        tbl.CampDate = model.CampDate.Value;
+                        tbl.CampDate = model.CampDate;
                         tbl.Location = model.Location;
                         if (model.TypeOfModule == 1)
                         {
@@ -187,7 +187,7 @@ namespace GlassLP.Controllers
                             {
                                 await model.PhotoUpload.CopyToAsync(stream);
                             }
-                            tbl.PhotoUploadPath = "\\uploads" + "\\campm1" + "\\" + uniqueFileName;
+                            tbl.PhotoUploadPath = "/uploads" + "/campm"+ model.TypeOfModule +"/" + uniqueFileName;
                         }
                         //tbl.PhotoUploadPath = "a";
                         _context.TblCamp.Add(tbl);

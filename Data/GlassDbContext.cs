@@ -159,7 +159,7 @@ namespace GlassLP.Data
         [StringLength(500)]
         public string VOName { get; set; }
 
-        public DateTime CampDate { get; set; }
+        public DateTime? CampDate { get; set; }
         public string Location { get; set; }
 
         [StringLength(500)]
@@ -185,7 +185,7 @@ namespace GlassLP.Data
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public string Version { get; set; }
-        public DateTime SynDate { get; set; }
+        public DateTime? SynDate { get; set; }
         public string uuid { get; set; }
     }
 
@@ -265,9 +265,9 @@ namespace GlassLP.Data
         [ValidateNever]
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
-        public string Version { get; set; }
-        public DateTime SynDate { get; set; }
-        public string uuid { get; set; }
+        public string? Version { get; set; }
+        public DateTime? SynDate { get; set; }
+        public string? uuid { get; set; }
     }
 
 	[Table("tbl_PaticipantM2")]
@@ -357,9 +357,9 @@ namespace GlassLP.Data
 		public DateTime? CreatedOn { get; set; }
 		public string? UpdatedBy { get; set; }
 		public DateTime? UpdatedOn { get; set; }
-        public string Version { get; set; }
-        public DateTime SynDate { get; set; }
-        public string uuid { get; set; }
+        public string? Version { get; set; }
+        public DateTime? SynDate { get; set; }
+        public string? uuid { get; set; }
     }
 
 	[Table("mst_PowerGlass")]
