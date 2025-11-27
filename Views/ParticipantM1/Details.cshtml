@@ -3,8 +3,24 @@
 @{
     ViewData["Title"] = "Participant Details";
 }
-
-<div class="row">
+<div class="row m-1">
+    <div class="col-12 ">
+        <h4 class="main-title">Participant Module One - Details</h4>
+        <ul class="app-line-breadcrumbs mb-3">
+            <li class="">
+                <a class="f-s-14 f-w-500" href="Home/Index">
+                    <span>
+                        Dashboard
+                    </span>
+                </a>
+            </li>
+            <li class="active">
+                <a class="f-s-14 f-w-500" href="#">Participant Module One - Details</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row view-details">
     <div class="col-12">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -20,37 +36,37 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Camp Code:</label>
                             <div class="form-control-plaintext">@ViewBag.CampCode</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Participant Name:</label>
                             <div class="form-control-plaintext">@Model.ParticipantName</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Mobile No:</label>
                             <div class="form-control-plaintext">@Model.MobileNo</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Age:</label>
                             <div class="form-control-plaintext">@Model.Age</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">SHG Name:</label>
                             <div class="form-control-plaintext">@Model.SHGName</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Occupation:</label>
                             <div class="form-control-plaintext">
@@ -62,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Vision Issue Identified:</label>
                             <div class="form-control-plaintext">
@@ -70,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Type of Vision Issue:</label>
                             <div class="form-control-plaintext">
@@ -78,7 +94,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Glasses Provided:</label>
                             <div class="form-control-plaintext">
@@ -86,13 +102,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Power of Glass:</label>
                             <div class="form-control-plaintext">@ViewBag.PowerOfGlassName</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Feedback on Comfort:</label>
                             <div class="form-control-plaintext">
@@ -100,7 +116,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Referral Required:</label>
                             <div class="form-control-plaintext">
@@ -108,7 +124,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Digital Consent:</label>
                             <div class="form-control-plaintext">
@@ -116,13 +132,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Remarks:</label>
                             <div class="form-control-plaintext">@Model.Remarks</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Status:</label>
                             <div class="form-control-plaintext">
@@ -130,25 +146,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Created By:</label>
                             <div class="form-control-plaintext">@Model.CreatedBy</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Created On:</label>
                             <div class="form-control-plaintext">@Model.CreatedOn</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Updated By:</label>
                             <div class="form-control-plaintext">@Model.UpdatedBy</div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Updated On:</label>
                             <div class="form-control-plaintext">@Model.UpdatedOn</div>

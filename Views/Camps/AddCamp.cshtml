@@ -1,234 +1,233 @@
 ﻿@model CampViewModel
-
 <div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header d-flex align-items-center">
-                <h5 class="mb-0">Create Camp</h5>
-            </div>
-            <div class="card-body">
-                <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.TypeOfModule, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.TypeOfModule, Model.TypeOfModuleList, null, new { @class = "required form-control" })
-                                @Html.ValidationMessageFor(m => m.TypeOfModule, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
-                                @Html.ValidationMessageFor(m => m.DistrictId, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
-                                @Html.ValidationMessageFor(m => m.BlockId, "", new { @class = "text-danger" })
-                                </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
-                                @Html.ValidationMessageFor(m => m.CLFId, "", new { @class = "text-danger" })
-                                </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.PanchayatId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
-                                @Html.ValidationMessageFor(m => m.PanchayatId, "", new { @class = "text-danger" })
-                                </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.VOName, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.VOName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-                                @Html.ValidationMessageFor(m => m.VOName, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.CampDate, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.CampDate, new { htmlAttributes = new { @class = "required datepicker form-control", @type = "text", @maxlength = "20" } })
-                                @Html.ValidationMessageFor(m => m.CampDate, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.Location, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-                                @Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-4 divve" style="display:none;">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.VEId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.VEId, new List<SelectListItem>(), "Select", new { @class = "required form-control" })
-                                @Html.ValidationMessageFor(m => m.VEId, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-4 divcrp" style="display:none;">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.CRPName, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.CRPName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-                                @Html.ValidationMessageFor(m => m.CRPName, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-4 divcrp" style="display:none;">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.CRPMobileNo, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.CRPMobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
-                                @Html.ValidationMessageFor(m => m.CRPMobileNo, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.ParticipantMobilized, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "numbersOnly required form-control",@type="text", @maxlength = "3" } })
-                                @Html.ValidationMessageFor(m => m.ParticipantMobilized, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                @Html.LabelFor(m => m.PhotoUpload, new { @class = "form-label" })
-                                <span class="text-warning">(JPEG,JPG,PNG)</span>
-                                @if (Model.CampId_pk==0)
-                                {
-                                    @Html.EditorFor(m => m.PhotoUpload, new { htmlAttributes = new { @class = "required form-control", type = "file",accept = "image/png, image/gif, image/jpeg" } })
-                                    @Html.ValidationMessageFor(m => m.PhotoUpload, "", new { @class = "text-danger" })
-                                }
-                                else
-                                {
-                                    @Html.EditorFor(m => m.PhotoUpload, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/png, image/jpg, image/jpeg" } })
-                                }
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="text-end">
-                                <button class="btn btn-primary b-r-22" type="submit">
-                                    Submit
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header d-flex align-items-center">
+				<h5 class="mb-0">Create Camp</h5>
+			</div>
+			<div class="card-body">
+				<form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.TypeOfModule, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.TypeOfModule, Model.TypeOfModuleList, null, new { @class = "required form-control" })
+								@Html.ValidationMessageFor(m => m.TypeOfModule, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
+								@Html.ValidationMessageFor(m => m.DistrictId, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
+								@Html.ValidationMessageFor(m => m.BlockId, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
+								@Html.ValidationMessageFor(m => m.CLFId, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.PanchayatId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "Select", new { @class = "required form-control ddl" })
+								@Html.ValidationMessageFor(m => m.PanchayatId, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.VOName, new { @class = "form-label" })
+								@Html.EditorFor(m => m.VOName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								@Html.ValidationMessageFor(m => m.VOName, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.CampDate, new { @class = "form-label" })
+								@Html.EditorFor(m => m.CampDate, new { htmlAttributes = new { @class = "required datepicker form-control", @type = "text", @maxlength = "20" } })
+								@Html.ValidationMessageFor(m => m.CampDate, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.Location, new { @class = "form-label" })
+								@Html.EditorFor(m => m.Location, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								@Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4 divve" style="display:none;">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.VEId, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.VEId, new List<SelectListItem>(), "Select", new { @class = "required form-control" })
+								@Html.ValidationMessageFor(m => m.VEId, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4 divcrp" style="display:none;">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.CRPName, new { @class = "form-label" })
+								@Html.EditorFor(m => m.CRPName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								@Html.ValidationMessageFor(m => m.CRPName, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4 divcrp" style="display:none;">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.CRPMobileNo, new { @class = "form-label" })
+								@Html.EditorFor(m => m.CRPMobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
+								@Html.ValidationMessageFor(m => m.CRPMobileNo, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.ParticipantMobilized, new { @class = "form-label" })
+								@Html.EditorFor(m => m.ParticipantMobilized, new { htmlAttributes = new { @class = "numbersOnly required form-control", @type = "text", @maxlength = "3" } })
+								@Html.ValidationMessageFor(m => m.ParticipantMobilized, "", new { @class = "text-danger" })
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.PhotoUpload, new { @class = "form-label" })
+								<span class="text-warning" style="font-size:12px;">(JPEG,JPG,PNG)</span>
+								@if (Model.CampId_pk == 0)
+								{
+									@Html.EditorFor(m => m.PhotoUpload, new { htmlAttributes = new { @class = "required form-control", type = "file", accept = "image/png, image/gif, image/jpeg" } })
+									@Html.ValidationMessageFor(m => m.PhotoUpload, "", new { @class = "text-danger" })
+								}
+								else
+								{
+									@Html.EditorFor(m => m.PhotoUpload, new { htmlAttributes = new { @class = "form-control", type = "file", accept = "image/png, image/jpg, image/jpeg" } })
+								}
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="text-end">
+								<button class="btn btn-primary b-r-22" type="submit">
+									Submit
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 @section Scripts {
-    
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    <script>
-        $(document).ready(function () {
-            $("#CampDate").datepicker({
-                dateFormat: "dd-M-yy",
-                maxDate: 0// jQuery UI standard
-            });
-            jQuery('.numbersOnly').keyup(function () {
-                this.value = this.value.replace(/[^0-9\.]/g, '');
-            });
-           
-            $("#TypeOfModule").change(function () {
-                debugger;
-                $('.divcrp').hide(); $('.divve').hide();
-                $('#CRPName').val('').removeAttr(); $('#CRPMobileNo').val('').removeAttr();
-                $('#VEId').val('').removeAttr(); $('#DistrictId').val('');
-                $('.ddl').empty();
-                if ($(this).val() != '')
-                    GetJSDistricts("DistrictId", $(this).val());
-                if ($(this).val() === "1") {
-                    $('.divcrp').show();
-                    $('#CRPName').attr("required", true);
-                    $('#CRPMobileNo').attr("required", true);
-                    $('#VEId').removeAttr("required");
-                }
-                else if ($(this).val() === "2") {
-                    GetJSVE("VEId",0)
-                    $('.divcrp').hide(); $('.divve').show();
-                    $('#VEId').attr("required", true);
-                    $('#CRPName').removeAttr("required");
-                    $('#CRPMobileNo').removeAttr("required");
-                }
-            });
-            $("#DistrictId").change(function () {
-                GetJSBlocks("BlockId", $(this).val());
-                $('#BlockId').val();
-            });
-            $("#BlockId").change(function () {
-                GetJSPanchayats("PanchayatId", $('#DistrictId').val(), $(this).val());
-                GetJSFederations("CLFId", $('#DistrictId').val(), $(this).val());
-                $('#PanchayatId').val(); $('#CLFId').val();
-            });
-            $("#PhotoUpload").change(function (e) {
-                var fileInput = document.getElementById('PhotoUpload');
-                let allowedExtension = ['image/jpeg', 'image/jpg', 'image/png'];
-                //Iterating through each files selected in fileInput
-                if (fileInput.files.length > 0) {
-                    for (i = 0; i < fileInput.files.length; i++) {
-                        if (fileInput.files[i]) {
-                            var sfilename = fileInput.files[i].name;
-                            // formData.append(sfilename, fileInput.files[i]);
-                            var file = fileInput.files[i], img;
-                            if (allowedExtension.indexOf(file.type) > -1) {
-                                if (Math.round(file.size / (1 * 1024 * 1024)) > 1) { // make it in MB so divide by 1024*1024  = 2 MB
-                                    toastr.error("Error", 'Please select image size less than 1 MB');
-                                    return false;
-                                }
-                            }
-                            else {
-                                toastr.error("Error", 'Please select valid image.');
-                                $('#PhotoUpload').val('');
-                                return false;
-                            }
-                        }
-                    }
-                }
-            });
 
-            //Post sumbitted Data
-            $('#addForm').on('submit', function (e) {
-                debugger;
-                e.preventDefault(); // <- prevent normal form post
-                var isvalid = $('#addForm').valid();
-                if (!$('#addForm').valid()) {
-                    return; // Invalid form, stop submission
-                }
-                var form = $('#addForm')[0];
-                var formData = new FormData(form);
-                $.ajax({
-                    url: '/Camps/AddCamp',
-                    type: 'POST',
-                    data: formData,
-                    processData: false, // Important for files
-                    contentType: false, // Important for files
-                    success: function (response) {
-                        if (response.isSuccess === true) {
-                            toastr.success(response.message);
-                            $('#addForm')[0].reset();
-                            setTimeout(function () {
-                                if (confirm("Do you want to add Participant?") == true) {
-                                    window.location.href = "/ParticipantM1/Create?code=" + response.data.campCode;
-                                }
-                            }, 200);
-                        } else {
-                            toastr.error(response.message);
-                        }
-                    },
-                    error: function (xhr) {
-                        $('#responseMessage').html(
-                            '<div class="alert alert-danger">Error: ' + xhr.responseText + '</div>'
-                        );
-                    }
-                });
-            });
-        });
-    </script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+	<script>
+		$(document).ready(function () {
+			$("#CampDate").datepicker({
+				dateFormat: "dd-M-yy",
+				maxDate: 0// jQuery UI standard
+			});
+			jQuery('.numbersOnly').keyup(function () {
+				this.value = this.value.replace(/[^0-9\.]/g, '');
+			});
+
+			$("#TypeOfModule").change(function () {
+				debugger;
+				$('.divcrp').hide(); $('.divve').hide();
+				$('#CRPName').val('').removeAttr(); $('#CRPMobileNo').val('').removeAttr();
+				$('#VEId').val('').removeAttr(); $('#DistrictId').val('');
+				$('.ddl').empty();
+				if ($(this).val() != '')
+					GetJSDistricts("DistrictId", $(this).val());
+				if ($(this).val() === "1") {
+					$('.divcrp').show();
+					$('#CRPName').attr("required", true);
+					$('#CRPMobileNo').attr("required", true);
+					$('#VEId').removeAttr("required");
+				}
+				else if ($(this).val() === "2") {
+					GetJSVE("VEId",0)
+					$('.divcrp').hide(); $('.divve').show();
+					$('#VEId').attr("required", true);
+					$('#CRPName').removeAttr("required");
+					$('#CRPMobileNo').removeAttr("required");
+				}
+			});
+			$("#DistrictId").change(function () {
+				GetJSBlocks("BlockId", $(this).val());
+				$('#BlockId').val();
+			});
+			$("#BlockId").change(function () {
+				GetJSPanchayats("PanchayatId", $('#DistrictId').val(), $(this).val());
+				GetJSFederations("CLFId", $('#DistrictId').val(), $(this).val());
+				$('#PanchayatId').val(); $('#CLFId').val();
+			});
+			$("#PhotoUpload").change(function (e) {
+				var fileInput = document.getElementById('PhotoUpload');
+				let allowedExtension = ['image/jpeg', 'image/jpg', 'image/png'];
+				//Iterating through each files selected in fileInput
+				if (fileInput.files.length > 0) {
+					for (i = 0; i < fileInput.files.length; i++) {
+						if (fileInput.files[i]) {
+							var sfilename = fileInput.files[i].name;
+							// formData.append(sfilename, fileInput.files[i]);
+							var file = fileInput.files[i], img;
+							if (allowedExtension.indexOf(file.type) > -1) {
+								if (Math.round(file.size / (1 * 1024 * 1024)) > 1) { // make it in MB so divide by 1024*1024  = 2 MB
+									toastr.error("Error", 'Please select image size less than 1 MB');
+									return false;
+								}
+							}
+							else {
+								toastr.error("Error", 'Please select valid image.');
+								$('#PhotoUpload').val('');
+								return false;
+							}
+						}
+					}
+				}
+			});
+
+			//Post sumbitted Data
+			$('#addForm').on('submit', function (e) {
+				debugger;
+				e.preventDefault(); // <- prevent normal form post
+				var isvalid = $('#addForm').valid();
+				if (!$('#addForm').valid()) {
+					return; // Invalid form, stop submission
+				}
+				var form = $('#addForm')[0];
+				var formData = new FormData(form);
+				$.ajax({
+					url: '/Camps/AddCamp',
+					type: 'POST',
+					data: formData,
+					processData: false, // Important for files
+					contentType: false, // Important for files
+					success: function (response) {
+						if (response.isSuccess === true) {
+							toastr.success(response.message);
+							$('#addForm')[0].reset();
+							setTimeout(function () {
+								if (confirm("Do you want to add Participant?") == true) {
+									window.location.href = "/ParticipantM1/Create?code=" + response.data.campCode;
+								}
+							}, 200);
+						} else {
+							toastr.error(response.message);
+						}
+					},
+					error: function (xhr) {
+						$('#responseMessage').html(
+							'<div class="alert alert-danger">Error: ' + xhr.responseText + '</div>'
+						);
+					}
+				});
+			});
+		});
+	</script>
 }
