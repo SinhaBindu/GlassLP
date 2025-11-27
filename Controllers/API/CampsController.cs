@@ -105,7 +105,7 @@ namespace GlassLP.Controllers.API
                         System.IO.File.WriteAllBytes(filePath, bytes);
 
                         var pth = "/uploads/campm" + model.TypeOfModule + "/" + fileName;
-                        model.PhotoUploadPath = pth; //"/uploads/" + fileName;
+                        tbl.PhotoUploadPath = pth; //"/uploads/" + fileName;
                     }
                     //if (model.PhotoUpload != null && model.PhotoUpload.Length > 0)
                     //{
