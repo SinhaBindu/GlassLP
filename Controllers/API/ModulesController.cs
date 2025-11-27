@@ -172,7 +172,7 @@ namespace GlassLP.Controllers.API
                         tbl.UpdatedOn = DateTime.Now;
                         tbl.IsActive = true;
                         tbl.Version=model.Version;
-                        tbl.SynDate=model.SynDate;
+                        tbl.SynDate=model.SynDate.Value;
                        // tbl.uuid = model.uuid;
                         _context.TblPaticipantM1.Add(tbl);
                     }
@@ -429,7 +429,7 @@ namespace GlassLP.Controllers.API
                         tbl.CreatedOn = DateTime.Now;
                         tbl.IsActive = true;
                         tbl.Version = model.Version;
-                        tbl.SynDate = model.SynDate;
+                        tbl.SynDate = model.SynDate.Value;
                        // tbl.uuid = model.uuid;
                     }
                     else
