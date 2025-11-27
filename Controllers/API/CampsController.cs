@@ -86,7 +86,7 @@ namespace GlassLP.Controllers.API
                         tbl.PhotoUploadPath = "na";
                         tbl.Version = model.Version;
                         //tbl.uuid = model.uuid;
-                        tbl.SynDate = model.SynDate.Value;
+                        tbl.SynDate = model.SynDate;
                     }
                     else
                     {
