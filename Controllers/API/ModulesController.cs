@@ -124,7 +124,7 @@ namespace GlassLP.Controllers.API
             if (!ModelState.IsValid)
             {
                 var validationErrors = ModelState
-                    .Where(entry => entry.Value?.Errors.Count > 0)
+                    .Where(entry => entry.Value?.Errors.Count > 0)  
                     .ToDictionary(
                         entry => entry.Key,
                         entry => entry.Value!.Errors.Select(error => error.ErrorMessage).ToArray());
@@ -173,7 +173,7 @@ namespace GlassLP.Controllers.API
                         tbl.IsActive = true;
                         tbl.Version=model.Version;
                         tbl.SynDate=model.SynDate;
-                        tbl.uuid = model.uuid;
+                       // tbl.uuid = model.uuid;
                         _context.TblPaticipantM1.Add(tbl);
                     }
                     else
@@ -246,8 +246,8 @@ namespace GlassLP.Controllers.API
                     updatedBy = p.UpdatedBy,
                     updatedOn = p.UpdatedOn,
                     version=p.Version,
-                    syndate=p.SynDate,
-                    uuid=p.uuid
+                    syndate=p.SynDate
+                    //uuid=p.uuid
                 })
                 .FirstOrDefaultAsync();
         }
@@ -293,14 +293,14 @@ namespace GlassLP.Controllers.API
                     createdBy = p.CreatedBy,
                     createdOn = p.CreatedOn,
                     updatedBy = p.UpdatedBy,
-                    updatedOn = p.UpdatedOn
+                    updatedOn = p.UpdatedOn,
+                    syndate=p.SynDate,
+                    version = p.Version
                 })
                 .ToListAsync();
 
             return Ok(new ApiResponse<List<object>>(
-                true,
-                "OK",
-                "Data fetched successfully",
+                true, "OK", "Data fetched successfully",
                 participants.Cast<object>().ToList()));
         }
 
@@ -344,7 +344,9 @@ namespace GlassLP.Controllers.API
                     createdBy = p.CreatedBy,
                     createdOn = p.CreatedOn,
                     updatedBy = p.UpdatedBy,
-                    updatedOn = p.UpdatedOn
+                    updatedOn = p.UpdatedOn,
+                    syndate = p.SynDate,
+                    version = p.Version
                 })
                 .FirstOrDefaultAsync();
 
@@ -428,7 +430,7 @@ namespace GlassLP.Controllers.API
                         tbl.IsActive = true;
                         tbl.Version = model.Version;
                         tbl.SynDate = model.SynDate;
-                        tbl.uuid = model.uuid;
+                       // tbl.uuid = model.uuid;
                     }
                     else
                     {
@@ -514,7 +516,9 @@ namespace GlassLP.Controllers.API
                     createdBy = p.CreatedBy,
                     createdOn = p.CreatedOn,
                     updatedBy = p.UpdatedBy,
-                    updatedOn = p.UpdatedOn
+                    updatedOn = p.UpdatedOn,
+                    syndate = p.SynDate,
+                    version = p.Version
                 })
                 .FirstOrDefaultAsync();
         }

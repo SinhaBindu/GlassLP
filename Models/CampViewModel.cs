@@ -78,8 +78,12 @@ namespace GlassLP.Models
 		//public string? PanchayatName { get; set; }
 		[DisplayName("Vision Entrepreneur")]
 		public int? VEId { get; set; }
-		public string Version { get; set; }
-		public DateTime SynDate { get; set; }
+        [NotMapped]
+        [ValidateNever]
+        public string Version { get; set; }
+        [NotMapped]
+        [ValidateNever]
+        public DateTime SynDate { get; set; }
         [NotMapped]
         [ValidateNever]
         public string uuid { get; set; }
