@@ -164,7 +164,6 @@ namespace GlassLP.Controllers
                         //tbl.PowerOfGlassId = model.PowerOfGlassId;
                         if (model.CampId_pk == 0)
                         {
-
                             tbl.CampCode = _spManager.GenerateCode(model.DistrictId, model.BlockId);// Optional: Generate unique CampCode
                             tbl.CreatedBy = currentUser;
                             tbl.CreatedOn = DateTime.Now;
