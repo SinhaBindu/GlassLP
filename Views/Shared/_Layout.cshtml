@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="~/GlassLP.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
     <base href="@GlassLP.Data.UrlUtility.GetBaseUrl()" />
-    <style>
+    @* <style>
         .main-nav li.active > a
         {
             color: #fff;
             background-color: #0d6efd; /* example */
         }
-    </style>
+    </style> *@
 </head>
 
 <body>
@@ -30,7 +30,7 @@
                     <img src="~/images/logo.jpg" />
                 </a>
             </div>
-            <div class="app-nav">
+            <div class="app-nav" id="accordion">
                 <ul class="main-nav p-0 mt-2">
                     <li class="menu-title">
                         <span>Dashboard</span>
@@ -43,7 +43,7 @@
                             <i class="fa fa-users"></i>
                             Forms
                         </a>
-                        <ul class="collapse" id="apps">
+                        <ul class="collapse multi-collapse" id="apps" data-bs-parent="#accordion">
                             <li><a href="~/Camps\Index">Camp</a></li>
                             <li><a href="~/ParticipantM1\Index">Participant Model One</a></li>
                             <li><a href="~/ParticipantM2\Index">Participant Model Two</a></li>
@@ -56,7 +56,7 @@
                                 <i class="fa fa-database"></i>
                                 Master
                             </a>
-                            <ul class="collapse" id="master">
+                            <ul class="collapse multi-collapse" id="master" data-bs-parent="#accordion">
                                 <li><a href="~/Vendors\Index">Vision Entrepreneurs</a></li>
                                 <li><a href="~/GlassesMst\Index">Glass Master</a></li>
                                 <li><a href="~/Users\Index">Add User</a></li>
