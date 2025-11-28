@@ -126,12 +126,13 @@
                         // table.buttons().container().appendTo($('#div-download'));
                     }
                     else {
-                        $("#subdata").html('<h6 class="text-danger">' + res.message + ' < / h6>');
+                        $("#subdata").html('<h6 class="text-danger">' + res.message + ' </h6>');
                     }
                 },
                 error: function (req, error) {
                     if (error === 'error') { error = req.statusText; }
                     var errormsg = 'There was a communication error: ' + error;
+                    $("#subdata").html('<h6 class="text-danger">' + errormsg + ' </h6>');
                     //Do To Message display
                 }
             });

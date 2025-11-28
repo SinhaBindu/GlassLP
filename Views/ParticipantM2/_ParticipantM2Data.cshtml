@@ -67,7 +67,7 @@
                         <td class="text-left">@dr["GlassesSold"]</td>
                         <td class="text-left">@dr["FeedbackonComfort"]</td>
                         <td class="text-left">@dr["Remarks"]</td>
-                        <td class="text-left">@dr["IsApproved"]</td>
+                        <td class="text-left @dr["IsApprovedColor"]">@dr["IsApproved"]</td>
                         <td class="edit text-center">
                             <a asp-action="Create"
                                asp-route-CId="@dr["ParticipantId_pk"]"

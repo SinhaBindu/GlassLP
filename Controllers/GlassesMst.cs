@@ -80,12 +80,18 @@ namespace GlassLP.Controllers
 						row["TypeOfModuleName"] = g.TypeOfModuleName ?? "";
 						row["PowerOfGlassId"] = g.PowerOfGlassId ;
 						row["PowerOfGlassName"] = g.PowerOfGlassName ?? "";
-						row["NoofGlasses"] = g.NoofGlasses ;
-						row["PerGlassCost"] = g.PerGlassCost;
-						row["TotalGlassCost"] = g.TotalGlassCost;
-						row["AdvertisingCost"] = g.AdvertisingCost;
-						row["Storagemiscellaneouscost"] = g.Storagemiscellaneouscost;
-						row["IsActive"] = g.IsActive ?? false;
+						row["NoofGlasses"] = g.NoofGlasses;
+						row["PerGlassCost"] = g.PerGlassCost ?? null;
+						row["TotalGlassCost"] = g.TotalGlassCost ?? null;
+						if (g.AdvertisingCost != null)
+							row["AdvertisingCost"] = g.AdvertisingCost != null ? g.AdvertisingCost : null;
+						else
+							row["AdvertisingCost"] = 0;
+                        if (g.Storagemiscellaneouscost != null)
+                            row["Storagemiscellaneouscost"] = g.Storagemiscellaneouscost!=null? g.Storagemiscellaneouscost : null;
+                        else
+                            row["Storagemiscellaneouscost"] = 0;
+                        row["IsActive"] = g.IsActive ?? false;
 						dt.Rows.Add(row);
 					}
 
@@ -177,7 +183,8 @@ namespace GlassLP.Controllers
 							tbl.CreatedBy = currentUser;
 							tbl.CreatedOn = DateTime.Now;
 							tbl.IsActive = true;
-							_context.MstGlass.Add(tbl);
+                            tbl.Availableglassinstock = model.NoofGlasses;
+                            _context.MstGlass.Add(tbl);
 						}
 						else
 						{

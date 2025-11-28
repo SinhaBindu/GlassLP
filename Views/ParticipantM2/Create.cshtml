@@ -408,12 +408,12 @@
 			else
 			{
 				<text>
-				GetJSDistricts("DistrictId");
+					GetJSDistricts("DistrictId", 2);
 				</text>
 			}
 			
 			$("#DistrictId").change(function () {
-				GetJSBlocks("BlockId", $(this).val());
+				GetJSBlocks("BlockId", $(this).val(),2);
 				$('#BlockId').val('');
 				$('#CLFId').empty().append('<option value="">-- Select CLF --</option>');
 				$('#PanchayatId').empty().append('<option value="">-- Select Panchayat --</option>');
@@ -694,7 +694,7 @@
 						}
 						
 						$("input[name='VisionIssueIdentifiedId'][value='@Model.VisionIssueIdentifiedId']").prop('checked', true);
-						$("input[name='TypeofVisionIssueId'][value='@Model.TypeofVisionIssueId']").prop('checked', true);
+						//$("input[name='TypeofVisionIssueId'][value='@Model.TypeofVisionIssueId']").prop('checked', true);
 						$("input[name='GlassesSold'][value='@Model.GlassesSold']").prop('checked', true);
 						$("input[name='FeedbackonComfort'][value='@Model.FeedbackonComfort']").prop('checked', true);
 						$("input[name='FollowupRequiredId'][value='@Model.FollowupRequiredId']").prop('checked', true);
@@ -760,6 +760,10 @@
 			//Post sumbitted Data
 			$('#addForm').on('submit', function (e) {
 				e.preventDefault(); // <- prevent normal form post
+					var isvalid = $('#addForm').valid();
+					if (!$('#addForm').valid()) {
+						return; // Invalid form, stop submission
+					}
 				var form = $('#addForm')[0];
 				var formData = new FormData(form);
 				$.ajax({

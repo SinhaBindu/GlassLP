@@ -36,32 +36,33 @@
                         <span>Dashboard</span>
                     </li>
                     <li>
-                        @* <a aria-expanded="false" data-bs-toggle="collapse" href="~/Home\Index"> *@
-                        <a href="~/Home\Index">
-                            <i class="fa fa-home"></i>
-                            dashboard
-                            <span class="badge bg-danger  badge-dashboard badge-notification ms-2">New</span>
-
-                        </a>
-                        @* <ul class="collapse" id="dashboard">
-                            <li><a href="index.html">Ecommerce</a></li>
-                            <li><a href="project_dashboard.html">Project</a></li>
-                        </ul> *@
+                        <a href="~/Home/Index"><i class="fa fa-home"></i>  dashboard</a>
                     </li>
                     <li>
                         <a aria-expanded="false" data-bs-toggle="collapse" href="#apps">
-                            <i class="fa fa-home"></i>
+                            <i class="fa fa-users"></i>
                             Forms
                         </a>
                         <ul class="collapse" id="apps">
                             <li><a href="~/Camps\Index">Camp</a></li>
                             <li><a href="~/ParticipantM1\Index">Participant Model One</a></li>
                             <li><a href="~/ParticipantM2\Index">Participant Model Two</a></li>
-                            <li><a href="~/Vendors\Index">Vision Entrepreneurs</a></li>
-                            <li><a href="~/GlassesMst\Index">Glass Master</a></li>
-                            <li><a href="~/Users\Index">Add User</a></li>
                         </ul>
                     </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a aria-expanded="false" data-bs-toggle="collapse" href="#apps">
+                                <i class="fa fa-database"></i>
+                                Master
+                            </a>
+                            <ul class="collapse" id="apps">
+                                <li><a href="~/Vendors\Index">Vision Entrepreneurs</a></li>
+                                <li><a href="~/GlassesMst\Index">Glass Master</a></li>
+                                <li><a href="~/Users\Index">Add User</a></li>
+                            </ul>
+                        </li>
+                    }
                 </ul>
             </div>
         </nav>

@@ -23,7 +23,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.PowerOfGlassId, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.PowerOfGlassId, Model.PowerOfGlassList, "Select", new { @class = "required form-control" })
+                                @Html.DropDownListFor(m => m.PowerOfGlassId, Model.PowerOfGlassList,null, new { @class = "required form-control" })
                                 @Html.ValidationMessageFor(m => m.PowerOfGlassId, "", new { @class = "text-danger" })
                             </div>
                         </div>

@@ -229,11 +229,13 @@
 
             // run on page load (important for Edit page)
             toggleOtherOccupation();
-
-
             //Post sumbitted Data
             $('#addForm').on('submit', function (e) {
                 e.preventDefault();
+                var isvalid = $('#addForm').valid();
+                if (!$('#addForm').valid()) {
+                    return; // Invalid form, stop submission
+                }
                 var form = $('#addForm')[0];
                 var formData = new FormData(form);
                 $.ajax({

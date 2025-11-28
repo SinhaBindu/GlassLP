@@ -16,7 +16,7 @@ namespace GlassLP.Controllers
         private readonly SPManager _spManager;
         private readonly CommonData _commonData;
         int result = 0;
-        public ParticipantM1Controller(GlassDbContext context, ICompositeViewEngine viewEngine, SPManager spManager,CommonData commonData)
+        public ParticipantM1Controller(GlassDbContext context, ICompositeViewEngine viewEngine, SPManager spManager, CommonData commonData)
         {
             _context = context;
             _viewEngine = viewEngine;
@@ -59,7 +59,22 @@ namespace GlassLP.Controllers
                             ApprovedOn = @p1
                             WHERE ParticipantId_pk IN ({idList})";
 
-                await _context.Database.ExecuteSqlRawAsync(sql, currentUser, now);
+                var res = await _context.Database.ExecuteSqlRawAsync(sql, currentUser, now);
+                if (res > 0)
+                {
+                    var sqlSelect = $@"
+                                    SELECT * FROM tbl_PaticipantM1
+                                    WHERE ParticipantId_pk IN ({idList})";
+                    var participants = await _context.TblPaticipantM1
+                        .FromSqlRaw(sqlSelect)
+                        .ToListAsync();
+                    //foreach (var participant in participants)
+                    //{
+                    //    var tbl = _context.MstGlass.Where(x => x.TypeOfModuleId == 1 && x.IsActive == true && x.PowerOfGlassId == participant.PowerofGlassId).ToList();
+                    //   var dataav= (tbl.Availableglassinstock - tbl.Count)
+                    //}
+
+                }
 
                 return Json(Result.Success("Selected participants activated successfully."));
             }
@@ -114,7 +129,7 @@ namespace GlassLP.Controllers
             }
         }
 
-        public IActionResult Create(int? PId,string Code="")
+        public IActionResult Create(int? PId, string Code = "")
         {
             ParticipantM1ViewModel model = new ParticipantM1ViewModel();
             model.VSIdList = _commonData.GetTypeofVisionIssue();
@@ -210,11 +225,12 @@ namespace GlassLP.Controllers
                         {
                             tbl.CreatedBy = currentUser;
                             tbl.CreatedOn = DateTime.Now;
-                           
+
                             tbl.IsActive = true;
                             _context.TblPaticipantM1.Add(tbl);
                         }
-                        else {
+                        else
+                        {
                             tbl.UpdatedBy = currentUser;
                             tbl.UpdatedOn = DateTime.Now;
                         }
@@ -222,23 +238,23 @@ namespace GlassLP.Controllers
                     }
                     if (result > 0)
                     {
-                        var message = model.ParticipantId_pk == 0 
-                            ? "Paticipant model one added successfully!" 
+                        var message = model.ParticipantId_pk == 0
+                            ? "Paticipant model one added successfully!"
                             : "Paticipant model one updated successfully!";
                         return Result<TblPaticipantM1>.Success(tbl, message);
                     }
                     else
                     {
-                        var errorMessage = model.ParticipantId_pk == 0 
-                            ? "Error occurred while adding paticipant model one." 
+                        var errorMessage = model.ParticipantId_pk == 0
+                            ? "Error occurred while adding paticipant model one."
                             : "Error occurred while updating paticipant model one.";
                         return Result<TblPaticipantM1>.Failure(errorMessage);
                     }
                 }
                 else
                 {
-                    var errorMessage = model.ParticipantId_pk == 0 
-                        ? "Error occurred while adding paticipant model one." 
+                    var errorMessage = model.ParticipantId_pk == 0
+                        ? "Error occurred while adding paticipant model one."
                         : "Error occurred while updating paticipant model one.";
                     return Result<TblPaticipantM1>.Failure(errorMessage);
                 }
@@ -256,10 +272,10 @@ namespace GlassLP.Controllers
             {
                 return NotFound();
             }
-            
+
             var participant = await _context.TblPaticipantM1
                 .FirstOrDefaultAsync(m => m.ParticipantId_pk == id);
-            
+
             if (participant == null)
             {
                 return NotFound();

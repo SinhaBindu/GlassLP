@@ -1,9 +1,10 @@
-@using System.Collections.Generic
+@* @using System.Collections.Generic *@
+@model IEnumerable<UserListVM>
 @{
-    List<object> users = new List<object>();
+    List<UserListVM> users = new List<UserListVM>();
     if (Model != null)
     {
-        users = Model as List<object>;
+        users = Model.ToList();
     }
 }
 <style>
@@ -32,7 +33,7 @@
             if (users != null && users.Count > 0)
             {
                 int srno = 1;
-                foreach (dynamic user in users)
+                foreach (var user in users)
                 {
                     <tr>
                         <td class="text-center">@(srno++)</td>

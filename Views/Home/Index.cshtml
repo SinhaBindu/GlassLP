@@ -21,7 +21,7 @@
                         <div class="h-50 w-50 d-flex-center b-r-15 bg-white mb-3">
                             <i class="ph-bold fa fa-globe f-s-25 text-primary"></i>
                         </div>
-                        <p class="f-s-16">Total Camp Count</p>
+                        <p class="f-s-16">Camps</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <h3 class="text-white">@ViewBag.CampCount</h3>
                         </div>
@@ -35,9 +35,9 @@
                         <div class="h-50 w-50 d-flex-center b-r-15 bg-white mb-3">
                             <i class="ph-bold fa fa-clock f-s-25 text-info"></i>
                         </div>
-                        <p class="f-s-16">Participant Model One</p>
+                        <p class="f-s-16">Participants</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <h3 class="text-white">@ViewBag.ParticipantM1Count</h3>
+                            <h3 class="text-white">@ViewBag.ParticipantCount</h3>
                         </div>
                     </div>
                 </div>
@@ -49,9 +49,9 @@
                         <div class="h-50 w-50 d-flex-center b-r-15 bg-white mb-3">
                             <i class="ph-bold fa fa-file f-s-25 text-success"></i>
                         </div>
-                        <p class="f-s-16">Vendor</p>
+                        <p class="f-s-16">VEs</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <h3 class="text-white">@ViewBag.VendorCount</h3>
+                            <h3 class="text-white">@ViewBag.VECount</h3>
                         </div>
                     </div>
                 </div>
@@ -63,17 +63,73 @@
                         <div class="h-50 w-50 d-flex-center b-r-15 bg-white mb-3">
                             <i class="ph-bold fa fa-recycle f-s-25 text-warning"></i>
                         </div>
-                        <p class="f-s-16">Participant Model Two</p>
+                        <p class="f-s-16">Total Stock In Glasses</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <h3 class="text-white">@ViewBag.ParticipantM2Count</h3>
+                            <h3 class="text-white">@ViewBag.Availableglassinstock</h3>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+           
+          //  BindData();
+            // $('#formid').on('submit', function (e) {
+            //     e.preventDefault();
+            //     BindData();
+            // });
+        });
+        // function BindData() {
+        //     debugger;
+        //     $("#subdata").html('');
+        //     $.ajax({
+        //         type: "Get",
+        //         url: "/ParticipantM2/GetParticipantM2List",
+        //         data: filtermodel,//JSON.stringify({ 'Roles': '' }),
+        //         //cache: false,
+        //         success: function (res) {
+        //             if (res.isSuccess) {
+        //                 $("#subdata").html(res.data);
+
+        //                 // Select All checkbox functionality - only check enabled checkboxes
+        //                 $('#selectAll').on('change', function () {
+        //                     $('.camp-checkbox:not(:disabled)').prop('checked', $(this).prop('checked'));
+        //                 });
+
+        //                 // Individual checkbox change - uncheck selectAll if any checkbox is unchecked
+        //                 $(document).on('change', '.camp-checkbox:not(:disabled)', function () {
+        //                     if (!$(this).prop('checked')) {
+        //                         $('#selectAll').prop('checked', false);
+        //                     } else {
+        //                         // Check if all enabled checkboxes are checked
+        //                         var totalEnabledCheckboxes = $('.camp-checkbox:not(:disabled)').length;
+        //                         var checkedCheckboxes = $('.camp-checkbox:not(:disabled):checked').length;
+        //                         if (totalEnabledCheckboxes === checkedCheckboxes && totalEnabledCheckboxes > 0) {
+        //                             $('#selectAll').prop('checked', true);
+        //                         }
+        //                     }
+        //                 });
+        //             }
+        //             else {
+        //                 $("#subdata").html('<h6 class="text-danger">' + res.message + ' </h6>');
+        //             }
+        //         },
+        //         error: function (req, error) {
+        //             if (error === 'error') { error = req.statusText; }
+        //             var errormsg = 'There was a communication error: ' + error;
+        //             $("#subdata").html('<h6 class="text-danger">' + errormsg + ' </h6>');
+        //         }
+        //     });
+        // }
+    </script>
+}
+
 
 
 

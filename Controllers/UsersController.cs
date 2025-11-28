@@ -324,17 +324,18 @@ namespace GlassLP.Controllers
                     .OrderByDescending(u => u.CreatedOn)
                     .ToListAsync();
 
-                var userList = new List<object>();
+                List<UserListVM> userList = new List<UserListVM>();
+                var selectList = new UserListVM();
                 foreach (var user in users)
                 {
                     var roles = await _userManager.GetRolesAsync(user);
                     var role = roles.FirstOrDefault() ?? "No Role";
 
-                    userList.Add(new
+                    userList.Add(new UserListVM
                     {
                         Id = user.Id,
-                        UserName = user.UserName,
-                        Email = user.Email,
+                        UserName = user.UserName ?? "N/A",
+                        Email = user.Email??"N/A",
                         Name = user.Name ?? "N/A",
                         Role = role,
                         PhoneNumber = user.PhoneNumber ?? "N/A",
@@ -344,7 +345,7 @@ namespace GlassLP.Controllers
                     });
                 }
 
-                string html = RenderPartialViewToString("_UserData", userList);
+                string html = RenderPartialViewToString("_UserData", userList.ToList());
                 return Result<string>.Success(html, "Record Found!!");
             }
             catch (Exception ex)

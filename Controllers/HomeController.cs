@@ -53,9 +53,9 @@ namespace GlassLP.Controllers
 
                     // Counts ko ViewBag me assign karna
                     ViewBag.CampCount = Convert.ToInt32(row["CampCount"]);
-                    ViewBag.ParticipantM1Count = Convert.ToInt32(row["ParticipantM1Count"]);
-                    ViewBag.VendorCount = Convert.ToInt32(row["VendorCount"]);
-                    ViewBag.ParticipantM2Count = Convert.ToInt32(row["ParticipantM2Count"]);
+                    ViewBag.ParticipantCount = Convert.ToInt32(row["ParticipantCount"]);
+                    ViewBag.VECount = Convert.ToInt32(row["VECount"]);
+                    ViewBag.Availableglassinstock = Convert.ToInt32(row["Availableglassinstock"]);
 
                     return Result.Success("Dashboard count loaded");
                 }

@@ -55,10 +55,25 @@ namespace GlassLP.Models
 
         [NotMapped]
         public string? PowerOfGlassName { get; set; }
-        public string Version { get; set; }
-        public DateTime SynDate { get; set; }
-        public string uuid { get; set; }
+
+        [NotMapped]
+        [ValidateNever]
+        public string? Version { get; set; }
+
+        [NotMapped]
+        [ValidateNever]
+        public DateTime? SynDate { get; set; }
+
+        [NotMapped]
+        [ValidateNever]
+        public string? uuid { get; set; }
+
+        [NotMapped]
+        [ValidateNever]
         public int? Availableglassinstock { get; set; }
+
+        [NotMapped]
+        [ValidateNever]
         public int? TotalDistributedGlass { get; set; }
     }
 }

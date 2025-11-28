@@ -56,9 +56,9 @@
 @section Scripts {
 	<script>
 		$(document).ready(function () {
-			GetJSDistricts("DistrictId", 1);
+			GetJSDistricts("DistrictId", 2);
 			$("#DistrictId").change(function () {
-				GetJSBlocks("BlockId", $(this).val(), 1);
+				GetJSBlocks("BlockId", $(this).val(), 2);
 			});
 			BindData();
 			$('#formid').on('submit', function (e) {
@@ -102,13 +102,13 @@
 						});
 					}
 					else {
-						$("#subdata").html('<h6 class="text-danger">' + res.message + ' < / h6>');
+						$("#subdata").html('<h6 class="text-danger">' + res.message + ' </h6>');
 					}
 				},
 				error: function (req, error) {
 					if (error === 'error') { error = req.statusText; }
 					var errormsg = 'There was a communication error: ' + error;
-					//Do To Message display
+					$("#subdata").html('<h6 class="text-danger">' + errormsg + ' </h6>');
 				}
 			});
 		}

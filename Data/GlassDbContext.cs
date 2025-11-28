@@ -112,9 +112,9 @@ namespace GlassLP.Data
         [StringLength(100)]
         public string? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
-        public string Version { get; set; }
-        public DateTime SynDate { get; set; }
-        public string uuid { get; set; }
+        public string? Version { get; set; }
+        public DateTime? SynDate { get; set; }
+        public string? uuid { get; set; }
         public int? Availableglassinstock { get; set; }
         public int? TotalDistributedGlass { get; set; }
     }
