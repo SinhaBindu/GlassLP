@@ -12,7 +12,7 @@ namespace GlassLP.Models
         [DisplayName("Type of Participant")]
         public int TypeofParticipantId{ get; set; }
 		
-		[DisplayName("Capm Code")]
+		[DisplayName("Camp Code")]
 		public int CampId_fk { get; set; }
 
 		[DisplayName("District")]
@@ -64,7 +64,7 @@ namespace GlassLP.Models
         [DisplayName("Power of Glass")]
         public int PowerofGlassId { get; set; }
 
-        [DisplayName("Feedbackon Comfort")]
+        [DisplayName("Feedback on Comfort")]
         public int FeedbackonComfort { get; set; }
 
         [DisplayName("Remarks")]
