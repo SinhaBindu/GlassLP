@@ -14,42 +14,42 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.CampId_fk, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.CampId_fk, new { @class = "form-label required-star" })
                                 @Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "required form-control" })
                                 <div>@Html.ValidationMessageFor(m => m.CampId_fk, "", new { @class = "text-danger" })</div>
                                 </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.ParticipantName, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.ParticipantName, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.ParticipantName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
                                 <div>@Html.ValidationMessageFor(m => m.ParticipantName, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.MobileNo, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.MobileNo, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.MobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
                                 <div>@Html.ValidationMessageFor(m => m.MobileNo, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.Age, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.Age, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "numbersOnly required form-control", @type="text", @maxlength = "2", @min = "35", @max = "59" } })
                                 <div>@Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.SHGName, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.SHGName, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.SHGName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
                                 <div>@Html.ValidationMessageFor(m => m.SHGName, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.OccupationId, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.OccupationId, new { @class = "form-label required-star" })
                                 @Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select Occupation --", new { @class = "form-control required" })
                                 <div>@Html.ValidationMessageFor(m => m.OccupationId, "", new { @class = "text-danger" })</div>
                                 </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.TypeofVisionIssueId, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.TypeofVisionIssueId, new { @class = "form-label required-star" })
                                 @Html.DropDownListFor(m => m.TypeofVisionIssueId, Model.VSIdList, null, new { @class = "required form-control" })
                                 <div>@Html.ValidationMessageFor(m => m.TypeofVisionIssueId, "", new { @class = "text-danger" })</div>
                             </div>
@@ -77,7 +77,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.PowerofGlassId, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.PowerofGlassId, new { @class = "form-label required-star" })
                                 @Html.DropDownListFor(m => m.PowerofGlassId, new List<SelectListItem>(),
                                          "Select", new { @class = "required form-control" })
                                 <div>@Html.ValidationMessageFor(m => m.PowerofGlassId, "", new { @class = "text-danger" })</div>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.FeedbackonComfort, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.FeedbackonComfort, new { @class = "form-label required-star" })
                                 @Html.DropDownListFor(m => m.FeedbackonComfort, new List<SelectListItem>
                                 {
                                 new SelectListItem { Text = "Satisfied", Value = "1" },
@@ -98,7 +98,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.VisionIssueIdentifiedId, new { @class = "form-label d-block" })
+                                @Html.LabelFor(m => m.VisionIssueIdentifiedId, new { @class = "form-label d-block required-star" })
 
                                 <div class="form-check form-check-inline">
                                     @Html.RadioButtonFor(m => m.VisionIssueIdentifiedId, "1", new { @class = "form-check-input", id = "VisionYes" })
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.GlassesProvidedId, new { @class = "form-label d-block" })
+                                @Html.LabelFor(m => m.GlassesProvidedId, new { @class = "form-label d-block required-star" })
                                 <div class="form-check form-check-inline">
                                     @Html.RadioButtonFor(m => m.GlassesProvidedId, "1", new { @class = "form-check-input", id = "GlassesYes" })
                                     <label class="form-check-label" for="GlassesYes">Yes</label>
@@ -130,7 +130,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.FollowupRequiredId, new { @class = "form-label d-block" })
+                                @Html.LabelFor(m => m.FollowupRequiredId, new { @class = "form-label d-block required-star" })
                                 <div class="form-check form-check-inline">
                                     @Html.RadioButtonFor(m => m.FollowupRequiredId, "1", new { @class = "form-check-input", id = "FollowupYes" })
                                     <label class="form-check-label" for="FollowupYes">Yes</label>
@@ -146,7 +146,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.DigitalConsentId, new { @class = "form-label d-block" })
+                                @Html.LabelFor(m => m.DigitalConsentId, new { @class = "form-label d-block required-star" })
 
                                 <div class="form-check form-check-inline">
                                     @Html.RadioButtonFor(m => m.DigitalConsentId, "1", new { @class = "form-check-input", id = "DigitalConsentYes" })

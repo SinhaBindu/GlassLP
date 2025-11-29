@@ -130,6 +130,48 @@ namespace GlassLP.Controllers.API
 
         }
 
+        [HttpGet("CampDetails")]
+        public async Task<IActionResult> GetCampDetails(int campId)
+        {
+            try
+            {
+                var camp = await _context.TblCamp
+                    .Where(c => c.CampId_pk == campId && c.IsActive == true)
+                    .Select(c => new
+                    {
+                        campId_pk = c.CampId_pk,
+                        districtId = c.DistrictId ?? 0,
+                        blockId = c.BlockId ?? 0,
+                        clfId = c.CLFId ?? 0,
+                        panchayatId = c.PanchayatId ?? 0
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (camp == null)
+                {
+                    return Ok(new ApiResponse<List<object>>(
+                        false,
+                        "not_found",
+                        "Camp not found.",
+                        new List<object>()));
+                }
+
+                return Ok(new ApiResponse<List<object>>(
+                    true,
+                    "OK",
+                    "Data fetched successfully",
+                    new List<object> { camp }));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ApiResponse<List<object>>(
+                    false,
+                    "error",
+                    ex.Message,
+                    new List<object>()));
+            }
+        }
+
 		[HttpGet("Occupations")]
         public async Task<IActionResult> GetOccupations()
         {

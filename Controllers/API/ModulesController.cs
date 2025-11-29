@@ -282,7 +282,6 @@ namespace GlassLP.Controllers.API
                     glassesSold = p.GlassesSold,
                     powerofGlassId = p.PowerofGlassId,
                     feedbackonComfort = p.FeedbackonComfort,
-                    remarks = p.Remarks,
                     followupRequiredId = p.FollowupRequiredId,
                     digitalConsentId = p.DigitalConsentId,
                     location = p.Location,
@@ -333,7 +332,6 @@ namespace GlassLP.Controllers.API
                     glassesSold = p.GlassesSold,
                     powerofGlassId = p.PowerofGlassId,
                     feedbackonComfort = p.FeedbackonComfort,
-                    remarks = p.Remarks,
                     followupRequiredId = p.FollowupRequiredId,
                     digitalConsentId = p.DigitalConsentId,
                     location = p.Location,
@@ -415,7 +413,6 @@ namespace GlassLP.Controllers.API
                     tbl.GlassesSold = model.GlassesSold;
                     tbl.PowerofGlassId = model.PowerofGlassId;
                     tbl.FeedbackonComfort = model.FeedbackonComfort;
-                    tbl.Remarks = model.Remarks;
                     tbl.FollowupRequiredId = model.FollowupRequiredId;
                     tbl.DigitalConsentId = model.DigitalConsentId;
                     tbl.Location = model.Location;
@@ -505,7 +502,6 @@ namespace GlassLP.Controllers.API
                     glassesSold = p.GlassesSold,
                     powerofGlassId = p.PowerofGlassId,
                     feedbackonComfort = p.FeedbackonComfort,
-                    remarks = p.Remarks,
                     followupRequiredId = p.FollowupRequiredId,
                     digitalConsentId = p.DigitalConsentId,
                     location = p.Location,

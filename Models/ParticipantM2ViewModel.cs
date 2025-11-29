@@ -67,9 +67,6 @@ namespace GlassLP.Models
         [DisplayName("Feedback on Comfort")]
         public int FeedbackonComfort { get; set; }
 
-        [DisplayName("Remarks")]
-        public string? Remarks { get; set; }
-
         [DisplayName("Referral Required")]
         public int FollowupRequiredId { get; set; }
 
@@ -79,10 +76,12 @@ namespace GlassLP.Models
         [DisplayName("Location")]
         public int Location{ get; set; }
 
-        [DisplayName("Screening Cost")]
+		[Required(ErrorMessage = "Screening Cost is required")]
+		[DisplayName("Screening Cost")]
         [Range(0, 99, ErrorMessage = "Screening Cost must be a two-digit number")]
         public int ScreeningCost { get; set; }
 
+		[Required(ErrorMessage = "Glass Cost is required")]
 		[DisplayName("Glasses Cost")]
         [Range(0, 999, ErrorMessage = "Glasses Cost must be a three-digit number (0-999)")]
         public int GlassesCost { get; set; }

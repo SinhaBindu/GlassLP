@@ -254,5 +254,24 @@ namespace GlassLP.Controllers
 		{
 			return _context.MstGlass.Any(e => e.pk_Glassid == id);
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> GetAvailableGlassStock(int typeOfModuleId, int powerOfGlassId)
+		{
+			try
+			{
+				var availableStock = await _context.MstGlass
+					.Where(g => g.TypeOfModuleId == typeOfModuleId 
+						&& g.PowerOfGlassId == powerOfGlassId 
+						&& g.IsActive == true)
+					.SumAsync(g => g.Availableglassinstock ?? 0);
+
+				return Json(new { status = true, data = new { availableStock = availableStock } });
+			}
+			catch (Exception ex)
+			{
+				return Json(new { status = false, message = ex.Message });
+			}
+		}
 	}
 }

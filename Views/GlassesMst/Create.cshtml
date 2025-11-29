@@ -15,51 +15,57 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.TypeOfModuleId, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.TypeOfModuleId, new { @class = "form-label required-star" })
                                 @Html.DropDownListFor(m => m.TypeOfModuleId, Model.TypeOfModuleList, null, new { @class = "required form-control" })
                                 @Html.ValidationMessageFor(m => m.TypeOfModuleId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.PowerOfGlassId, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.PowerOfGlassId, new { @class = "form-label required-star" })
                                 @Html.DropDownListFor(m => m.PowerOfGlassId, Model.PowerOfGlassList,null, new { @class = "required form-control" })
                                 @Html.ValidationMessageFor(m => m.PowerOfGlassId, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.NoofGlasses, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.NoofGlasses, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.NoofGlasses, new { htmlAttributes = new { @class = "required numbersOnly form-control", @type = "text", @maxlength = "10" } })
                                 @Html.ValidationMessageFor(m => m.NoofGlasses, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.PerGlassCost, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.PerGlassCost, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.PerGlassCost, new { htmlAttributes = new { @class = "required numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
                                 @Html.ValidationMessageFor(m => m.PerGlassCost, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.TotalGlassCost, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.TotalGlassCost, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.TotalGlassCost, new { htmlAttributes = new { @class = "required numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
                                 @Html.ValidationMessageFor(m => m.TotalGlassCost, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4 module2-field" style="display: none;">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.AdvertisingCost, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.AdvertisingCost, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.AdvertisingCost, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
                                 @Html.ValidationMessageFor(m => m.AdvertisingCost, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="col-md-4 module2-field" style="display: none;">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.Storagemiscellaneouscost, new { @class = "form-label" })
+                                @Html.LabelFor(m => m.Storagemiscellaneouscost, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.Storagemiscellaneouscost, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01" } })
                                 @Html.ValidationMessageFor(m => m.Storagemiscellaneouscost, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                @Html.LabelFor(m => m.Availableglassinstock, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.Availableglassinstock, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01", @disabled = "disabled" } })
                             </div>
                         </div>
                         <div class="col-12">
@@ -106,6 +112,31 @@
             // Toggle on TypeOfModuleId change
             $('#TypeOfModuleId').on('change', function () {
                 toggleModule2Fields();
+                loadAvailableGlassStock();
+            });
+
+            // Load available glass stock when TypeOfModuleId or PowerOfGlassId changes
+            function loadAvailableGlassStock() {
+                var typeOfModuleId = $('#TypeOfModuleId').val();
+                var powerOfGlassId = $('#PowerOfGlassId').val();
+                
+                if (typeOfModuleId && powerOfGlassId) {
+                    $.getJSON('/GlassesMst/GetAvailableGlassStock?typeOfModuleId=' + typeOfModuleId + '&powerOfGlassId=' + powerOfGlassId, function (response) {
+                        if (response.status && response.data) {
+                            var stock = response.data.availableStock || 0;
+                            $('#Availableglassinstock').val(stock);
+                        }
+                    }).fail(function () {
+                        $('#Availableglassinstock').val(0);
+                    });
+                } else {
+                    $('#Availableglassinstock').val('');
+                }
+            }
+
+            // Load available stock when PowerOfGlassId changes
+            $('#PowerOfGlassId').on('change', function () {
+                loadAvailableGlassStock();
             });
 
             jQuery('.numbersOnly').keyup(function () {

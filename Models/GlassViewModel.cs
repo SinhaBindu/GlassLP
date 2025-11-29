@@ -70,6 +70,7 @@ namespace GlassLP.Models
 
         [NotMapped]
         [ValidateNever]
+        [DisplayName("Available Glass in Stock")]
         public int? Availableglassinstock { get; set; }
 
         [NotMapped]

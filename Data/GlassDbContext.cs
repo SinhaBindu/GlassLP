@@ -332,9 +332,6 @@ namespace GlassLP.Data
 		[DisplayName("Feedbackon Comfort")]
 		public int FeedbackonComfort { get; set; }
 
-		[DisplayName("Remarks")]
-		public string? Remarks { get; set; }
-
 		[DisplayName("Referral Required")]
 		public int FollowupRequiredId { get; set; }
 

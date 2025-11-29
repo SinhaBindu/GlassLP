@@ -14,7 +14,7 @@
 					<div class="row">
 						<div class="col-md-3">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.TypeofParticipantId, new { @class = "form-label d-block" })
+								@Html.LabelFor(m => m.TypeofParticipantId, new { @class = "form-label d-block required-star" })
 								<div class="form-check form-check-inline">
 									@Html.RadioButtonFor(m => m.TypeofParticipantId, 1, new { @class = "form-check-input", id = "New" })
 									<label class="form-check-label" for="New">New</label>
@@ -28,7 +28,7 @@
 						</div>
 						<div class="col-md-3">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.Location, new { @class = "form-label d-block" })
+								@Html.LabelFor(m => m.Location, new { @class = "form-label d-block required-star" })
 								<div class="form-check form-check-inline">
 									@Html.RadioButtonFor(m => m.Location, "1", new { @class = "form-check-input", id = "locationCamp" })
 									<label class="form-check-label" for="locationCamp">Camp</label>
@@ -37,105 +37,121 @@
 									@Html.RadioButtonFor(m => m.Location, "2", new { @class = "form-check-input", id = "locationHome" })
 									<label class="form-check-label" for="locationHome">Home Visit</label>
 								</div>
+								<div>@Html.ValidationMessageFor(m => m.Location, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.CampId_fk, new { @class = "form-label" })
+								@Html.LabelFor(m => m.CampId_fk, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.CampId_fk, new List<SelectListItem>(), "-- Select Camp --", new { @class = "form-control", @id = "CampId_fk", @disabled = "disabled" })
+								<div>@Html.ValidationMessageFor(m => m.CampId_fk, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
+								@Html.LabelFor(m => m.DistrictId, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "-- Select District --", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.DistrictId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
+								@Html.LabelFor(m => m.BlockId, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.BlockId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
+								@Html.LabelFor(m => m.CLFId, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.CLFId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.PanchayatId, new { @class = "form-label" })
+								@Html.LabelFor(m => m.PanchayatId, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.PanchayatId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.ParticipantName, new { @class = "form-label" })
+								@Html.LabelFor(m => m.ParticipantName, new { @class = "form-label required-star" })
 								@Html.EditorFor(m => m.ParticipantName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								<div>@Html.ValidationMessageFor(m => m.ParticipantName, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.MobileNo, new { @class = "form-label" })
+								@Html.LabelFor(m => m.MobileNo, new { @class = "form-label required-star" })
 								@Html.EditorFor(m => m.MobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.Age, new { @class = "form-label" })
-								@Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "required form-control numbersOnly age-input", @maxlength = "2", @min = "35", @max = "59", @type = "number" } })
-								@Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.ScreeningDate, new { @class = "form-label" })
-								@Html.EditorFor(m => m.ScreeningDate, new { htmlAttributes = new { @class = "datepicker required form-control", @type = "text", @maxlength = "500" } })
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.SHGName, new { @class = "form-label" })
-								@Html.EditorFor(m => m.SHGName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.OccupationId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select--", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.MobileNo, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.Age, new { @class = "form-label required-star" })
+								@Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "2", @min = "35", @max = "59", @type = "text" } })
+								<div>@Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.ScreeningDate, new { @class = "form-label required-star" })
+								@Html.EditorFor(m => m.ScreeningDate, new { htmlAttributes = new { @class = "datepicker required form-control", @type = "text", @maxlength = "500" } })
+								<div>@Html.ValidationMessageFor(m => m.ScreeningDate, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.SHGName, new { @class = "form-label required-star" })
+								@Html.EditorFor(m => m.SHGName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								<div>@Html.ValidationMessageFor(m => m.SHGName, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.OccupationId, new { @class = "form-label required-star" })
+								@Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select--", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.OccupationId, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.Occupation_Others, new { @class = "form-label" })
 								@Html.EditorFor(m => m.Occupation_Others, new { htmlAttributes = new { @class = "required form-control", @disabled = "disabled", id = "Occupation_Others", @maxlength = "100" } })
 							</div>
 						</div>
-						
-						<div class="col-md-4">
+
+						<div class="col-md-3">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.TypeofVisionIssueId, new { @class = "form-label" })
+								@Html.LabelFor(m => m.TypeofVisionIssueId, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.TypeofVisionIssueId, new List<SelectListItem>
 								{
 								new SelectListItem { Text = "pyesMyopia", Value = "1" },
 								new SelectListItem { Text = "Other", Value = "2" }
-								},
-									"Select",
-									new { @class = "form-control" })
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.PowerofGlassId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.PowerofGlassId, new List<SelectListItem>(),
-																	"Select", new { @class = "form-control" })
+								}, "Select", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.TypeofVisionIssueId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-3">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.VisionIssueIdentifiedId, new { @class = "form-label d-block" })
-
+								@Html.LabelFor(m => m.TypeofVisionIssue_Others, new { @class = "form-label" })
+								@Html.EditorFor(m => m.TypeofVisionIssue_Others, new { htmlAttributes = new { @class = "required form-control", @disabled = "disabled", id = "TypeofVisionIssue_Others", @maxlength = "100" } })
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.PowerofGlassId, new { @class = "form-label required-star" })
+								@Html.DropDownListFor(m => m.PowerofGlassId, new List<SelectListItem>(),
+																	"Select", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.PowerofGlassId, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.VisionIssueIdentifiedId, new { @class = "form-label d-block required-star" })
 								<div class="form-check form-check-inline">
 									@Html.RadioButtonFor(m => m.VisionIssueIdentifiedId, "1",
 																		new { @class = "form-check-input", id = "VisionYes" })
@@ -152,26 +168,26 @@
 						</div>
 						<div class="col-md-3">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.GlassesSold, new { @class = "form-label d-block" })
+								@Html.LabelFor(m => m.GlassesSold, new { @class = "form-label d-block required-star" })
 
 								<div class="form-check form-check-inline">
 									@Html.RadioButtonFor(m => m.GlassesSold, "1",
-										new { @class = "form-check-input", id = "GlassesYes" })
+																		new { @class = "form-check-input", id = "GlassesYes" })
 									<label class="form-check-label" for="GlassesYes">Yes</label>
 								</div>
 
 								<div class="form-check form-check-inline">
 									@Html.RadioButtonFor(m => m.GlassesSold, "0",
-										new { @class = "form-check-input", id = "GlassesNo" })
+																		new { @class = "form-check-input", id = "GlassesNo" })
 									<label class="form-check-label" for="GlassesNo">No</label>
 								</div>
 								<div>@Html.ValidationMessageFor(m => m.GlassesSold, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						
+
 						<div class="col-md-3">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.FollowupRequiredId, new { @class = "form-label d-block" })
+								@Html.LabelFor(m => m.FollowupRequiredId, new { @class = "form-label d-block required-star" })
 								<div class="form-check form-check-inline">
 									@Html.RadioButtonFor(m => m.FollowupRequiredId, 1, new { @class = "form-check-input", id = "New" })
 									<label class="form-check-label" for="New">Yes</label>
@@ -186,7 +202,7 @@
 						</div>
 						<div class="col-md-3">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.DigitalConsentId, new { @class = "form-label d-block" })
+								@Html.LabelFor(m => m.DigitalConsentId, new { @class = "form-label d-block required-star" })
 								<div class="form-check form-check-inline">
 									@Html.RadioButtonFor(m => m.DigitalConsentId, "1", new { @class = "form-check-input", id = "digitalConsentYes" })
 									<label class="form-check-label" for="digitalConsentYes">Yes</label>
@@ -195,11 +211,12 @@
 									@Html.RadioButtonFor(m => m.DigitalConsentId, "2", new { @class = "form-check-input", id = "digitalConsentNo" })
 									<label class="form-check-label" for="digitalConsentNo">No</label>
 								</div>
+								<div>@Html.ValidationMessageFor(m => m.DigitalConsentId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.FeedbackonComfort, new { @class = "form-label" })
+								@Html.LabelFor(m => m.FeedbackonComfort, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.FeedbackonComfort, new List<SelectListItem>
 								{
 								new SelectListItem { Text = "Satisfied", Value = "1" },
@@ -207,35 +224,31 @@
 								new SelectListItem { Text = "Adjustment Needed", Value = "3" }
 								},
 																	"Select", new { @class = "form-control" })
+								<div>@Html.ValidationMessageFor(m => m.FeedbackonComfort, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.Remarks, new { @class = "form-label" })
-								@Html.EditorFor(m => m.Remarks, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+								@Html.LabelFor(m => m.GlassesCost, new { @class = "form-label required-star" })
+								@Html.EditorFor(m => m.GlassesCost, new { htmlAttributes = new { @class = "numbersOnly required form-control", @type = "text", @min = "0", @max = "999", @maxlength = "3" } })
+								<div>@Html.ValidationMessageFor(m => m.GlassesCost, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.ScreeningCost, new { @class = "form-label" })
-								@Html.EditorFor(m => m.ScreeningCost, new { htmlAttributes = new { @class = "required form-control numbersOnly two-digit-input", @maxlength = "2", @type = "number", @min = "0", @max = "99" } })
-								@Html.ValidationMessageFor(m => m.ScreeningCost, "", new { @class = "text-danger" })
+								@Html.LabelFor(m => m.ScreeningCost, new { @class = "form-label required-star" })
+								@Html.EditorFor(m => m.ScreeningCost, new { htmlAttributes = new { @class = "numbersOnly required form-control ", @maxlength = "2", @type = "text", @min = "0", @max = "99" } })
+								<div>@Html.ValidationMessageFor(m => m.ScreeningCost, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.GlassesCost, new { @class = "form-label" })
-								@Html.EditorFor(m => m.GlassesCost, new { htmlAttributes = new { @class = "required form-control numbersOnly three-digit-input", @type = "number", @min = "0", @max = "999", @maxlength = "3" } })
-								@Html.ValidationMessageFor(m => m.GlassesCost, "", new { @class = "text-danger" })
-							</div>
-						</div>
+
 						<div class="col-md-8">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.RemarksActionTaken, new { @class = "form-label" })
 								@Html.EditorFor(m => m.RemarksActionTaken, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
 							</div>
 						</div>
-						
+
 						<div class="col-12">
 							<div class="text-end">
 								<button class="btn btn-primary b-r-22" type="submit">
@@ -255,11 +268,11 @@
 	}
 	<script>
 		$(document).ready(function () {
-			@if (Model != null && Model.ParticipantId_pk > 0)
-			{
-				<text>
-				// Store values to bind (edit mode)
-				var campIdToBind = '@Model.CampId_fk';
+		@if (Model != null && Model.ParticipantId_pk > 0)
+		{
+			<text>
+																// Store values to bind (edit mode)
+																var campIdToBind = '@Model.CampId_fk';
 				var occupationIdToBind = '@Model.OccupationId';
 				var powerofGlassIdToBind = '@Model.PowerofGlassId';
 				var districtIdToBind = '@Model.DistrictId';
@@ -268,167 +281,31 @@
 				var panchayatIdToBind = '@Model.PanchayatId';
 				var locationToBind = '@Model.Location';
 				var typeofParticipantIdToBind = '@Model.TypeofParticipantId';
-				</text>
-			}
+			</text>
+		}
 
-			// Initialize datepicker for ScreeningDate
-			$("#ScreeningDate").datepicker({
-				dateFormat: "dd-M-yy",
-				maxDate: 0
-			});
+				// Initialize datepicker for ScreeningDate
+				$("#ScreeningDate").datepicker({
+					dateFormat: "dd-M-yy",
+					maxDate: 0
+				});
 
 			GetOccupations("OccupationId");
 			GetPowerofGlasses("PowerofGlassId");
 
 			jQuery('.numbersOnly').keyup(function () {
-				// For age and three-digit fields, don't allow decimals
-				if ($(this).hasClass('age-input') || $(this).hasClass('three-digit-input')) {
-					this.value = this.value.replace(/[^0-9]/g, '');
-				} else {
-					this.value = this.value.replace(/[^0-9\.]/g, '');
-				}
+				this.value = this.value.replace(/[^0-9\.]/g, '');
 			});
 
-			// Age validation - only numbers, max 2 digits, range 35-59
-			$('.age-input').on('input', function () {
-				var value = $(this).val();
-				// Remove any non-numeric characters
-				value = value.replace(/[^0-9]/g, '');
-				// Limit to 2 digits
-				if (value.length > 2) {
-					value = value.substring(0, 2);
-				}
-				$(this).val(value);
-				
-				// Validate range 35-59
-				var age = parseInt(value);
-				if (value && (age < 35 || age > 59)) {
-					$(this).addClass('is-invalid');
-					if (!$(this).next('.age-error').length) {
-						$(this).after('<span class="age-error text-danger small">Age must be between 35 and 59</span>');
-					}
-				} else {
-					$(this).removeClass('is-invalid');
-					$(this).next('.age-error').remove();
-				}
-			});
-
-			// Screening cost validation - numbers only, max 2 digits
-			$('.two-digit-input').on('input', function () {
-				var value = $(this).val();
-				value = value.replace(/[^0-9]/g, '');
-				if (value.length > 2) {
-					value = value.substring(0, 2);
-				}
-				$(this).val(value);
-
-				var amount = parseInt(value);
-				if (value && (amount < 0 || amount > 99)) {
-					$(this).addClass('is-invalid');
-					if (!$(this).next('.two-digit-error').length) {
-						$(this).after('<span class="two-digit-error text-danger small">Value must be a two-digit number</span>');
-					}
-				} else {
-					$(this).removeClass('is-invalid');
-					$(this).next('.two-digit-error').remove();
-				}
-			});
-
-			$('.two-digit-input').on('blur', function () {
-				var value = parseInt($(this).val());
-				if ($(this).val() && (value < 0 || value > 99)) {
-					$(this).addClass('is-invalid');
-					if (!$(this).next('.two-digit-error').length) {
-						$(this).after('<span class="two-digit-error text-danger small">Value must be a two-digit number</span>');
-					}
-				} else {
-					$(this).removeClass('is-invalid');
-					$(this).next('.two-digit-error').remove();
-				}
-			});
-
-			// Also validate on blur
-			$('.age-input').on('blur', function () {
-				var value = parseInt($(this).val());
-				if ($(this).val() && (value < 35 || value > 59)) {
-					$(this).addClass('is-invalid');
-					if (!$(this).next('.age-error').length) {
-						$(this).after('<span class="age-error text-danger small">Age must be between 35 and 59</span>');
-					}
-				} else {
-					$(this).removeClass('is-invalid');
-					$(this).next('.age-error').remove();
-				}
-			});
-
-			// Three-digit validation for Glasses Cost - only numbers, max 3 digits, range 0-999
-			$('.three-digit-input').on('input', function () {
-				var value = $(this).val();
-				// Remove any non-numeric characters
-				value = value.replace(/[^0-9]/g, '');
-				// Limit to 3 digits
-				if (value.length > 3) {
-					value = value.substring(0, 3);
-				}
-				$(this).val(value);
-				
-				// Validate range 0-999
-				var numValue = parseInt(value);
-				if (value && (numValue < 0 || numValue > 999)) {
-					$(this).addClass('is-invalid');
-					if (!$(this).next('.three-digit-error').length) {
-						$(this).after('<span class="three-digit-error text-danger small">Value must be between 0 and 999</span>');
-					}
-				} else {
-					$(this).removeClass('is-invalid');
-					$(this).next('.three-digit-error').remove();
-				}
-			});
-
-			// Also validate on blur
-			$('.three-digit-input').on('blur', function () {
-				var value = parseInt($(this).val());
-				if ($(this).val() && (value < 0 || value > 999)) {
-					$(this).addClass('is-invalid');
-					if (!$(this).next('.three-digit-error').length) {
-						$(this).after('<span class="three-digit-error text-danger small">Value must be between 0 and 999</span>');
-					}
-				} else {
-					$(this).removeClass('is-invalid');
-					$(this).next('.three-digit-error').remove();
-				}
-			});
-
-			@if (Model != null && Model.ParticipantId_pk > 0)
-			{
-				<text>
-				// For edit mode, we'll load districts after setting up listeners
-				</text>
-			}
-			else
-			{
-				<text>
-					GetJSDistricts("DistrictId", 2);
-				</text>
-			}
-			
 			$("#DistrictId").change(function () {
-				GetJSBlocks("BlockId", $(this).val(),2);
-				$('#BlockId').val('');
-				$('#CLFId').empty().append('<option value="">-- Select CLF --</option>');
-				$('#PanchayatId').empty().append('<option value="">-- Select Panchayat --</option>');
+				GetJSBlocks("BlockId", $(this).val());
+				$('#BlockId').val();
 			});
 
 			$("#BlockId").change(function () {
-				var districtId = $('#DistrictId').val();
-				var blockId = $(this).val();
-				if (districtId && blockId) {
-					GetJSPanchayats("PanchayatId", districtId, blockId);
-					GetJSFederations("CLFId", districtId, blockId);
-				} else {
-					$('#CLFId').empty().append('<option value="">-- Select CLF --</option>');
-					$('#PanchayatId').empty().append('<option value="">-- Select Panchayat --</option>');
-				}
+				GetJSPanchayats("PanchayatId", $('#DistrictId').val(), $(this).val());
+				GetJSFederations("CLFId", $('#DistrictId').val(), $(this).val());
+				$('#PanchayatId').val(); $('#CLFId').val();
 			});
 
 			// Camp dropdown disable or enable based on Location
@@ -438,16 +315,21 @@
 				if (selectedLocation == "1") {
 					// Camp location selected - enable Camp dropdown
 					$("#CampId_fk").prop("disabled", false);
+
 				} else {
 					// Home Visit or no selection - disable Camp dropdown
 					$("#CampId_fk").prop("disabled", true);
 					$("#CampId_fk").val("");  // clear value if disabled
+					$("#DistrictId").val("");
+					$("#BlockId").val("");
+					$("#CLFId").val("");
+					$("#PanchayatId").val("");
 				}
 			}
 
 			// On page load - set initial state first
 			toggleCampDropdown();
-			
+
 			// Then populate the dropdown (function handles disabled state)
 			// For ParticipantM2, TypeMId = 2 (Module 2)
 			GetCampCode("CampId_fk", "", 2, 0);
@@ -455,6 +337,50 @@
 			// On Location change
 			$("input[name='Location']").change(function () {
 				toggleCampDropdown();
+			});
+
+			// On Camp Code change - Auto populate District, Block, CLF, Panchayat
+			$("#CampId_fk").change(function () {
+				var campId = $(this).val();
+				if (campId && campId !== '') {
+					$.getJSON('/API/Masters/CampDetails?campId=' + campId, function (response) {
+						if (response.status && response.data && response.data.length > 0) {
+							var camp = response.data[0];
+							var districtId = camp.districtId || 0;
+							var blockId = camp.blockId || 0;
+							var clfId = camp.clfId || 0;
+							var panchayatId = camp.panchayatId || 0;
+
+							if ($("#DistrictId option").length <= 1) {
+								GetJSDistricts("DistrictId", 2);
+							}
+
+							setTimeout(function () {
+								if (districtId > 0) {
+									$("#DistrictId").val(districtId).trigger('change');
+									setTimeout(function () {
+										if (blockId > 0) {
+											$("#BlockId").val(blockId).trigger('change');
+											setTimeout(function () {
+												if (panchayatId > 0) $("#PanchayatId").val(panchayatId);
+												if (clfId > 0) $("#CLFId").val(clfId);
+											}, 500);
+										}
+									}, 500);
+								}
+							}, 500);
+						}
+					}).fail(function () {
+						if (typeof toastr !== 'undefined') {
+							toastr.error('Failed to load camp details');
+						}
+					});
+				} else {
+					$("#DistrictId").val('');
+					$("#BlockId").val('').empty().append('<option value=""></option>');
+					$("#CLFId").val('').empty().append('<option value=""></option>');
+					$("#PanchayatId").val('').empty().append('<option value=""></option>');
+				}
 			});
 
 			// GetOccupations Disable
@@ -476,294 +402,44 @@
 			// run on page load (important for Edit page)
 			toggleOtherOccupation();
 
-			@if (Model != null && Model.ParticipantId_pk > 0)
-			{
-				<text>
-				// Function to bind form data after all dropdowns are loaded
-				function bindFormDataAfterLoad() {
-					setTimeout(function() {
-						console.log('Binding form data...');
-						
-						// Bind District first (this will trigger Block loading)
-						if (districtIdToBind && districtIdToBind !== '0' && districtIdToBind !== '') {
-							var districtSelect = $("#DistrictId");
-							var districtOption = districtSelect.find('option[value="' + districtIdToBind + '"]');
-							if (districtOption.length > 0) {
-								districtSelect.val(districtIdToBind).trigger('change');
-								console.log('District ID bound:', districtIdToBind);
-								
-								// Wait for blocks to load, then bind block
-								setTimeout(function() {
-									if (blockIdToBind && blockIdToBind !== '0' && blockIdToBind !== '') {
-										var blockSelect = $("#BlockId");
-										var blockOption = blockSelect.find('option[value="' + blockIdToBind + '"]');
-										if (blockOption.length > 0) {
-											blockSelect.val(blockIdToBind).trigger('change');
-											console.log('Block ID bound:', blockIdToBind);
-											// After block loads, bind CLF and Panchayat
-											setTimeout(function() {
-												if (clfIdToBind && clfIdToBind !== '0' && clfIdToBind !== '') {
-													var clfSelect = $("#CLFId");
-													clfSelect.find('option').each(function() {
-														if ($(this).val() == clfIdToBind || $(this).val() === clfIdToBind) {
-															clfSelect.val($(this).val());
-															return false;
-														}
-													});
-												}
-												if (panchayatIdToBind && panchayatIdToBind !== '0' && panchayatIdToBind !== '') {
-													var panchayatSelect = $("#PanchayatId");
-													panchayatSelect.find('option').each(function() {
-														if ($(this).val() == panchayatIdToBind || $(this).val() === panchayatIdToBind) {
-															panchayatSelect.val($(this).val());
-															return false;
-														}
-													});
-												}
-											}, 500);
-										} else {
-											blockSelect.find('option').each(function() {
-												if ($(this).val() == blockIdToBind || $(this).val() === blockIdToBind) {
-													blockSelect.val($(this).val()).trigger('change');
-													console.log('Block ID bound (fallback):', blockIdToBind);
-													// After block loads, bind CLF and Panchayat
-													setTimeout(function() {
-														if (clfIdToBind && clfIdToBind !== '0' && clfIdToBind !== '') {
-															var clfSelect = $("#CLFId");
-															clfSelect.find('option').each(function() {
-																if ($(this).val() == clfIdToBind || $(this).val() === clfIdToBind) {
-																	clfSelect.val($(this).val());
-																	return false;
-																}
-															});
-														}
-														if (panchayatIdToBind && panchayatIdToBind !== '0' && panchayatIdToBind !== '') {
-															var panchayatSelect = $("#PanchayatId");
-															panchayatSelect.find('option').each(function() {
-																if ($(this).val() == panchayatIdToBind || $(this).val() === panchayatIdToBind) {
-																	panchayatSelect.val($(this).val());
-																	return false;
-																}
-															});
-														}
-													}, 500);
-													return false;
-												}
-											});
-										}
-									}
-								}, 500);
-							} else {
-								districtSelect.find('option').each(function() {
-									if ($(this).val() == districtIdToBind || $(this).val() === districtIdToBind) {
-										districtSelect.val($(this).val()).trigger('change');
-										console.log('District ID bound (fallback):', districtIdToBind);
-										setTimeout(function() {
-											if (blockIdToBind && blockIdToBind !== '0' && blockIdToBind !== '') {
-												var blockSelect = $("#BlockId");
-												blockSelect.find('option').each(function() {
-													if ($(this).val() == blockIdToBind || $(this).val() === blockIdToBind) {
-														blockSelect.val($(this).val()).trigger('change');
-														// After block loads, bind CLF and Panchayat
-														setTimeout(function() {
-															if (clfIdToBind && clfIdToBind !== '0' && clfIdToBind !== '') {
-																var clfSelect = $("#CLFId");
-																clfSelect.find('option').each(function() {
-																	if ($(this).val() == clfIdToBind || $(this).val() === clfIdToBind) {
-																		clfSelect.val($(this).val());
-																		return false;
-																	}
-																});
-															}
-															if (panchayatIdToBind && panchayatIdToBind !== '0' && panchayatIdToBind !== '') {
-																var panchayatSelect = $("#PanchayatId");
-																panchayatSelect.find('option').each(function() {
-																	if ($(this).val() == panchayatIdToBind || $(this).val() === panchayatIdToBind) {
-																		panchayatSelect.val($(this).val());
-																		return false;
-																	}
-																});
-															}
-														}, 500);
-														return false;
-													}
-												});
-											}
-										}, 500);
-										return false;
-									}
-								});
-							}
-						}
-						
-						// Bind Camp Code dropdown
-						if (campIdToBind && campIdToBind !== '0' && campIdToBind !== '') {
-							var campSelect = $("#CampId_fk");
-							// Temporarily enable if disabled
-							var wasDisabled = campSelect.prop('disabled');
-							if (wasDisabled) {
-								campSelect.prop('disabled', false);
-							}
-							
-							var campOption = campSelect.find('option[value="' + campIdToBind + '"]');
-							if (campOption.length > 0) {
-								campSelect.val(campIdToBind);
-								console.log('Camp ID bound:', campIdToBind);
-							} else {
-								// Try with string comparison
-								campSelect.find('option').each(function() {
-									if ($(this).val() == campIdToBind || $(this).val() === campIdToBind) {
-										campSelect.val($(this).val());
-										console.log('Camp ID bound (fallback):', campIdToBind);
-										return false;
-									}
-								});
-							}
-							
-							// Restore disabled state if it was disabled
-							if (wasDisabled) {
-								campSelect.prop('disabled', true);
-							}
-						}
-						
-						// Bind Occupation
-						if (occupationIdToBind && occupationIdToBind !== '0' && occupationIdToBind !== '') {
-							var occSelect = $("#OccupationId");
-							var occOption = occSelect.find('option[value="' + occupationIdToBind + '"]');
-							if (occOption.length > 0) {
-								occSelect.val(occupationIdToBind).trigger('change');
-								console.log('Occupation ID bound:', occupationIdToBind);
-							} else {
-								occSelect.find('option').each(function() {
-									if ($(this).val() == occupationIdToBind || $(this).val() === occupationIdToBind) {
-										occSelect.val($(this).val()).trigger('change');
-										console.log('Occupation ID bound (fallback):', occupationIdToBind);
-										return false;
-									}
-								});
-							}
-							toggleOtherOccupation();
-						}
-						
-						// Bind Power of Glass
-						if (powerofGlassIdToBind && powerofGlassIdToBind !== '0' && powerofGlassIdToBind !== '') {
-							var powerSelect = $("#PowerofGlassId");
-							var powerOption = powerSelect.find('option[value="' + powerofGlassIdToBind + '"]');
-							if (powerOption.length > 0) {
-								powerSelect.val(powerofGlassIdToBind);
-								console.log('Power of Glass ID bound:', powerofGlassIdToBind);
-							} else {
-								powerSelect.find('option').each(function() {
-									if ($(this).val() == powerofGlassIdToBind || $(this).val() === powerofGlassIdToBind) {
-										powerSelect.val($(this).val());
-										console.log('Power of Glass ID bound (fallback):', powerofGlassIdToBind);
-										return false;
-									}
-								});
-							}
-						}
-						
-						// Set text field values
-						$("#ParticipantName").val('@Html.Raw(Model.ParticipantName ?? "")');
-						$("#MobileNo").val('@(Model.MobileNo ?? "")');
-						$("#Age").val('@Model.Age');
-						$("#SHGName").val('@Html.Raw(Model.SHGName ?? "")');
-						$("#Occupation_Others").val('@Html.Raw(Model.Occupation_Others ?? "")');
-						$("#Remarks").val('@Html.Raw(Model.Remarks ?? "")');
-						$("#ScreeningCost").val('@Model.ScreeningCost');
-						$("#GlassesCost").val('@Model.GlassesCost');
-						$("#RemarksActionTaken").val('@Html.Raw(Model.RemarksActionTaken ?? "")');
-						
-						// Set date field
-						@if (Model.ScreeningDate.HasValue)
-						{
-							<text>
-							var screeningDate = '@Model.ScreeningDate.Value.ToString("dd-MMM-yy")';
-							$("#ScreeningDate").val(screeningDate);
-							</text>
-						}
-						
-						// Set radio button values
-						if (locationToBind && locationToBind !== '0' && locationToBind !== '') {
-							$("input[name='Location'][value='" + locationToBind + "']").prop('checked', true);
-							toggleCampDropdown();
-						}
-						
-						if (typeofParticipantIdToBind && typeofParticipantIdToBind !== '0' && typeofParticipantIdToBind !== '') {
-							$("input[name='TypeofParticipantId'][value='" + typeofParticipantIdToBind + "']").prop('checked', true);
-						}
-						
-						$("input[name='VisionIssueIdentifiedId'][value='@Model.VisionIssueIdentifiedId']").prop('checked', true);
-						//$("input[name='TypeofVisionIssueId'][value='@Model.TypeofVisionIssueId']").prop('checked', true);
-						$("input[name='GlassesSold'][value='@Model.GlassesSold']").prop('checked', true);
-						$("input[name='FeedbackonComfort'][value='@Model.FeedbackonComfort']").prop('checked', true);
-						$("input[name='FollowupRequiredId'][value='@Model.FollowupRequiredId']").prop('checked', true);
-						$("input[name='DigitalConsentId'][value='@Model.DigitalConsentId']").prop('checked', true);
-						
-						console.log('Form data binding completed');
-					}, 500);
+			// Get Type of vision issue Disable
+			function toggleOtherTypeofvision() {
+				var selectedValue = $("#TypeofVisionIssueId").val();
+
+				if (selectedValue == "2") {   // 6 = Other
+					$("#TypeofVisionIssue_Others").prop("disabled", false);
+				} else {
+					$("#TypeofVisionIssue_Others").prop("disabled", true).val('');
 				}
-				
-				// Track when dropdowns are loaded
-				var loadedCount = 0;
-				var totalDropdowns = 4; // CampCode, Occupations, PowerofGlasses, Districts
-				
-				function checkAndBind() {
-					loadedCount++;
-					console.log('Dropdown loaded:', loadedCount, 'of', totalDropdowns);
-					if (loadedCount >= totalDropdowns) {
-						bindFormDataAfterLoad();
-					}
-				}
-				
-				// Listen for custom events from site.js
-				$("#CampId_fk").on('campcode:loaded', function() {
-					checkAndBind();
-				});
-				
-				$("#OccupationId").on('occupations:loaded', function() {
-					checkAndBind();
-				});
-				
-				$("#PowerofGlassId").on('powerofglasses:loaded', function() {
-					checkAndBind();
-				});
-				
-				// Load districts and wait for it to complete
-				GetJSDistricts("DistrictId");
-				
-				// Check when districts are loaded
-				var checkDistrictInterval = setInterval(function() {
-					if ($("#DistrictId option").length > 1) {
-						clearInterval(checkDistrictInterval);
-						checkAndBind();
-					}
-				}, 100);
-				
-				// Fallback: if all dropdowns have options after 2 seconds, bind anyway
-				setTimeout(function() {
-					clearInterval(checkDistrictInterval);
-					if (loadedCount < totalDropdowns) {
-						var hasCamp = $("#CampId_fk option").length > 1;
-						var hasOcc = $("#OccupationId option").length > 1;
-						var hasPower = $("#PowerofGlassId option").length > 1;
-						var hasDistrict = $("#DistrictId option").length > 1;
-						
-						if (hasCamp && hasOcc && hasPower && hasDistrict) {
-							bindFormDataAfterLoad();
-						}
-					}
-				}, 2000);
-				</text>
 			}
+
+			// run on dropdown change
+			$("#TypeofVisionIssueId").change(function () {
+				toggleOtherTypeofvision();
+			});
+
+			//check Screening cost always > glass cost
+
+			$("#ScreeningCost").on("keyup change", function () {
+				var glass = parseInt($("#GlassesCost").val()) || 0;
+				var screen = parseInt($(this).val()) || 0;
+
+				if (screen <= glass) {
+					$("#ScreeningCost-error").remove();
+					$("<span id='ScreeningCost-error' class='text-danger'>Screening Cost must be greater than Glasses Cost</span>")
+						.insertAfter("#ScreeningCost");
+				} else {
+					$("#ScreeningCost-error").remove();
+				}
+			});
 
 			//Post sumbitted Data
 			$('#addForm').on('submit', function (e) {
 				e.preventDefault(); // <- prevent normal form post
-					var isvalid = $('#addForm').valid();
-					if (!$('#addForm').valid()) {
-						return; // Invalid form, stop submission
-					}
+				var isvalid = $('#addForm').valid();
+				if (!$('#addForm').valid()) {
+					return; // Invalid form, stop submission
+				}
 				var form = $('#addForm')[0];
 				var formData = new FormData(form);
 				$.ajax({
@@ -775,7 +451,7 @@
 					success: function (response) {
 						if (response.isSuccess === true) {
 							toastr.success(response.message);
-							
+
 							// Check if it's an update (ParticipantId_pk > 0)
 							var participantId = $('#ParticipantId_pk').val();
 							if (participantId && participantId !== '0' && participantId !== '') {
@@ -792,7 +468,7 @@
 						}
 					},
 					error: function (xhr) {
-							toastr.error(xhr.message);
+						toastr.error(xhr.message);
 					}
 				});
 			});

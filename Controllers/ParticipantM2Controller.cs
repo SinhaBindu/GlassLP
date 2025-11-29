@@ -141,7 +141,6 @@ namespace GlassLP.Controllers
 					model.GlassesSold = tbl.GlassesSold;
 					model.PowerofGlassId = tbl.PowerofGlassId;
 					model.FeedbackonComfort = tbl.FeedbackonComfort;
-					model.Remarks = tbl.Remarks;
 					model.FollowupRequiredId = tbl.FollowupRequiredId;
 					model.DigitalConsentId = tbl.DigitalConsentId;
 					model.Location = tbl.Location;
@@ -217,13 +216,12 @@ namespace GlassLP.Controllers
 						tbl.GlassesSold = model.GlassesSold;
 						tbl.PowerofGlassId = model.PowerofGlassId;
 						tbl.FeedbackonComfort = model.FeedbackonComfort;
-						tbl.Remarks = model.Remarks;
 						tbl.FollowupRequiredId = model.FollowupRequiredId;
 						tbl.DigitalConsentId = model.DigitalConsentId;
 						tbl.Location = model.Location;
-					tbl.ScreeningCost = model.ScreeningCost;
-					tbl.GlassesCost = model.GlassesCost;
-					tbl.RemarksActionTaken = model.RemarksActionTaken;
+					    tbl.ScreeningCost = model.ScreeningCost;
+					    tbl.GlassesCost = model.GlassesCost;
+					    tbl.RemarksActionTaken = model.RemarksActionTaken;
 
 					if (model.ParticipantId_pk == 0)
 					{
@@ -304,7 +302,6 @@ namespace GlassLP.Controllers
 				GlassesSold = participant.GlassesSold,
 				PowerofGlassId = participant.PowerofGlassId,
 				FeedbackonComfort = participant.FeedbackonComfort,
-				Remarks = participant.Remarks,
 				FollowupRequiredId = participant.FollowupRequiredId,
 				DigitalConsentId = participant.DigitalConsentId,
 				Location = participant.Location,
