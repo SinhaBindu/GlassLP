@@ -256,22 +256,67 @@ namespace GlassLP.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetAvailableGlassStock(int typeOfModuleId, int powerOfGlassId)
-		{
-			try
-			{
-				var availableStock = await _context.MstGlass
-					.Where(g => g.TypeOfModuleId == typeOfModuleId 
-						&& g.PowerOfGlassId == powerOfGlassId 
-						&& g.IsActive == true)
-					.SumAsync(g => g.Availableglassinstock ?? 0);
+        //public async Task<IActionResult> GetAvailableGlassStock(int typeOfModuleId, int powerOfGlassId)
+        //{
+        //	try
+        //	{
+        //		var availableStock = await _context.MstGlass
+        //			.Where(g => g.TypeOfModuleId == typeOfModuleId 
+        //				&& g.PowerOfGlassId == powerOfGlassId 
+        //				&& g.IsActive == true)
+        //			.SumAsync(g => g.Availableglassinstock ?? 0);
 
-				return Json(new { status = true, data = new { availableStock = availableStock } });
-			}
-			catch (Exception ex)
-			{
-				return Json(new { status = false, message = ex.Message });
-			}
-		}
-	}
+        //		return Json(new { status = true, data = new { availableStock = availableStock } });
+        //	}
+        //	catch (Exception ex)
+        //	{
+        //		return Json(new { status = false, message = ex.Message });
+        //	}
+        //}
+
+        public async Task<IActionResult> GetAvailableGlassStock(int typeOfModuleId, int powerOfGlassId)
+        {
+            try
+            {
+                //var availableStock = await _context.MstGlass
+                //    .Where(g => g.TypeOfModuleId == typeOfModuleId
+                //        && g.PowerOfGlassId == powerOfGlassId
+                //        && g.IsActive == true)
+                //    .SumAsync(g => g.Availableglassinstock ?? 0);
+
+                var availableStock = await _context.MstGlass
+                    .Where(g => g.PowerOfGlassId == powerOfGlassId
+                        && g.IsActive == true)
+                    .SumAsync(g => g.Availableglassinstock ?? 0);
+
+                var soldCount1 = await _context.TblPaticipantM1
+                    .Where(p => p.PowerofGlassId == powerOfGlassId
+                    && p.GlassesProvidedId == 1)
+                    .CountAsync();
+
+                var soldCount2 = await _context.TblPaticipantM2
+					.Where(p => p.PowerofGlassId == powerOfGlassId
+					&& p.GlassesSold == 1)
+					.CountAsync();
+
+
+                var finalStock = availableStock - (soldCount1 + soldCount2);
+                if (finalStock < 0) finalStock = 0;
+
+                return Json(new
+                {
+                    status = true,
+                    data = new
+                    {
+                        availableStock = finalStock
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { status = false, message = ex.Message });
+            }
+        }
+
+    }
 }

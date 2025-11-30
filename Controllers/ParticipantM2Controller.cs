@@ -114,45 +114,57 @@ namespace GlassLP.Controllers
 				return writer.ToString();
 			}
 		}
-		public IActionResult Create(int? CId)
-		{
-			ParticipantM2ViewModel model = new ParticipantM2ViewModel();
-			if (CId > 0)
-			{
-				var tbl = _context.TblPaticipantM2.Find(CId);
-				if (tbl != null)
-				{
-					model.ParticipantId_pk = tbl.ParticipantId_pk;
-					model.TypeofParticipantId = tbl.TypeofParticipantId;
-					model.CampId_fk = tbl.CampId_fk;
-					model.DistrictId = tbl.DistrictId;
-					model.BlockId = tbl.BlockId;
-					model.CLFId = tbl.CLFId;
-					model.PanchayatId = tbl.PanchayatId;
-					model.ParticipantName = tbl.ParticipantName;
-					model.MobileNo = tbl.MobileNo;
-					model.Age = tbl.Age;
-					model.ScreeningDate = tbl.ScreeningDate;
-					model.SHGName = tbl.SHGName;
-					model.OccupationId = tbl.OccupationId;
-					model.Occupation_Others = tbl.Occupation_Others;
-					model.VisionIssueIdentifiedId = tbl.VisionIssueIdentifiedId;
-					model.TypeofVisionIssueId = tbl.TypeofVisionIssueId;
-					model.GlassesSold = tbl.GlassesSold;
-					model.PowerofGlassId = tbl.PowerofGlassId;
-					model.FeedbackonComfort = tbl.FeedbackonComfort;
-					model.FollowupRequiredId = tbl.FollowupRequiredId;
-					model.DigitalConsentId = tbl.DigitalConsentId;
-					model.Location = tbl.Location;
-					model.ScreeningCost = tbl.ScreeningCost;
-					model.GlassesCost = tbl.GlassesCost;
-					model.RemarksActionTaken = tbl.RemarksActionTaken;
-				}
-			}
-			return View(model);
-		}
+        public IActionResult Create(int? CId)
+        {
+            ParticipantM2ViewModel model = new ParticipantM2ViewModel();
 
-		[HttpPost]
+            try
+            {
+                if (CId > 0)
+                {
+                    var tbl = _context.TblPaticipantM2.Find(CId);
+
+                    if (tbl != null)
+                    {
+                        model.ParticipantId_pk = tbl.ParticipantId_pk;
+                        model.TypeofParticipantId = tbl.TypeofParticipantId;
+                        model.CampId_fk = tbl.CampId_fk;
+                        model.DistrictId = tbl.DistrictId;
+                        model.BlockId = tbl.BlockId;
+                        model.CLFId = tbl.CLFId;
+                        model.PanchayatId = tbl.PanchayatId;
+                        model.ParticipantName = tbl.ParticipantName;
+                        model.MobileNo = tbl.MobileNo;
+                        model.Age = tbl.Age;
+                        model.ScreeningDate = tbl.ScreeningDate;
+                        model.SHGName = tbl.SHGName;
+                        model.OccupationId = tbl.OccupationId;
+                        model.Occupation_Others = tbl.Occupation_Others;
+                        model.VisionIssueIdentifiedId = tbl.VisionIssueIdentifiedId;
+                        model.TypeofVisionIssueId = tbl.TypeofVisionIssueId;
+                        model.GlassesSold = tbl.GlassesSold;
+                        model.PowerofGlassId = tbl.PowerofGlassId;
+                        model.FeedbackonComfort = tbl.FeedbackonComfort;
+                        model.FollowupRequiredId = tbl.FollowupRequiredId;
+                        model.DigitalConsentId = tbl.DigitalConsentId;
+                        model.Location = tbl.Location;
+                        model.ScreeningCost = tbl.ScreeningCost;
+                        model.GlassesCost = tbl.GlassesCost;
+                        model.RemarksActionTaken = tbl.RemarksActionTaken;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+
+            }
+
+            return View(model);
+        }
+
+
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<Result<TblPaticipantM2>> Create(ParticipantM2ViewModel model)
 		{
