@@ -60,6 +60,10 @@ namespace GlassLP.Models
         [NotMapped]
         [ValidateNever]
         public IEnumerable<SelectListItem> VSIdList { get; set; }
+
+        [NotMapped]
+        [ValidateNever]
+        public int Availableglassinstock {  get; set; }
         public bool? IsActive { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }

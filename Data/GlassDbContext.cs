@@ -255,7 +255,10 @@ namespace GlassLP.Data
         public string? Remarks { get; set; }
         public int FollowupRequiredId { get; set; }
         public int DigitalConsentId { get; set; }
-        public bool? IsActive { get; set; }
+
+        [ValidateNever]
+		public int IsApproved { get; set; }
+		public bool? IsActive { get; set; }
 
         [StringLength(130)]
         [ValidateNever]
@@ -321,7 +324,7 @@ namespace GlassLP.Data
 		[DisplayName("Type of Vision Issue")]
 		public int TypeofVisionIssueId { get; set; }
         [DisplayName("Type of Vision Issue (Other)")]
-        public string TypeofVisionIssue_Others { get; set; }
+        public string? TypeofVisionIssue_Others { get; set; }
 
 		[DisplayName("Glasses Sold")]
 		public int GlassesSold { get; set; }
@@ -349,6 +352,9 @@ namespace GlassLP.Data
 
 		[DisplayName("Remarks/Action Taken")]
 		public string? RemarksActionTaken { get; set; }
+
+		[ValidateNever]
+		public int IsApproved { get;set; }
 		public bool? IsActive { get; set; }
 		public string? CreatedBy { get; set; }
 		public DateTime? CreatedOn { get; set; }

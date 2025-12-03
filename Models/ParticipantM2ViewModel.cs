@@ -78,7 +78,7 @@ namespace GlassLP.Models
 
 		[Required(ErrorMessage = "Screening Cost is required")]
 		[DisplayName("Screening Cost")]
-        [Range(0, 99, ErrorMessage = "Screening Cost must be a two-digit number")]
+        [Range(0, 999, ErrorMessage = "Screening Cost must be a three-digit number")]
         public int ScreeningCost { get; set; }
 
 		[Required(ErrorMessage = "Glass Cost is required")]
@@ -88,7 +88,11 @@ namespace GlassLP.Models
 
         [DisplayName("Remarks/Action Taken")]
         public string? RemarksActionTaken{ get; set; }
-        public bool? IsActive { get; set; }
+
+		[NotMapped]
+		[ValidateNever]
+		public int Availableglassinstock { get; set; }
+		public bool? IsActive { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
         public string? UpdatedBy { get; set; }

@@ -54,63 +54,63 @@
 								<div>@Html.ValidationMessageFor(m => m.DistrictId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.BlockId, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
 								<div>@Html.ValidationMessageFor(m => m.BlockId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.CLFId, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
 								<div>@Html.ValidationMessageFor(m => m.CLFId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.PanchayatId, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.PanchayatId, new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
 								<div>@Html.ValidationMessageFor(m => m.PanchayatId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.ParticipantName, new { @class = "form-label required-star" })
 								@Html.EditorFor(m => m.ParticipantName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
 								<div>@Html.ValidationMessageFor(m => m.ParticipantName, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.MobileNo, new { @class = "form-label required-star" })
 								@Html.EditorFor(m => m.MobileNo, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "10" } })
 								<div>@Html.ValidationMessageFor(m => m.MobileNo, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.Age, new { @class = "form-label required-star" })
 								@Html.EditorFor(m => m.Age, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "2", @min = "35", @max = "59", @type = "text" } })
 								<div>@Html.ValidationMessageFor(m => m.Age, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.ScreeningDate, new { @class = "form-label required-star" })
 								@Html.EditorFor(m => m.ScreeningDate, new { htmlAttributes = new { @class = "datepicker required form-control", @type = "text", @maxlength = "500" } })
 								<div>@Html.ValidationMessageFor(m => m.ScreeningDate, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.SHGName, new { @class = "form-label required-star" })
 								@Html.EditorFor(m => m.SHGName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
 								<div>@Html.ValidationMessageFor(m => m.SHGName, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.OccupationId, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.OccupationId, new List<SelectListItem>(), "-- Select--", new { @class = "form-control" })
@@ -214,7 +214,7 @@
 								<div>@Html.ValidationMessageFor(m => m.DigitalConsentId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.FeedbackonComfort, new { @class = "form-label required-star" })
 								@Html.DropDownListFor(m => m.FeedbackonComfort, new List<SelectListItem>
@@ -227,28 +227,33 @@
 								<div>@Html.ValidationMessageFor(m => m.FeedbackonComfort, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.GlassesCost, new { @class = "form-label required-star" })
 								@Html.EditorFor(m => m.GlassesCost, new { htmlAttributes = new { @class = "numbersOnly required form-control", @type = "text", @min = "0", @max = "999", @maxlength = "3" } })
 								<div>@Html.ValidationMessageFor(m => m.GlassesCost, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
+						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.ScreeningCost, new { @class = "form-label required-star" })
-								@Html.EditorFor(m => m.ScreeningCost, new { htmlAttributes = new { @class = "numbersOnly required form-control ", @maxlength = "2", @type = "text", @min = "0", @max = "99" } })
+								@Html.EditorFor(m => m.ScreeningCost, new { htmlAttributes = new { @class = "numbersOnly required form-control ", @maxlength = "3", @type = "text", @min = "0", @max = "999" } })
 								<div>@Html.ValidationMessageFor(m => m.ScreeningCost, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 
-						<div class="col-md-8">
+						<div class="col-md-9">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.RemarksActionTaken, new { @class = "form-label" })
 								@Html.EditorFor(m => m.RemarksActionTaken, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
 							</div>
 						</div>
-
+						<div class="col-md-3">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.Availableglassinstock, new { @class = "form-label" })
+								@Html.EditorFor(m => m.Availableglassinstock, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01", @disabled = "disabled" } })
+							</div>
+						</div>
 						<div class="col-12">
 							<div class="text-end">
 								<button class="btn btn-primary b-r-22" type="submit">
@@ -432,6 +437,36 @@
 					$("#ScreeningCost-error").remove();
 				}
 			});
+
+			//count Available Stock
+			$("#PowerofGlassId").change(function () {
+				loadAvailableGlassStock();
+			});
+
+			function loadAvailableGlassStock() {
+				var typeOfModuleId = 2;
+				var powerOfGlassId = $("#PowerofGlassId").val();
+
+				if (typeOfModuleId && powerOfGlassId) {
+
+					$.getJSON("/GlassesMst/GetAvailableGlassStock", {
+						typeOfModuleId: typeOfModuleId,
+						powerOfGlassId: powerOfGlassId
+					})
+						.done(function (response) {
+							if (response.status && response.data) {
+								$("#Availableglassinstock").val(response.data.availableStock || 0);
+							}
+						})
+						.fail(function () {
+							$("#Availableglassinstock").val(0);
+						});
+
+				} else {
+					$("#Availableglassinstock").val("");
+				}
+			}
+
 
 			//Post sumbitted Data
 			$('#addForm').on('submit', function (e) {
