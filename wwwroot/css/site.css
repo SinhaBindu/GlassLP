@@ -343,7 +343,18 @@ nav .app-nav .main-nav > li.no-sub a::after {
             margin: 0 1rem;
             list-style-position: inside;
         }
+header.header-main .container-fluid .header-right .header-signout .signout-dropdown {
+    padding: 0.5rem;
+    border-radius: var(0.6rem);
+    transform: translate(0px, 45px) !important;
+    overflow: hidden;
+}
 
+        header.header-main .container-fluid .header-right .header-signout {
+            box-shadow: 0 0.2rem 1.2rem rgba(var(--dark), 0.2);
+            border: none;
+            margin-bottom: 1.25rem;
+        }
             nav .app-nav .main-nav > li:not(.menu-title) ul li {
                 padding: 0.3rem 1.2rem;
                 font-size: 14px;
@@ -351,17 +362,19 @@ nav .app-nav .main-nav > li.no-sub a::after {
                 line-height: 2;
                 position: relative;
                 width: 100%;
-                display: block;
+                display: block;         
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
-
-                nav .app-nav .main-nav > li:not(.menu-title) ul li.active {
-                    color: rgba(var(--primary), 1);
-                    font-weight: 500;
-                    transition: all 0.3s ease;
-                }
+nav .app-nav .main-nav > li.arrownone a::after {
+    content: none !important;
+}
+nav .app-nav .main-nav > li:not(.menu-title) ul li.active {
+    color: rgba(var(--primary), 1);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
 
                     nav .app-nav .main-nav > li:not(.menu-title) ul li.active a {
                         color: rgba(var(--primary), 1);
