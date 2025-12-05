@@ -11,8 +11,10 @@ namespace GlassLP.Models
     {
         public int pk_Glassid { get; set; } = 0;
 
-        [DisplayName("Type of Module")]
+        [DisplayName("Type of Model")]
         public int TypeOfModuleId { get; set; }
+        [DisplayName("Receive Date")]
+        public DateTime? ReceiveDate { get; set; }
 
         [DisplayName("Power of Glass")]
         public int PowerOfGlassId { get; set; }
@@ -71,7 +73,7 @@ namespace GlassLP.Models
         [NotMapped]
         [ValidateNever]
         [DisplayName("Available Glass in Stock")]
-        public int? Availableglassinstock { get; set; }
+        public int? Availableclassesinstock { get; set; }
 
         [NotMapped]
         [ValidateNever]

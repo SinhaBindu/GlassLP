@@ -42,7 +42,7 @@
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.UserName, new { @class = "form-label" })
-								@Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "100" } })
+								@Html.EditorFor(m => m.UserName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "20" } })
 								<div>@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
@@ -56,26 +56,15 @@
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.Name, new { @class = "form-label" })
-								@Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control", @maxlength = "200" } })
+								@Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control required", @maxlength = "200" } })
 								<div>@Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.Password, new { @class = "form-label" })
-								@Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @maxlength = "100", @placeholder = Model != null && !string.IsNullOrEmpty(Model.Id) ? "Leave empty to keep current password" : "", @id = "Password" } })
-								<div>@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div>
-								@if (Model != null && !string.IsNullOrEmpty(Model.Id))
-								{
-									<small class="text-muted">Leave empty to keep current password</small>
-								}
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label" })
-								@Html.EditorFor(m => m.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @type = "password", @maxlength = "100", @id = "ConfirmPassword" } })
-								<div>@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })</div>
+								@Html.LabelFor(m => m.PhoneNumber, new { @class = "form-label" })
+								@Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control numbersOnly required", @maxlength = "10" } })
+								<div>@Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -87,54 +76,50 @@
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.PhoneNumber, new { @class = "form-label" })
-								@Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control numbersOnly", @maxlength = "15" } })
-								<div>@Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })</div>
+								@Html.LabelFor(m => m.Password, new { @class = "form-label" })
+								@Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control required", @type = "password", @maxlength = "100", @placeholder = Model != null && !string.IsNullOrEmpty(Model.Id) ? "Leave empty to keep current password" : "", @id = "Password" } })
+								<div>@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div>
+								@if (Model != null && !string.IsNullOrEmpty(Model.Id))
+								{
+									<small class="text-muted">Leave empty to keep current password</small>
+								}
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
-								@Html.LabelFor(m => m.DistrictId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.DistrictId, Model?.DistrictList ?? new List<SelectListItem>(), "-- Select District --", new { @class = "form-control" })
-								<div>@Html.ValidationMessageFor(m => m.DistrictId, "", new { @class = "text-danger" })</div>
+								@Html.LabelFor(m => m.ConfirmPassword, new { @class = "form-label" })
+								@Html.EditorFor(m => m.ConfirmPassword, new { htmlAttributes = new { @class = "form-control required", @type = "password", @maxlength = "100", @id = "ConfirmPassword" } })
+								<div>@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="mb-3">
+								@Html.LabelFor(m => m.DistrictIds, new { @class = "form-label" })
+								@Html.DropDownListFor(m => m.DistrictIds, Model.DistrictList ?? new List<SelectListItem>(), "Select", new { @class = "form-control", multiple = "multiple" })
+								<div>@Html.ValidationMessageFor(m => m.DistrictIds, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
 						<div class="col-md-4">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.BlockId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.BlockId, Model?.BlockList ?? new List<SelectListItem>(), "-- Select Block --", new { @class = "form-control" })
+								@Html.DropDownListFor(m => m.BlockId, new List<SelectListItem>(), "Select Block", new { @class = "form-control" })
 								<div>@Html.ValidationMessageFor(m => m.BlockId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.PanchayatId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.PanchayatId, Model?.PanchayatList ?? new List<SelectListItem>(), "-- Select Panchayat --", new { @class = "form-control" })
-								<div>@Html.ValidationMessageFor(m => m.PanchayatId, "", new { @class = "text-danger" })</div>
-							</div>
-						</div>
-						<div class="col-md-4">
+						<div class="col-md-4" >
 							<div class="mb-3">
 								@Html.LabelFor(m => m.CLFId, new { @class = "form-label" })
-								@Html.DropDownListFor(m => m.CLFId, Model?.CLFList ?? new List<SelectListItem>(), "-- Select CLF --", new { @class = "form-control" })
+								@Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "Select CLF", new { @class = "form-control" })
 								<div>@Html.ValidationMessageFor(m => m.CLFId, "", new { @class = "text-danger" })</div>
 							</div>
 						</div>
+						
 						<div class="col-md-3">
 							<div class="mb-3">
 								@Html.LabelFor(m => m.IsActive, new { @class = "form-label d-block" })
 								<div class="form-check form-switch">
 									@Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
 									<label class="form-check-label" for="IsActive">Active</label>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="mb-3">
-								@Html.LabelFor(m => m.EmailConfirmed, new { @class = "form-label d-block" })
-								<div class="form-check form-switch">
-									@Html.CheckBoxFor(m => m.EmailConfirmed, new { @class = "form-check-input" })
-									<label class="form-check-label" for="EmailConfirmed">Email Confirmed</label>
 								</div>
 							</div>
 						</div>
@@ -160,107 +145,55 @@
 	<script>
 		$(document).ready(function () {
 			// Set default password for new users
-			var isEditMode = '@(Model != null && !string.IsNullOrEmpty(Model.Id) ? "true" : "false")';
-			if (isEditMode === 'false') {
-				$('#Password').val('User@123');
-				$('#ConfirmPassword').val('User@123');
+			var hasDistrictList = @(Model.DistrictList != null ? "true" : "false");
+			if (hasDistrictList)
+			{
+				debugger;
+				GetJSBlocks("BlockId", $('#DistrictIds').val());
+				setTimeout(function () {
+					$("#BlockId")
+						.val('@(Model.BlockId ?? 0)')
+						.trigger('change');
+					GetJSFederations("CLFId", $('#DistrictIds').val(), $("#BlockId").val());
+					setTimeout(function () {
+						$("#CLFId").val("@Model.CLFId").trigger('change');
+					}, 300);
+
+				}, 500);
 			}
-
-			// Load dropdowns
-			var currentDistrictId = '@(Model?.DistrictId?.ToString() ?? "")';
-			var currentBlockId = '@(Model?.BlockId?.ToString() ?? "")';
-			var currentPanchayatId = '@(Model?.PanchayatId?.ToString() ?? "")';
-			var currentCLFId = '@(Model?.CLFId?.ToString() ?? "")';
-
-			GetJSDistricts("DistrictId", 1);
-			
+			else
+				GetJSDistricts("DistrictIds");
+			$('#DistrictIds').select2();
 			// District change event
-			$("#DistrictId").change(function () {
+			$("#DistrictIds").change(function () {
+				debugger;
 				var districtId = $(this).val();
-				GetJSBlocks("BlockId", districtId, 1);
-				// Clear panchayat when district changes
-				$("#PanchayatId").empty().append('<option value="">Select</option>');
+				GetJSBlocks("BlockId", districtId);
+				$("#BlockId").empty().append('<option value="">Select</option>');
+				$("#CLFId").empty().append('<option value="">Select</option>');
 			});
-
 			// Block change event
 			$("#BlockId").change(function () {
-				var districtId = $("#DistrictId").val();
+				var districtId = $("#DistrictIds").val();
 				var blockId = $(this).val();
 				if (districtId && blockId) {
-					GetJSPanchayats("PanchayatId", districtId, blockId);
-				}
-			});
-
-			// Load CLFs if not already populated from model
-			if ($("#CLFId option").length <= 1) {
-				GetJSCLFs("CLFId");
-			}
-
-			// Bind values after dropdowns load (for edit mode)
-			setTimeout(function() {
-				if (currentDistrictId) {
-					$("#DistrictId").val(currentDistrictId).trigger('change');
-					
-					setTimeout(function() {
-						if (currentBlockId) {
-							$("#BlockId").val(currentBlockId).trigger('change');
-							
-							setTimeout(function() {
-								if (currentPanchayatId) {
-									$("#PanchayatId").val(currentPanchayatId);
-								}
-							}, 500);
-						}
-					}, 500);
-				}
-				
-				if (currentCLFId) {
-					$("#CLFId").val(currentCLFId);
-				}
-			}, 500);
-
-			// Numbers only for phone
-			jQuery('.numbersOnly').keyup(function () {
-				this.value = this.value.replace(/[^0-9\.]/g, '');
-			});
-
-			// Password validation - only required for new users
-			var isEditMode = '@(Model != null && !string.IsNullOrEmpty(Model.Id) ? "true" : "false")';
-			
-			if (isEditMode === 'true') {
-				// Remove required attribute for password fields in edit mode
-				$('#Password').removeAttr('required');
-				$('#ConfirmPassword').removeAttr('required');
-			}
-
-			// Custom validation for password
-			$('#addForm').on('submit', function (e) {
-				var password = $('#Password').val();
-				var confirmPassword = $('#ConfirmPassword').val();
-				var isEdit = isEditMode === 'true';
-
-				// If editing and password is provided, both must match
-				if (isEdit && password) {
-					if (password !== confirmPassword) {
-						e.preventDefault();
-						toastr.error('Password and Confirm Password do not match.');
-						return false;
-					}
-				}
-				// If new user, password is required
-				if (!isEdit && !password) {
-					e.preventDefault();
-					toastr.error('Password is required for new user.');
-					return false;
+					//GetJSPanchayats("PanchayatId", districtId, blockId);
+					GetJSFederations("CLFId", districtId, blockId);
 				}
 			});
 
 			// Post form data
 			$('#addForm').on('submit', function (e) {
 				e.preventDefault();
-				var form = $('#addForm')[0];
-				var formData = new FormData(form);
-
+				//var form = $('#addForm')[0];
+				var ids = $('#DistrictIds').val();
+				var formData = new FormData($('#addForm')[0]);
+				formData.delete("DistrictIds");
+				ids.forEach(x => formData.append("DistrictIds", x));
+				//var formData = new FormData(form);
+				if (!$('#addForm').valid()) {
+					return; // Invalid form, stop submission
+				}
 				$.ajax({
 					url: '/Users/Create',
 					type: 'POST',
@@ -293,21 +226,6 @@
 			});
 		});
 
-		// Function to load CLFs
-		function GetJSCLFs(eleid) {
-			$('#' + eleid).empty();
-			$.getJSON('/API/Masters/ClfName', function (response) {
-				if (response.status && response.data) {
-					let items = '<option value="">Select</option>';
-					$.each(response.data, function (i, item) {
-						var clfId = item.pk_CLFId || item.pk_CLFId;
-						var clfName = item.clfName || item.CLFName || item.cLFName || '';
-						items += '<option value="' + clfId + '">' + clfName + '</option>';
-					});
-					$('#' + eleid).html(items);
-				}
-			});
-		}
 	</script>
 }
 

@@ -115,7 +115,8 @@ namespace GlassLP.Data
         public string? Version { get; set; }
         public DateTime? SynDate { get; set; }
         public string? uuid { get; set; }
-        public int? Availableglassinstock { get; set; }
+        public DateTime? ReceiveDate { get; set; }
+        public int? Availableclassesinstock { get; set; }
         public int? TotalDistributedGlass { get; set; }
     }
 
@@ -385,7 +386,17 @@ namespace GlassLP.Data
         public DateTime SynDate { get; set; }
         public string uuid { get; set; }
     }
-
+	[Table("AspUserMap")]
+    public class AspUserMap
+    {
+		[Key]
+		public int MapId { get; set; } = 0;
+        public string UserId { get; set; }
+        public string RoleId { get; set; }
+        public int? DistrictId { get; set; }
+        public int? BlockId { get; set; }
+        public int? CLFId { get; set; }
+    }
 	// -------------------------
 	// DbContext
 	// -------------------------
@@ -394,7 +405,6 @@ namespace GlassLP.Data
         public GlassDbContext(DbContextOptions<GlassDbContext> options) : base(options)
         {
         }
-
         public DbSet<MstBlock> MstBlock { get; set; }
         public DbSet<MstCLF> MstCLF { get; set; }
         public DbSet<MstDistrict> MstDistrict { get; set; }
@@ -408,8 +418,9 @@ namespace GlassLP.Data
 		public DbSet<TblPaticipantM2> TblPaticipantM2 { get; set; }
 		public DbSet<MstPowerGlasses> MstPowerGlasses { get; set; }
 		public DbSet<TempMasterGlass> TempMasterGlass { get; set; }
+		public DbSet<AspUserMap> AspUserMap { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 

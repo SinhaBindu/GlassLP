@@ -1,238 +1,196 @@
 ﻿using GlassLP.Data;
+using GlassLP.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Claims;
 
 namespace GlassLP.Controllers
 {
-    public abstract class BaseController : Controller
-    {
-        //protected CommonData _commonData;
+	public abstract class BaseController : Controller
+	{
+		//protected CommonData _commonData;
+		protected string? UserId => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+		protected string? UserEmail => User.FindFirst(ClaimTypes.Email)?.Value;
+		protected string? UserName => User.FindFirst(ClaimTypes.Name)?.Value;
+		protected string? FirstName => User.FindFirst(ClaimTypes.GivenName)?.Value;
+		protected string? LastName => User.FindFirst(ClaimTypes.Surname)?.Value;
+		protected string? FullName => User.FindFirst("FullName")?.Value;
+		protected string? DistrictId => User.FindFirst("DistrictId")?.Value;
+		protected string? BlockId => User.FindFirst("BlockId")?.Value;
+		protected string? CLFId => User.FindFirst("CLFId")?.Value;
+		protected string? DistrictIds => User.FindFirst("DistrictIds")?.Value;
+		protected List<string> UserRoles => User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+		protected bool IsAuthenticated => User.Identity?.IsAuthenticated == true;
+		protected string DateFormat => User.FindFirst("date_format")?.Value ?? "dd-MMM-yyyy";
+		public override async void OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext context)
+		{
+			base.OnActionExecuting(context);
 
-        protected string? UserId => User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+			// Set global ViewBag properties for all views
 
-        protected string? UserEmail => User.FindFirst(ClaimTypes.Email)?.Value;
+			ViewBag.IsAuthenticated = IsAuthenticated;
 
-        protected string? UserName => User.FindFirst(ClaimTypes.Name)?.Value;
+			ViewBag.UserEmail = UserEmail;
 
-        protected string? FirstName => User.FindFirst(ClaimTypes.GivenName)?.Value;
+			ViewBag.UserName = UserName;
 
-        protected string? LastName => User.FindFirst(ClaimTypes.Surname)?.Value;
+			ViewBag.FirstName = FirstName;
 
-        protected string? FullName => User.FindFirst("full_name")?.Value;
+			ViewBag.LastName = LastName;
 
-        protected List<string> UserRoles => User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+			ViewBag.FullName = FullName;
 
-        protected bool IsAuthenticated => User.Identity?.IsAuthenticated == true;
+			ViewBag.UserRoles = UserRoles;
 
-        protected string DateFormat => User.FindFirst("date_format")?.Value ?? "dd-MMM-yyyy";
+			ViewBag.UserId = UserId;
 
-        public override void OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext context)
+			ViewBag.DateFormat = DateFormat;
 
-        {
+			// Set user display name (prefer FullName, fallback to FirstName + LastName, then UserName)
 
-            base.OnActionExecuting(context);
+			ViewBag.UserDisplayName = !string.IsNullOrEmpty(FullName) ? FullName :
 
-            // Set global ViewBag properties for all views
+									 (!string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName)) ? $"{FirstName} {LastName}" :
 
-            ViewBag.IsAuthenticated = IsAuthenticated;
+									 UserName ?? "User";
+		}
+		protected IActionResult RedirectToLogin(string? returnUrl = null)
+		{
+			if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+			{
+				return RedirectToAction("Login", "Account", new { returnUrl });
+			}
+			return RedirectToAction("Login", "Account");
+		}
+		protected bool HasRole(string role)
+		{
+			return UserRoles.Contains(role);
+		}
+		protected bool HasAnyRole(params string[] roles)
+		{
+			return roles.Any(role => UserRoles.Contains(role));
+		}
+		// Authorization helper methods
 
-            ViewBag.UserEmail = UserEmail;
+		//protected async Task<bool> HasPermissionAsync(string permissionName)
 
-            ViewBag.UserName = UserName;
+		//{
 
-            ViewBag.FirstName = FirstName;
+		//    if (string.IsNullOrEmpty(UserId)) return false;
 
-            ViewBag.LastName = LastName;
+		//    var authorizationService = HttpContext.RequestServices
 
-            ViewBag.FullName = FullName;
+		//        .GetRequiredService<GMS.Application.Interfaces.IAuthorizationService>();
 
-            ViewBag.UserRoles = UserRoles;
+		//    return await authorizationService.HasPermissionAsync(UserId, permissionName);
 
-            ViewBag.UserId = UserId;
+		//}
 
-            ViewBag.DateFormat = DateFormat;
+		//protected async Task<bool> HasPermissionAsync(string moduleName, string actionName)
 
-            // Set user display name (prefer FullName, fallback to FirstName + LastName, then UserName)
+		//{
 
-            ViewBag.UserDisplayName = !string.IsNullOrEmpty(FullName) ? FullName :
+		//    if (string.IsNullOrEmpty(UserId)) return false;
 
-                                     (!string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName)) ? $"{FirstName} {LastName}" :
+		//    var authorizationService = HttpContext.RequestServices
 
-                                     UserName ?? "User";
+		//        .GetRequiredService<GMS.Application.Interfaces.IAuthorizationService>();
 
-        }
+		//    return await authorizationService.HasPermissionAsync(UserId, moduleName, actionName);
 
-        protected IActionResult RedirectToLogin(string? returnUrl = null)
+		//}
 
-        {
+		//protected async Task<IEnumerable<string>> GetUserPermissionsAsync()
 
-            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+		//{
 
-            {
+		//    if (string.IsNullOrEmpty(UserId)) return new List<string>();
 
-                return RedirectToAction("Login", "Auth", new { returnUrl });
+		//    var authorizationService = HttpContext.RequestServices
 
-            }
+		//        .GetRequiredService<GMS.Application.Interfaces.IAuthorizationService>();
 
-            return RedirectToAction("Login", "Auth");
+		//    return await authorizationService.GetUserPermissionsAsync(UserId);
 
-        }
+		//}
 
-        protected bool HasRole(string role)
+		//protected async Task<IEnumerable<MenuDto>> GetUserMenusAsync()
 
-        {
+		//{
 
-            return UserRoles.Contains(role);
+		//    if (string.IsNullOrEmpty(UserId)) return new List<MenuDto>();
 
-        }
+		//    var authorizationService = HttpContext.RequestServices
 
-        protected bool HasAnyRole(params string[] roles)
+		//        .GetRequiredService<GMS.Application.Interfaces.IAuthorizationService>();
 
-        {
+		//    return await authorizationService.GetMenusByUserAsync(UserId);
 
-            return roles.Any(role => UserRoles.Contains(role));
+		//}
 
-        }
+		// Helper extension method to render view to string
 
-        // Authorization helper methods
+		protected async Task<string> RenderViewToStringAsync(Controller controller, string viewName, object model)
+		{
+			controller.ViewData.Model = model;
+			using (var writer = new StringWriter())
+			{
+				var viewEngine = controller.HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
 
-        //protected async Task<bool> HasPermissionAsync(string permissionName)
+				var viewResult = viewEngine.FindView(controller.ControllerContext, viewName, false);
 
-        //{
+				if (viewResult.View == null)
+				{
+					throw new ArgumentNullException($"{viewName} does not match any available view");
+				}
+				var viewContext = new ViewContext(
 
-        //    if (string.IsNullOrEmpty(UserId)) return false;
+					controller.ControllerContext,
 
-        //    var authorizationService = HttpContext.RequestServices
+					viewResult.View,
 
-        //        .GetRequiredService<GMS.Application.Interfaces.IAuthorizationService>();
+					controller.ViewData,
 
-        //    return await authorizationService.HasPermissionAsync(UserId, permissionName);
+					controller.TempData,
 
-        //}
+					writer,
 
-        //protected async Task<bool> HasPermissionAsync(string moduleName, string actionName)
+					new HtmlHelperOptions()
+				);
+				await viewResult.View.RenderAsync(viewContext);
+				return writer.GetStringBuilder().ToString();
+			}
+		}
+		protected string GetSubmittedBy()
+		{
+			if (string.IsNullOrEmpty(UserId)) return "System";
+			else
+				return UserId;
+		}
+		protected string GetCurrentDistricts()
+		{
+			if (string.IsNullOrEmpty(DistrictIds)) return "System";
+			else
+				return DistrictIds;
+		}
 
-        //{
+		public string SubmittedBy
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(UserId)) return "System";
 
-        //    if (string.IsNullOrEmpty(UserId)) return false;
-
-        //    var authorizationService = HttpContext.RequestServices
-
-        //        .GetRequiredService<GMS.Application.Interfaces.IAuthorizationService>();
-
-        //    return await authorizationService.HasPermissionAsync(UserId, moduleName, actionName);
-
-        //}
-
-        //protected async Task<IEnumerable<string>> GetUserPermissionsAsync()
-
-        //{
-
-        //    if (string.IsNullOrEmpty(UserId)) return new List<string>();
-
-        //    var authorizationService = HttpContext.RequestServices
-
-        //        .GetRequiredService<GMS.Application.Interfaces.IAuthorizationService>();
-
-        //    return await authorizationService.GetUserPermissionsAsync(UserId);
-
-        //}
-
-        //protected async Task<IEnumerable<MenuDto>> GetUserMenusAsync()
-
-        //{
-
-        //    if (string.IsNullOrEmpty(UserId)) return new List<MenuDto>();
-
-        //    var authorizationService = HttpContext.RequestServices
-
-        //        .GetRequiredService<GMS.Application.Interfaces.IAuthorizationService>();
-
-        //    return await authorizationService.GetMenusByUserAsync(UserId);
-
-        //}
-
-        // Helper extension method to render view to string
-
-        protected async Task<string> RenderViewToStringAsync(Controller controller, string viewName, object model)
-
-        {
-
-            controller.ViewData.Model = model;
-
-            using (var writer = new StringWriter())
-
-            {
-
-                var viewEngine = controller.HttpContext.RequestServices.GetService(typeof(ICompositeViewEngine)) as ICompositeViewEngine;
-
-                var viewResult = viewEngine.FindView(controller.ControllerContext, viewName, false);
-
-                if (viewResult.View == null)
-
-                {
-
-                    throw new ArgumentNullException($"{viewName} does not match any available view");
-
-                }
-
-                var viewContext = new ViewContext(
-
-                    controller.ControllerContext,
-
-                    viewResult.View,
-
-                    controller.ViewData,
-
-                    controller.TempData,
-
-                    writer,
-
-                    new HtmlHelperOptions()
-
-                );
-
-                await viewResult.View.RenderAsync(viewContext);
-
-                return writer.GetStringBuilder().ToString();
-
-            }
-
-        }
-
-        protected string GetSubmittedBy()
-
-        {
-
-            if (string.IsNullOrEmpty(UserId)) return "System";
-
-            else
-
-                return UserId;
-
-        }
-
-        public string SubmittedBy
-
-        {
-
-            get
-
-            {
-
-                if (string.IsNullOrEmpty(UserId)) return "System";
-
-                else
-
-                    return UserId;
-
-            }
-
-        }
-
-    }
+				else
+					return UserId;
+			}
+		}
+	}
 
 }

@@ -36,36 +36,42 @@
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.BusinessMentorName, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.BusinessMentorName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                <div>@Html.ValidationMessageFor(m => m.BusinessMentorName, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.VEName, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.VEName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                <div>@Html.ValidationMessageFor(m => m.VEName, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.ContactNumber, new { @class = "form-label required-star" })
-                                @Html.EditorFor(m => m.ContactNumber, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.EditorFor(m => m.ContactNumber, new { htmlAttributes = new { @class = "numbersOnly required form-control", min = "10", @maxlength = "10" } })
+                                <div>@Html.ValidationMessageFor(m => m.ContactNumber, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.CLFId, new { @class = "form-label required-star" })
-                                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "-- Select--", new { @class = "form-control" })
+                                @Html.DropDownListFor(m => m.CLFId, new List<SelectListItem>(), "--Select--", new { @class = "form-control" })
+                                <div>@Html.ValidationMessageFor(m => m.CLFId, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.AOPName, new { @class = "form-label required-star" })
                                 @Html.EditorFor(m => m.AOPName, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                <div>@Html.ValidationMessageFor(m => m.AOPName, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 @Html.LabelFor(m => m.TotalSalesAmount, new { @class = "form-label required-star" })
-                                @Html.EditorFor(m => m.TotalSalesAmount, new { htmlAttributes = new { @class = "required form-control", @maxlength = "500" } })
+                                @Html.EditorFor(m => m.TotalSalesAmount, new { htmlAttributes = new { @class = "numbersOnly required form-control", @maxlength = "5" } })
+                                <div>@Html.ValidationMessageFor(m => m.TotalSalesAmount, "", new { @class = "text-danger" })</div>
                             </div>
                         </div>
                         <div class="col-12">
@@ -87,7 +93,7 @@
     }
     <script>
         $(document).ready(function () {
-            GetClfName("CLFId");
+            GetJSFederations("CLFId",0,0);
             // $("#DistrictId").change(function () {
             //     GetJSBlocks("BlockId", $(this).val());
             //     $('#BlockId').val();
@@ -103,6 +109,9 @@
                 e.preventDefault(); // <- prevent normal form post
                 var form = $('#addForm')[0];
                 var formData = new FormData(form);
+                if (!$('#addForm').valid()) {
+                    return; // Invalid form, stop submission
+                }
                 $.ajax({
                     url: '/Vendors/Create',
                     type: 'POST',

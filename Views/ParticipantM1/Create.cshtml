@@ -227,11 +227,7 @@
 
             GetOccupations("OccupationId");
             GetPowerofGlasses("PowerofGlassId");
-
-            jQuery('.numbersOnly').keyup(function () {
-                this.value = this.value.replace(/[^0-9\.]/g, '');
-            });
-
+        
             // GetOccupations Disable
             function toggleOtherOccupation() {
                 var selectedValue = $("#OccupationId").val();

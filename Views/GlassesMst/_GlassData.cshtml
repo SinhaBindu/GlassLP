@@ -16,13 +16,16 @@
     <thead class="text-center">
         <tr>
             <th class="text-center tblth">Srno.</th>
-            <th class="text-center tblth">Type of Module</th>
+            <th class="text-center tblth">Type of Model</th>
             <th class="text-center tblth">Power of Glass</th>
+            <th class="text-center tblth">Received Date</th>
             <th class="text-center tblth">No. of Glasses</th>
             <th class="text-center tblth">Per Glass Cost</th>
             <th class="text-center tblth">Total Glass Cost</th>
             <th class="text-center tblth">Advertising Cost</th>
             <th class="text-center tblth">Storage/Misc Cost</th>
+            <th class="text-center tblth">Available classes in stock</th>
+            <th class="text-center tblth">Total Distributed Glasses</th>
             <th class="text-center tblth" style="min-width:100px;">Action</th>
         </tr>
     </thead>
@@ -37,11 +40,14 @@
                         <td class="text-center">@(srno++)</td>
                         <td class="text-left">@dr["TypeOfModuleName"]</td>
                         <td class="text-left">@dr["PowerOfGlassName"]</td>
-                        <td class="text-center">@(dr["NoofGlasses"] != DBNull.Value ? dr["NoofGlasses"] : "")</td>
-                        <td class="text-right">@(Convert.ToDecimal(dr["PerGlassCost"]).ToString("N2"))</td>
-                        <td class="text-right">@(Convert.ToDecimal(dr["TotalGlassCost"]).ToString("N2"))</td>
-                        <td class="text-right">@(Convert.ToDecimal(dr["AdvertisingCost"]).ToString("N2"))</td>
-                        <td class="text-right">@(Convert.ToDecimal(dr["Storagemiscellaneouscost"]).ToString("N2"))</td>
+                        <td class="text-center">@(dr["ReceivedDate"])</td>
+                        <td class="text-center">@(dr["NoofGlasses"])</td>
+                        <td class="text-center">@(dr["PerGlassCost"] ?? Convert.ToDecimal(dr["PerGlassCost"]).ToString("N2"))</td>
+                        <td class="text-center">@(dr["TotalGlassCost"] ?? Convert.ToDecimal(dr["TotalGlassCost"]).ToString("N2"))</td>
+                        <td class="text-center">@(dr["AdvertisingCost"]??Convert.ToDecimal(dr["AdvertisingCost"]).ToString("N2"))</td>
+                        <td class="text-center">@(dr["Storagemiscellaneouscost"] ?? Convert.ToDecimal(dr["Storagemiscellaneouscost"]).ToString("N2"))</td>
+                        <td class="text-center">@(dr["Availableclassesinstock"])</td>
+                        <td class="text-center">@(dr["TotalDistributedGlass"])</td>
                         <td class="text-center">
                             <a asp-action="Create"
                                asp-route-GId="@dr["pk_Glassid"]"

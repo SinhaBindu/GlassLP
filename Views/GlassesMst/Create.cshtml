@@ -26,9 +26,6 @@
 <div class="row">
     <div class="col-12">
         <div class="card">
-            @* <div class="card-header d-flex align-items-center">
-                <h5 class="mb-0"></h5>
-            </div> *@
             <div class="card-body">
                 <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
                     @if (Model != null && Model.pk_Glassid > 0)
@@ -52,8 +49,15 @@
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
+                                @Html.LabelFor(m => m.ReceiveDate, new { @class = "form-label required-star" })
+                                @Html.EditorFor(m => m.ReceiveDate, new { htmlAttributes = new { @class = "required datepicker form-control", @type = "text", @maxlength = "11" } })
+                                @Html.ValidationMessageFor(m => m.ReceiveDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
                                 @Html.LabelFor(m => m.NoofGlasses, new { @class = "form-label required-star" })
-                                @Html.EditorFor(m => m.NoofGlasses, new { htmlAttributes = new { @class = "required numbersOnly form-control", @type = "text", @maxlength = "10" } })
+                                @Html.EditorFor(m => m.NoofGlasses, new { htmlAttributes = new { @class = "required numbersOnly form-control", @type = "text", @maxlength = "5" } })
                                 @Html.ValidationMessageFor(m => m.NoofGlasses, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -87,8 +91,8 @@
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
-                                @Html.LabelFor(m => m.Availableglassinstock, new { @class = "form-label" })
-                                @Html.EditorFor(m => m.Availableglassinstock, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01", @disabled = "disabled" } })
+                                @Html.LabelFor(m => m.Availableclassesinstock, new { @class = "form-label" })
+                                @Html.EditorFor(m => m.Availableclassesinstock, new { htmlAttributes = new { @class = "numbersOnly form-control", @type = "text", @maxlength = "10", @step = "0.01", @disabled = "disabled" } })
                             </div>
                         </div>
                         <div class="col-12">
@@ -111,6 +115,10 @@
     }
     <script>
         $(document).ready(function () {
+            $("#ReceiveDate").datepicker({
+                dateFormat: "dd-M-yy",
+                maxDate: 0// jQuery UI standard
+            });
             // Function to toggle Module 2 fields based on TypeOfModuleId
             function toggleModule2Fields() {
                 var typeOfModuleId = $('#TypeOfModuleId').val();

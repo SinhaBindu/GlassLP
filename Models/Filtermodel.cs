@@ -6,6 +6,7 @@ namespace GlassLP.Models
     {
         [Display (Name ="District")]
         public int? DistrictId { get; set; }
+        public string? DistrictIdsstr { get; set; }
 		[Display(Name = "Block")]
 		public int? BlockId { get; set; }
 		[Display(Name = "CLF")]

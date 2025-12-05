@@ -20,7 +20,7 @@
             <th class="text-center tblth">VE Name</th>
             <th class="text-center tblth">AOP Name</th>
             <th class="text-center tblth">CLF Name</th>
-            <th class="text-center tblth">Dated</th>
+            <th class="text-center tblth">Reported Date</th>
             <th class="text-center tblth" style="min-width:100px;">Action</th>
         </tr>
     </thead>
@@ -39,10 +39,7 @@
                         <td class="text-left">@dr["CLFName"]</td>
                         <td class="text-left">@dr["Dated"]</td>
                         <td class="edit text-center">
-                            <a asp-action="Create"
-                               asp-route-PId="ParticipantId_pk"
-                               class="btn edit-item-btn icon-btn btn-outline-info">
-                                <i class="fa fa-edit"></i>
+                            <a asp-action="Create" asp-route-PId="ParticipantId_pk" class="btn edit-item-btn icon-btn btn-outline-info">   <i class="fa fa-edit"></i>
                             </a>
 
                             <button class="btn edit-item-btn icon-btn btn-outline-success" asp-action="Details" asp-route-PId="ParticipantId_pk">

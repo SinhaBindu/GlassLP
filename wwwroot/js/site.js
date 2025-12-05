@@ -3,7 +3,13 @@
 
 // Write your JavaScript code.
 
-function GetJSDistricts(eleid, ModuleId = 0) {
+$(document).ready(function () {
+    jQuery('.numbersOnly').keyup(function () {
+        this.value = this.value.replace(/[^0-9\.]/g, '');
+    });
+
+})
+function GetJSDistricts(eleid, ModuleId = 0,DId="") {
     $('#' + eleid).empty();
     $.getJSON('/API/Masters/Districts?ModuleId=' + ModuleId, function (response) {
         if (response.status && response.data) {
@@ -15,7 +21,7 @@ function GetJSDistricts(eleid, ModuleId = 0) {
         }
     });
 }
-function GetJSBlocks(eleid, Paraid, ModuleId = 0) {
+function GetJSBlocks(eleid, Paraid, ModuleId = 0,BId = 0) {
     $('#' + eleid).empty();
     $.getJSON('/API/Masters/Blocks?DistrictId=' + Paraid + '&ModuleId=' + ModuleId, function (response) {
         if (response.status && response.data) {
@@ -27,7 +33,7 @@ function GetJSBlocks(eleid, Paraid, ModuleId = 0) {
         }
     });
 }
-function GetJSPanchayats(eleid, Paraid1, Paraid2) {
+function GetJSPanchayats(eleid, Paraid1, Paraid2, PId = 0) {
     $('#' + eleid).empty();
     $.getJSON('/API/Masters/Panchayats?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (response) {
         if (response.status && response.data) {
@@ -39,7 +45,7 @@ function GetJSPanchayats(eleid, Paraid1, Paraid2) {
         }
     });
 }
-function GetJSFederations(eleid, Paraid1, Paraid2) {
+function GetJSFederations(eleid, Paraid1, Paraid2, FId = 0) {
     $('#' + eleid).empty();
     $.getJSON('/API/Masters/Federations?DistrictId=' + Paraid1 + "&&BlockId=" + Paraid2, function (response) {
         if (response.status && response.data) {
@@ -132,18 +138,18 @@ function GetPowerofGlasses(eleid, callback) {
     });
 }
 
-function GetClfName(eleid) {
-    $('#' + eleid).empty();
-    $.getJSON('/API/Masters/ClfName', function (response) {
-        if (response.status && response.data) {
-            let items = '<option value="">Select</option>';
-            $.each(response.data, function (i, item) {
-                items += '<option value="' + item.pk_CLFId + '">' + item.clfName + '</option>';
-            });
-            $('#' + eleid).html(items);
-        }
-    });
-}
+//function GetClfName(eleid) {
+//    $('#' + eleid).empty();
+//    $.getJSON('/API/Masters/ClfName', function (response) {
+//        if (response.status && response.data) {
+//            let items = '<option value="">Select</option>';
+//            $.each(response.data, function (i, item) {
+//                items += '<option value="' + item.pk_CLFId + '">' + item.clfName + '</option>';
+//            });
+//            $('#' + eleid).html(items);
+//        }
+//    });
+//}
 function GetJSVE(eleid, isSelect) {
     debugger;
     $('#' + eleid).empty();

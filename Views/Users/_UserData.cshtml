@@ -1,10 +1,9 @@
-@* @using System.Collections.Generic *@
-@model IEnumerable<UserListVM>
+@using System.Data
 @{
-    List<UserListVM> users = new List<UserListVM>();
+    DataTable dt = new DataTable();
     if (Model != null)
     {
-        users = Model.ToList();
+        dt = Model;
     }
 }
 <style>
@@ -19,64 +18,49 @@
             <th class="text-center tblth">Sr. No.</th>
             <th class="text-center tblth">User Name</th>
             <th class="text-center tblth">Email</th>
+            <th class="text-center tblth">Phone Number</th>
             <th class="text-center tblth">Name</th>
             <th class="text-center tblth">Role</th>
-            <th class="text-center tblth">Phone Number</th>
-            <th class="text-center tblth">Email Confirmed</th>
+            <th class="text-center tblth">District</th>
+            <th class="text-center tblth">Block</th>
+            <th class="text-center tblth">CLF</th>
             <th class="text-center tblth">Status</th>
-            <th class="text-center tblth">Created On</th>
             <th class="text-center tblth" style="min-width:120px;">Action</th>
         </tr>
     </thead>
     <tbody>
         @{
-            if (users != null && users.Count > 0)
+            if (dt.Rows.Count > 0)
             {
                 int srno = 1;
-                foreach (var user in users)
+                foreach (DataRow dr in dt.Rows)
                 {
                     <tr>
                         <td class="text-center">@(srno++)</td>
-                        <td class="text-left">@user.UserName</td>
-                        <td class="text-left">@user.Email</td>
-                        <td class="text-left">@user.Name</td>
+                        <td class="text-left">@dr["LoginName"]</td>
+                        <td class="text-left">@dr["Email"]</td>
+                        <td class="text-left">@dr["PhoneNumber"]</td>
+                        <td class="text-left">@dr["Name"]</td>
                         <td class="text-left">
-                            <span class="badge bg-info">@user.Role</span>
+                            <span class="badge bg-info">@dr["RoleName"]</span>
                         </td>
-                        <td class="text-left">@user.PhoneNumber</td>
+                        <td class="text-left">@dr["DistrictName"]</td>
+                        <td class="text-left">@dr["BlockName"]</td>
+                        <td class="text-left">@dr["FederationName"]</td>
                         <td class="text-center">
-                            @if (user.EmailConfirmed)
-                            {
-                                <span class="badge bg-success">Confirmed</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-warning">Not Confirmed</span>
-                            }
+                            <span class="@dr["ColorActiveUser"]">@dr["LockoutEnabled"]</span>
                         </td>
-                        <td class="text-center">
-                            <span class="badge bg-success">Active</span>
-                        </td>
-                        <td class="text-left">@user.CreatedOn</td>
                         <td class="edit text-center">
-                            <a asp-action="Create"
-                               asp-route-id="@user.Id"
+                            <a asp-action="Create" asp-route-id="@dr["UserId"]"
                                class="btn edit-item-btn icon-btn btn-outline-info"
                                title="Edit">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a asp-action="Details"
-                               asp-route-id="@user.Id"
+                            <a asp-action="Details" asp-route-id="@dr["UserId"]"
                                class="btn edit-item-btn icon-btn btn-outline-success"
                                title="View Details">
                                 <i class="fa fa-eye"></i>
                             </a>
-                            <button type="button"
-                                    class="btn edit-item-btn icon-btn btn-outline-danger"
-                                    title="Deactivate"
-                                    onclick="deleteUser('@user.Id', '@user.UserName')">
-                                <i class="fa fa-trash"></i>
-                            </button>
                         </td>
                     </tr>
                 }

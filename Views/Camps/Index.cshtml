@@ -68,7 +68,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            GetJSDistricts("DistrictId", 1);
+            GetJSDistricts("DistrictId", 1,"@Model.DistrictIdsstr");
             $("#DistrictId").change(function () {
                 GetJSBlocks("BlockId",$(this).val(), 1);
             });

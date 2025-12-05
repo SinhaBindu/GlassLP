@@ -3,6 +3,7 @@ using GlassLP.Middleware;
 using GlassLP.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static GlassLP.Data.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpContextAccessor();
@@ -10,6 +11,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<GlassDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<CommonData>();
+builder.Services.AddScoped<GlobalDataService>();
 
 // Add Identity with roles and the default UI
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -33,6 +35,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<SPManager>();
 builder.Services.AddScoped<JWTHelper>();
+
 
 var app = builder.Build();
 UrlUtility.Configure(app.Services.GetRequiredService<IHttpContextAccessor>());

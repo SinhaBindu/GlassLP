@@ -68,8 +68,8 @@ namespace GlassLP.Data
             {
                 list.Insert(0, new SelectListItem { Value = "", Text = "All" });
             }
-            list.Add(new SelectListItem { Value = "1", Text = "Module One" });
-            list.Add(new SelectListItem { Value = "2", Text = "Module Two" });
+            list.Add(new SelectListItem { Value = "1", Text = "Model One" });
+            list.Add(new SelectListItem { Value = "2", Text = "Model Two" });
             return list;
         }
         public List<SelectListItem> GetPowerOfGlass(int IsSelect = 0)

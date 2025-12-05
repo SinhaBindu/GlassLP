@@ -1,6 +1,10 @@
 ﻿using GlassLP.Data;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
+using System.Security.Claims;
+using static GlassLP.Data.Service;
 
 namespace GlassLP.Controllers
 {
@@ -8,11 +12,15 @@ namespace GlassLP.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public AccountController(UserManager<ApplicationUser> userManager,
-                                 SignInManager<ApplicationUser> signInManager)
+		private readonly SPManager _spManager;
+		private readonly GlobalDataService _globalData;
+		public AccountController(UserManager<ApplicationUser> userManager,
+                                 SignInManager<ApplicationUser> signInManager, SPManager spManager,GlobalDataService globalData)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _spManager = spManager;
+			_globalData = globalData;
         }
 
         // GET: /Account/Register
@@ -58,7 +66,48 @@ namespace GlassLP.Controllers
             if (result.Succeeded)
             {
                 if (!string.IsNullOrEmpty(returnUrl)) return LocalRedirect(returnUrl);
-                return RedirectToAction("Index", "Home");
+				var user = await _userManager.FindByNameAsync(username);
+				if (user != null)
+				{
+					// Populate GlobalDataService
+					var globalData = _spManager.GetLoggedInUser(user.Id);
+
+					//// Optional: store in DI service for later use
+					//_globalData.UserId = globalData.UserId;
+					//_globalData.UserName = globalData.UserName;
+					//_globalData.PhoneNumber = globalData.PhoneNumber;
+					//_globalData.Email = globalData.Email;
+					//_globalData.RoleId = globalData.RoleId;
+					//_globalData.Role = globalData.Role;
+					//_globalData.DistrictIds = globalData.DistrictIds;
+					//_globalData.DistrictName = globalData.DistrictName;
+					//_globalData.BlockId = globalData.BlockId;
+					//_globalData.BlockName = globalData.BlockName;
+					//_globalData.CLFId = globalData.CLFId;
+					//_globalData.CLFName = globalData.CLFName;
+					//_globalData.LoginTime = globalData.LoginTime;
+
+					var claims = new List<Claim>
+                    {
+	                    new Claim("UserId", globalData.UserId),
+	                    new Claim("UserName", globalData.UserName),
+	                    new Claim("PhoneNumber", globalData.PhoneNumber),
+	                    new Claim("Email", globalData.Email),
+	                    new Claim("RoleId", globalData.RoleId),
+	                    new Claim("DistrictIds", globalData.DistrictIds),
+	                    new Claim("DistrictName", globalData.DistrictName),
+	                    new Claim("BlockId", globalData.BlockId),
+	                    new Claim("BlockName", globalData.BlockName),
+	                    new Claim("CLFId", globalData.CLFId),
+	                    new Claim("CLFName", globalData.CLFName),
+	                    new Claim("LoginTime", globalData.LoginTime)
+                    };
+
+					var identity = new ClaimsIdentity(claims, "login");
+					await HttpContext.SignInAsync(new ClaimsPrincipal(identity));
+				}
+
+				return RedirectToAction("Index", "Home");
             }
 
             ModelState.AddModelError("", "Invalid login attempt.");

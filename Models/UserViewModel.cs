@@ -33,7 +33,7 @@ namespace GlassLP.Models
         public string Role { get; set; } = string.Empty;
 
         [DisplayName("District")]
-        public int? DistrictId { get; set; }
+        public string? DistrictId { get; set; }
 
         [DisplayName("Block")]
         public int? BlockId { get; set; }
@@ -63,7 +63,12 @@ namespace GlassLP.Models
         // Display only fields
         public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
-    }
+
+		public int MapId { get; set; }
+		public List<int>? DistrictIds { get; set; }
+
+		public string? RoleId { get; set; }
+	}
     public class UserListVM
     {
         public string Id { get; set; }
@@ -71,10 +76,19 @@ namespace GlassLP.Models
         public string Email { get; set; }
         public string Name { get; set; }
         public string Role { get; set; }
-        public string PhoneNumber { get; set; }
+		public string RoleId { get; set; }
+		public string PhoneNumber { get; set; }
         public bool EmailConfirmed { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedOn { get; set; }
+		public string DistrictIds { get; set; }
+		public string BlockId { get; set; }
+        public string CLFId { get; set; }
+        public string DistrictName { get; set; }
+        public string BlockName { get; set; }
+        public string CLFName { get; set; }
+        public string PanchayatName { get; set; }
+       
     }
 }
 
