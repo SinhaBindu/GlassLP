@@ -149,7 +149,39 @@ header.header-main {
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 }
+@media (max-width: 991px) {
+    .vertical-sidebar {
+        z-index: 999;
+        margin-left: -260px;
+        visibility: hidden;
+    }
 
+    .app-wrapper .app-content {
+        width: calc(100% - 0px);
+        margin-left: 0px;
+    }
+
+    header.header-main {
+        width: calc(100% - 0px);
+        left: 0px;
+    }
+
+    div > footer {
+        position: fixed;
+        bottom: 0;
+        padding: 0.75rem 2.5rem 0.75rem 0rem !important;
+    }
+}
+@media (max-width: 991px) {
+    .app-wrapper .vertical-sidebar.open {
+        display: block;
+        margin-left: 0 !important;
+        -webkit-transition: .3s;
+        transition: .3s;
+        visibility: visible;
+        z-index: 99;
+    }
+}
 nav .app-logo .logo {
     padding: 7.5px 10px;
     width: 100%;

@@ -1,11 +1,34 @@
 @model GlassViewModel
-
+<div class="row">
+    <div class="col-12">
+        <h4 class="main-title">Inventory Glass Master</h4>
+        <ul class="app-line-breadcrumbs mb-3">
+            <li class="">
+                <a class="f-s-14 f-w-500" href="">
+                    <span>
+                        Master
+                    </span>
+                </a>
+            </li>
+            <li class="">
+                <a class="f-s-14 f-w-500" href="GlassesMst/Create">
+                    <span>
+                        Inventory Glass Master
+                    </span>
+                </a>
+            </li>
+            <li class="active">
+                <a class="f-s-14 f-w-500" href="#">@(Model != null && Model.pk_Glassid > 0 ? "Update Glass Master" : "Add Glass Master")</a>
+            </li>
+        </ul>
+    </div>
+</div>
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header d-flex align-items-center">
-                <h5 class="mb-0">@(Model != null && Model.pk_Glassid > 0 ? "Update Glass Master" : "Add Glass Master")</h5>
-            </div>
+            @* <div class="card-header d-flex align-items-center">
+                <h5 class="mb-0"></h5>
+            </div> *@
             <div class="card-body">
                 <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
                     @if (Model != null && Model.pk_Glassid > 0)

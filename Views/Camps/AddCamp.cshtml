@@ -1,10 +1,34 @@
 ﻿@model CampViewModel
 <div class="row">
 	<div class="col-12">
+		<h4 class="main-title">Camp</h4>
+		<ul class="app-line-breadcrumbs mb-3">
+			<li class="">
+				<a class="f-s-14 f-w-500" href="">
+					<span>
+						Forms
+					</span>
+				</a>
+			</li>
+			<li class="">
+				<a class="f-s-14 f-w-500" href="Camps/Index">
+					<span>
+						Camp
+					</span>
+				</a>
+			</li>
+			<li class="active">
+				<a class="f-s-14 f-w-500" href="#">Create Camp</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
 		<div class="card">
-			<div class="card-header d-flex align-items-center">
+			@* <div class="card-header d-flex align-items-center">
 				<h5 class="mb-0">Create Camp</h5>
-			</div>
+			</div> *@
 			<div class="card-body">
 				<form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
 					<div class="row">

@@ -1,10 +1,34 @@
 ﻿@model ParticipantM1ViewModel
 <div class="row">
     <div class="col-12">
+        <h4 class="main-title">Participant Module One</h4>
+        <ul class="app-line-breadcrumbs mb-3">
+            <li class="">
+                <a class="f-s-14 f-w-500" href="">
+                    <span>
+                        Forms
+                    </span>
+                </a>
+            </li>
+            <li class="">
+                <a class="f-s-14 f-w-500" href="ParticipantM1/Index">
+                    <span>
+                        Participant Module One
+                    </span>
+                </a>
+            </li>
+            <li class="active">
+                <a class="f-s-14 f-w-500" href="#">@(Model != null && Model.ParticipantId_pk > 0 ? "Update Participant Module One" : "Add Participant Module One")</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
         <div class="card">
-            <div class="card-header d-flex align-items-center">
-                <h5 class="mb-0">@(Model != null && Model.ParticipantId_pk > 0 ? "Update Participant Module One" : "Add Participant Module One")</h5>
-            </div>
+            @* <div class="card-header d-flex align-items-center">
+                <h5 class="mb-0"></h5>
+            </div> *@
             <div class="card-body">
                 <form class="app-form" method="post" enctype="multipart/form-data" id="addForm">
                     @if (Model != null && Model.ParticipantId_pk > 0)
