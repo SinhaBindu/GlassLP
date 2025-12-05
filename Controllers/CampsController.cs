@@ -38,7 +38,8 @@ namespace GlassLP.Controllers
 		{
 			try
 			{
-				//filtermodel.DistrictIdsstr = User.Claims;	
+				filtermodel.DistrictIdsstr = User.Claims?.ToString();	
+				filtermodel.DistrictIdsstr = DistrictIds;	
 				DataTable tbllist = _spManager.SP_CampList(filtermodel);
 				if (tbllist.Rows.Count > 0)
 				{

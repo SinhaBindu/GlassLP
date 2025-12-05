@@ -1,8 +1,11 @@
 ﻿using GlassLP.Data;
+using GlassLP.Utilities;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using static GlassLP.Data.Service;
 
@@ -71,41 +74,49 @@ namespace GlassLP.Controllers
 				{
 					// Populate GlobalDataService
 					var globalData = _spManager.GetLoggedInUser(user.Id);
+					JWTHelper jWTHelper = new JWTHelper();
 
-					//// Optional: store in DI service for later use
-					//_globalData.UserId = globalData.UserId;
-					//_globalData.UserName = globalData.UserName;
-					//_globalData.PhoneNumber = globalData.PhoneNumber;
-					//_globalData.Email = globalData.Email;
-					//_globalData.RoleId = globalData.RoleId;
-					//_globalData.Role = globalData.Role;
-					//_globalData.DistrictIds = globalData.DistrictIds;
-					//_globalData.DistrictName = globalData.DistrictName;
-					//_globalData.BlockId = globalData.BlockId;
-					//_globalData.BlockName = globalData.BlockName;
-					//_globalData.CLFId = globalData.CLFId;
-					//_globalData.CLFName = globalData.CLFName;
-					//_globalData.LoginTime = globalData.LoginTime;
+					var accessToken = jWTHelper.GenerateJwtToken(globalData);
+                    //// Optional: store in DI service for later use
+                    //_globalData.UserId = globalData.UserId;
+                    //_globalData.UserName = globalData.UserName;
+                    //_globalData.PhoneNumber = globalData.PhoneNumber;
+                    //_globalData.Email = globalData.Email;
+                    //_globalData.RoleId = globalData.RoleId;
+                    //_globalData.Role = globalData.Role;
+                    //_globalData.DistrictIds = globalData.DistrictIds;
+                    //_globalData.DistrictName = globalData.DistrictName;
+                    //_globalData.BlockId = globalData.BlockId;
+                    //_globalData.BlockName = globalData.BlockName;
+                    //_globalData.CLFId = globalData.CLFId;
+                    //_globalData.CLFName = globalData.CLFName;
+                    //_globalData.LoginTime = globalData.LoginTime;
 
-					var claims = new List<Claim>
-                    {
-	                    new Claim("UserId", globalData.UserId),
-	                    new Claim("UserName", globalData.UserName),
-	                    new Claim("PhoneNumber", globalData.PhoneNumber),
-	                    new Claim("Email", globalData.Email),
-	                    new Claim("RoleId", globalData.RoleId),
-	                    new Claim("DistrictIds", globalData.DistrictIds),
-	                    new Claim("DistrictName", globalData.DistrictName),
-	                    new Claim("BlockId", globalData.BlockId),
-	                    new Claim("BlockName", globalData.BlockName),
-	                    new Claim("CLFId", globalData.CLFId),
-	                    new Claim("CLFName", globalData.CLFName),
-	                    new Claim("LoginTime", globalData.LoginTime)
-                    };
+                    //var claims = new List<Claim>
+                    //               {
+                    //                new Claim("UserId", globalData.UserId),
+                    //                new Claim("UserName", globalData.UserName),
+                    //                new Claim("PhoneNumber", globalData.PhoneNumber),
+                    //                new Claim("Email", globalData.Email),
+                    //                new Claim("RoleId", globalData.RoleId),
+                    //                new Claim("DistrictIds", globalData.DistrictIds),
+                    //                new Claim("DistrictName", globalData.DistrictName),
+                    //                new Claim("BlockId", globalData.BlockId),
+                    //                new Claim("BlockName", globalData.BlockName),
+                    //                new Claim("CLFId", globalData.CLFId),
+                    //                new Claim("CLFName", globalData.CLFName),
+                    //                new Claim("LoginTime", globalData.LoginTime)
+                    //               };
+                    var claims = jWTHelper.GenerateClaims(globalData);
 
-					var identity = new ClaimsIdentity(claims, "login");
-					await HttpContext.SignInAsync(new ClaimsPrincipal(identity));
-				}
+					var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+					var principal = new ClaimsPrincipal(identity);
+
+					await HttpContext.SignInAsync(
+						CookieAuthenticationDefaults.AuthenticationScheme,
+						principal
+					);
+                }
 
 				return RedirectToAction("Index", "Home");
             }

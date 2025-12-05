@@ -1,8 +1,12 @@
 using GlassLP.Data;
 using GlassLP.Middleware;
 using GlassLP.Utilities;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using static GlassLP.Data.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +39,50 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<SPManager>();
 builder.Services.AddScoped<JWTHelper>();
+
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+var secretKey = jwtSettings["SecretKey"];
+
+builder.Services.AddAuthentication(options =>
+{
+	// ? MVC will use Cookie by default
+	options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+	options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+	options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+})
+
+/* ? COOKIE AUTH ? FOR MVC */
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+{
+	options.LoginPath = "/Account/Login";
+	options.LogoutPath = "/Account/Logout";
+	options.AccessDeniedPath = "/Account/Login";
+	options.ExpireTimeSpan = TimeSpan.FromDays(365);
+	options.SlidingExpiration = true;
+})
+
+/* ? JWT AUTH ? FOR API */
+.AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+{
+	options.TokenValidationParameters = new TokenValidationParameters
+	{
+		ValidateIssuer = true,
+		ValidateAudience = true,
+		ValidateLifetime = true,
+		ValidateIssuerSigningKey = true,
+
+		ValidIssuer = jwtSettings["Issuer"],
+		ValidAudience = jwtSettings["Audience"],
+
+		IssuerSigningKey = new SymmetricSecurityKey(
+			Encoding.UTF8.GetBytes(secretKey!)
+		),
+
+		ClockSkew = TimeSpan.Zero
+	};
+});
+// Authorization
+builder.Services.AddAuthorization();
 
 
 var app = builder.Build();

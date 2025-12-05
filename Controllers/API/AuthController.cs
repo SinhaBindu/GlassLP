@@ -18,15 +18,17 @@ namespace GlassLP.Controllers.API
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly JWTHelper _jwtHelper;
+        private readonly SPManager _spManager;
 
         public AuthController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            JWTHelper jwtHelper)
+            JWTHelper jwtHelper,SPManager sPManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtHelper = jwtHelper;
+			_spManager = sPManager;
         }
 
         [HttpPost("login")]
@@ -72,7 +74,8 @@ namespace GlassLP.Controllers.API
 
             var roles = await _userManager.GetRolesAsync(user);
             var primaryRole = roles.FirstOrDefault() ?? string.Empty;
-            var token = _jwtHelper.GenerateJwtToken(user.Id, user.UserName ?? string.Empty, primaryRole);
+			var globalData = _spManager.GetLoggedInUser(user.Id);
+			var token = _jwtHelper.GenerateJwtToken(globalData);
 
             var responsePayload = new List<object>
             {

@@ -6,10 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using GlassLP.Data;
 using GlassLP.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GlassLP.Controllers.API
 {
-    [Route("api/[controller]")]
+	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+	[Route("api/[controller]")]
     [ApiController]
     public class CampsController : BaseController
     {
