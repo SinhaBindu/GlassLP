@@ -43,17 +43,16 @@
                         <span>Dashboard</span>
                     </li>
                     <li class="arrownone">
-                        <a href="~/Home/Index"><i class="fa fa-home"></i>  dashboard</a>
+                        <a href="~/Home/Index"><i class="fa fa-home"></i>&nbsp;&nbsp;dashboard</a>
                     </li>
                     <li>
                         <a aria-expanded="false" data-bs-toggle="collapse" href="#apps">
-                            <i class="fa fa-users"></i>
-                            Forms
+                            <i class="fa fa-users"></i>&nbsp;&nbsp;Forms
                         </a>
                         <ul class="collapse multi-collapse" id="apps" data-bs-parent="#accordion">
-                            <li><a href="~/Camps\Index">Camp</a></li>
-                            <li><a href="~/ParticipantM1\Index">Participant Model One</a></li>
-                            <li><a href="~/ParticipantM2\Index">Participant Model Two</a></li>
+                            <li><a href="~/Camps\Index"><i class="fa fa-hospital"></i>&nbsp;&nbsp;Camp</a></li>
+                            <li><a href="~/ParticipantM1\Index"><i class="fa fa-cube"></i>&nbsp;&nbsp;Participant Model One</a></li>
+                            <li><a href="~/ParticipantM2\Index"><i class="fa fa-cube"></i>&nbsp;&nbsp;Participant Model Two</a></li>
                         </ul>
                     </li>
                     @if (User.IsInRole("Admin"))
@@ -64,9 +63,9 @@
                                 Master
                             </a>
                             <ul class="collapse multi-collapse" id="master" data-bs-parent="#accordion">
-                                <li><a href="~/Vendors\Index">Vision Entrepreneurs</a></li>
-                                <li><a href="~/GlassesMst\Index">Inventory Glass Master</a></li>
-                                <li><a href="~/Users\Index">Add User</a></li>
+                                <li><a href="~/Vendors\Index"><i class="fa fa-eye"></i>&nbsp;&nbsp;Vision Entrepreneurs</a></li>
+                                <li><a href="~/GlassesMst\Index"><i class="fa fa-info"></i>&nbsp;&nbsp;Inventory Glass Master</a></li>
+                                <li><a href="~/Users\Index"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add User</a></li>
                             </ul>
                         </li>
                     }
